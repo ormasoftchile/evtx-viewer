@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "entries": [
+    {
+      "id": "focus-1758850253254-m30urwvgc",
+      "uriString": "file:///Volumes/Projects/evtx-viewer/specs/001-a-vs-code/plan.md",
+      "type": "file",
+      "metadata": {
+        "dateAdded": 1758850253254,
+        "relativePath": "specs/001-a-vs-code/plan.md",
+        "order": 0
+      }
+    },
+    {
+      "id": "focus-1758850253267-2paxkgddm",
+      "uriString": "file:///Volumes/Projects/evtx-viewer/specs/001-a-vs-code/spec.md",
+      "type": "file",
+      "metadata": {
+        "dateAdded": 1758850253267,
+        "relativePath": "specs/001-a-vs-code/spec.md",
+        "order": 1
+      }
+    }
+  ],
+  "lastModified": 1758850253771
+}
