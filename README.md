@@ -83,7 +83,18 @@ vsce package
 // File: C:\\Windows\\System32\\winevt\\Logs\\Security.evtx
 ```
 
-## 🔧 Advanced Usage
+## � What's New
+
+For detailed information about new features, improvements, and bug fixes in each version, see our [**Changelog**](CHANGELOG.md).
+
+**Latest Updates:**
+- ✅ Complete webview UI overhaul with modern React interface
+- ✅ Advanced T028 Filter Panel with real-time filtering  
+- ✅ Performance optimizations for large EVTX files
+- ✅ Enhanced security and accessibility features
+- ✅ Comprehensive test suite with 100% test coverage
+
+## �🔧 Advanced Usage
 
 ### Filtering Events
 
@@ -539,7 +550,8 @@ code --extensionDevelopmentPath=/path/to/evtx-viewer
 
 ### Support
 - 📖 [Documentation](https://github.com/your-org/evtx-viewer/wiki)
-- 🐛 [Issue Tracker](https://github.com/your-org/evtx-viewer/issues)
+- � [Changelog](CHANGELOG.md) - View version history and changes
+- �🐛 [Issue Tracker](https://github.com/your-org/evtx-viewer/issues)
 - 💬 [Discussions](https://github.com/your-org/evtx-viewer/discussions)
 
 ## 📄 License
@@ -551,6 +563,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=your-publisher.evtx-viewer)
 - [GitHub Repository](https://github.com/your-org/evtx-viewer)
 - [Documentation](https://your-org.github.io/evtx-viewer)
+- [Changelog](CHANGELOG.md) - View all changes and version history
 - [Security Policy](SECURITY.md)
 
 ---
