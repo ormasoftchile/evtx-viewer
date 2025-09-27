@@ -10,6 +10,32 @@ import { TextEncoder, TextDecoder } from 'util';
 (global as any).TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder;
 
+// Add missing URL globals that webidl-conversions needs
+(global as any).URL = URL || require('url').URL;
+(global as any).URLSearchParams = URLSearchParams || require('url').URLSearchParams;
+
+// Add performance API if missing
+if (typeof performance === 'undefined') {
+  (global as any).performance = {
+    now: () => Date.now(),
+    mark: () => {},
+    measure: () => {},
+    clearMarks: () => {},
+    clearMeasures: () => {}
+  };
+}
+
+// Add other missing globals that might be needed
+if (typeof (global as any).Request === 'undefined') {
+  (global as any).Request = class Request {};
+}
+if (typeof (global as any).Response === 'undefined') {
+  (global as any).Response = class Response {};
+}
+if (typeof (global as any).Headers === 'undefined') {
+  (global as any).Headers = class Headers {};
+}
+
 // Suppress jsdom navigation errors
 const originalError = console.error;
 console.error = (...args: any[]) => {
