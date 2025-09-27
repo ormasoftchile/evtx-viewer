@@ -93,7 +93,7 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "jest",
+    "test": "node -r ./tests/setup/pre-jsdom.js ./node_modules/.bin/jest",
     "test:vscode": "node ./out/tests/runTests.js",
     "test:performance": "jest --testPathPattern=tests/performance --testTimeout=30000",
     "test:security": "jest --testPathPattern=tests/security --passWithNoTests",
