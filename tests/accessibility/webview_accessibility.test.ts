@@ -81,6 +81,11 @@ describe('EVTX Viewer Accessibility Compliance', () => {
   beforeEach(() => {
     dom = mockWebviewEnvironment();
     mockComponents = mockReactComponents();
+    
+    // Ensure document language is properly set in the mocked environment
+    if (document.documentElement && !document.documentElement.lang) {
+      document.documentElement.lang = 'en';
+    }
   });
 
   afterEach(() => {
