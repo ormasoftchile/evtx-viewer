@@ -15,8 +15,6 @@
  * - Security: Safe XML parsing with entity resolution disabled
  */
 
-import type * as _vscode from 'vscode';
-import * as _path from 'path';
 import { DOMParser } from 'xmldom';
 
 import { EventRecord } from '../models/event_record';
@@ -515,13 +513,7 @@ export class EventExtractor {
     const warnings: string[] = [];
 
     try {
-      // Core event data
-      console.debug('EventExtractor - processing record:', {
-        eventId: record.eventId,
-        level: record.level,
-        levelType: typeof record.level,
-        provider: record.provider,
-      });
+      // Core event data - processing record
 
       const core = {
         eventId: record.eventId,

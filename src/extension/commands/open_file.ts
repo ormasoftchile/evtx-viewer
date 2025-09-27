@@ -215,7 +215,6 @@ export class OpenFileCommand {
             const actualSignature = buffer
               .toString('ascii', 0, Math.min(7, bytesRead))
               .replace(/\0/g, '');
-            const _bufferHex = buffer.subarray(0, 8).toString('hex');
 
             // Show warning but don't fail - let the parser handle it
             const response = await vscode.window.showWarningMessage(

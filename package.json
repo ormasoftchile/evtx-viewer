@@ -3,7 +3,7 @@
   "displayName": "EVTX Viewer",
   "description": "A Visual Studio Code extension for viewing, filtering, searching, and exporting Windows Event Log (.evtx) files",
   "version": "0.1.0",
-  "publisher": "ormasoftchile",
+  "publisher": "focus-space",
   "engines": {
     "vscode": "^1.80.0",
     "node": ">=18.0.0"

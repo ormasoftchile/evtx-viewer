@@ -172,7 +172,7 @@ export class EvtxWebviewProvider {
    * Get HTML content for webview - Enhanced for real event data display
    */
   private getWebviewContent(fileUris: vscode.Uri[]): string {
-    const _fileNames = fileUris.map((uri) => path.basename(uri.fsPath)).join(', ');
+    // const fileNames = fileUris.map((uri) => path.basename(uri.fsPath)).join(', ');
 
     return `<!DOCTYPE html>
 <html lang="en">

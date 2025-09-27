@@ -31,7 +31,6 @@ import { EvtxFile, EvtxFileHeader, EvtxFileStatus } from '../models/evtx_file';
  * @constitutional These constants ensure proper binary format validation
  * and maintain parsing accuracy within performance constraints
  */
-const _EVTX_SIGNATURE = 'ElfFile\0';
 const CHUNK_SIZE = 65536; // 64KB standard chunk size for optimal memory usage
 const FILE_HEADER_SIZE = 4096;
 
@@ -431,7 +430,7 @@ export class EvtxParser {
     }
 
     try {
-      const _buffer = Buffer.alloc(options.bufferSize!);
+      // Buffer validation
     } catch (error) {
       console.error(`Error allocating buffer:`, error);
       throw error;
@@ -1019,12 +1018,10 @@ export class EvtxParser {
       let currentOffset = offset + 1; // Skip token
 
       // Read dependency identifier (optional - may not be present in template resources)
-      let _dependencyId: number | null = null;
       if (currentOffset + 2 <= data.length) {
         const depId = data.readUInt16LE(currentOffset);
         if (depId !== 0xffff) {
-          // -1 means not set
-          _dependencyId = depId;
+          // -1 means not set - dependency tracking for future use
         }
         currentOffset += 2;
       }
@@ -1198,7 +1195,7 @@ export class EvtxParser {
   private static parseValue(
     data: Buffer,
     offset: number,
-    context: ParsingContext
+    _context: ParsingContext
   ): { name: string; value: any; nextOffset: number } | null {
     try {
       if (offset >= data.length) return null;
@@ -1237,7 +1234,7 @@ export class EvtxParser {
         return this.parseByHeuristics(data);
       }
 
-      const version = data.readUInt8(currentOffset);
+      // const version = data.readUInt8(currentOffset); // Template version
       const templateId = data.readUInt32LE(currentOffset + 1);
       const templateDataOffset = data.readUInt32LE(currentOffset + 5);
       currentOffset += 33; // Skip to template instance data
@@ -1266,8 +1263,8 @@ export class EvtxParser {
    */
   private static parseProcessingInstruction(
     data: Buffer,
-    offset: number,
-    context: ParsingContext
+    _offset: number,
+    _context: ParsingContext
   ): any {
     // Simplified PI parsing - return heuristic fallback
     return this.parseByHeuristics(data);
@@ -1408,7 +1405,7 @@ export class EvtxParser {
   /**
    * Apply template to instance data (simplified)
    */
-  private static applyTemplate(template: any, data: Buffer, offset: number): any {
+  private static applyTemplate(template: any, data: Buffer, _offset: number): any {
     // Simplified template application - would need full substitution logic
     return this.parseByHeuristics(data);
   }
@@ -1433,7 +1430,7 @@ export class EvtxParser {
   private static parseNormalSubstitution(
     data: Buffer,
     offset: number,
-    context: ParsingContext
+    _context: ParsingContext
   ): { data: any; nextOffset: number } | null {
     try {
       if (offset + 4 >= data.length || data.readUInt8(offset) !== 0x0d) return null;
@@ -1457,7 +1454,7 @@ export class EvtxParser {
   private static parseOptionalSubstitution(
     data: Buffer,
     offset: number,
-    context: ParsingContext
+    _context: ParsingContext
   ): { data: any; nextOffset: number } | null {
     try {
       if (offset + 4 >= data.length || data.readUInt8(offset) !== 0x0e) return null;
@@ -1711,7 +1708,7 @@ export class EvtxParser {
 
       const year = data.readUInt16LE(offset);
       const month = data.readUInt16LE(offset + 2) - 1; // Month is 1-based
-      const dayOfWeek = data.readUInt16LE(offset + 4); // Not used in Date constructor
+      // const dayOfWeek = data.readUInt16LE(offset + 4); // Not used in Date constructor
       const day = data.readUInt16LE(offset + 6);
       const hour = data.readUInt16LE(offset + 8);
       const minute = data.readUInt16LE(offset + 10);
@@ -2191,7 +2188,7 @@ export class EvtxParser {
       extracted.length < 100 &&
       !extracted.includes('\ufffd')
     ) {
-      const cleaned = extracted.replace(/[^\w\-\.]/g, '');
+      const cleaned = extracted.replace(/[^\w\-.]/g, '');
       if (cleaned.length > 2) {
         console.debug(`Found provider via general extraction: "${cleaned}"`);
         return cleaned;
@@ -2291,7 +2288,7 @@ export class EvtxParser {
       /^.+\/Admin$/i,
       /^.+\/Debug$/i,
       /^AAD\/Operational$/i,
-      /^[A-Za-z0-9\-\/_]+$/,
+      /^[A-Za-z0-9\-/_]+$/,
     ];
 
     return validPatterns.some((pattern) => pattern.test(name));
@@ -2550,6 +2547,7 @@ export class EvtxParser {
         // Replace Unicode replacement character (corrupted Unicode)
         .replace(/\uFFFD/g, '')
         // Remove non-printable control characters except newlines and tabs
+        // eslint-disable-next-line no-control-regex
         .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, ' ')
         // Replace multiple spaces with single space
         .replace(/\s+/g, ' ')
@@ -2714,7 +2712,7 @@ export class EvtxParser {
                 if (cleaned.length >= 6 && cleaned.length <= 15) {
                   if (/^DESKTOP-[A-Z0-9]+$/i.test(cleaned)) {
                     potentialNames.push(cleaned);
-                  } else if (/^[A-Z0-9\-]{6,15}$/i.test(cleaned)) {
+                  } else if (/^[A-Z0-9-]{6,15}$/i.test(cleaned)) {
                     potentialNames.push(cleaned);
                   }
                 }
@@ -2739,7 +2737,7 @@ export class EvtxParser {
               if (cleaned.length >= 6 && cleaned.length <= 15) {
                 if (/^DESKTOP-[A-Z0-9]+$/i.test(cleaned)) {
                   potentialNames.push(cleaned);
-                } else if (/^[A-Z0-9\-]{6,15}$/i.test(cleaned)) {
+                } else if (/^[A-Z0-9-]{6,15}$/i.test(cleaned)) {
                   potentialNames.push(cleaned);
                 }
               }
@@ -2766,7 +2764,7 @@ export class EvtxParser {
     }
 
     // Basic validation for computer name format
-    const validPattern = /^[a-zA-Z0-9\-\.]+$/;
+    const validPattern = /^[a-zA-Z0-9\-.]+$/;
     if (!validPattern.test(name)) {
       return false;
     }
@@ -2778,10 +2776,10 @@ export class EvtxParser {
       /^PC-[A-Z0-9]+$/i,
       /^WIN-[A-Z0-9]+$/i,
       /^SERVER-[A-Z0-9]+$/i,
-      /^[A-Z0-9\-]+\.local$/i,
-      /^[A-Z0-9\-]+\.domain$/i,
-      /^[A-Z0-9\-]+\.corp$/i,
-      /^[A-Z0-9\-]{3,15}$/i, // Generic computer name
+      /^[A-Z0-9-]+\.local$/i,
+      /^[A-Z0-9-]+\.domain$/i,
+      /^[A-Z0-9-]+\.corp$/i,
+      /^[A-Z0-9-]{3,15}$/i, // Generic computer name
     ];
 
     return commonPatterns.some((pattern) => pattern.test(name));
