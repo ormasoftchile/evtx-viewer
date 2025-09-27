@@ -15,7 +15,7 @@
  * - Security: Safe XML parsing with entity resolution disabled
  */
 
-import { DOMParser } from 'xmldom';
+import { DOMParser } from '@xmldom/xmldom';
 
 import { EventRecord } from '../models/event_record';
 
