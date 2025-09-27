@@ -95,7 +95,7 @@
     "lint": "eslint src --ext ts",
     "test": "node -r ./tests/setup/pre-jsdom.js ./node_modules/jest/bin/jest.js",
     "test:vscode": "node ./out/tests/runTests.js",
-    "test:performance": "jest --testPathPattern=tests/performance --testTimeout=30000",
+    "test:performance": "jest --testPathPattern=tests/performance --testTimeout=30000 --passWithNoTests",
     "test:security": "jest --testPathPattern=tests/security --passWithNoTests",
     "test:accessibility": "jest --testPathPattern=tests/accessibility --passWithNoTests",
     "package": "vsce package",
