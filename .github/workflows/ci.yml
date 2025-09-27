@@ -54,13 +54,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y xvfb
 
-    - name: Run VS Code extension tests
-      run: |
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          xvfb-run -a npm run test:vscode
-        else
-          npm run test:vscode
-        fi
+    - name: Run VS Code extension tests (Linux with Xvfb)
+      if: runner.os == 'Linux'
+      run: xvfb-run -a npm run test:vscode
+
+    - name: Run VS Code extension tests (Windows/macOS)
+      if: runner.os != 'Linux'
+      run: npm run test:vscode
 
     - name: Run performance benchmarks
       run: npm run test:performance
