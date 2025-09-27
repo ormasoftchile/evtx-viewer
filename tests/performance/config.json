@@ -1,0 +1,41 @@
+{
+  "name": "EVTX Viewer Performance Benchmarks",
+  "version": "1.0.0",
+  "description": "Performance test suite ensuring constitutional requirements compliance",
+  "constitutional_requirements": {
+    "parsing_throughput_mb_per_sec": 10,
+    "max_memory_usage_mb": 512,
+    "ui_response_time_ms": 100
+  },
+  "test_configurations": {
+    "parsing_tests": {
+      "file_sizes_mb": [1, 10, 50, 100],
+      "expected_min_throughput_mb_per_sec": 10
+    },
+    "memory_tests": {
+      "cache_operations": 100000,
+      "large_file_size_mb": 200,
+      "stress_test_threshold_mb": 400
+    },
+    "ui_tests": {
+      "max_response_time_ms": 100,
+      "test_event_counts": [1000, 5000, 10000],
+      "pagination_page_size": 100
+    },
+    "concurrent_tests": {
+      "max_concurrent_operations": 10,
+      "events_per_operation": 5000
+    }
+  },
+  "reporting": {
+    "output_format": "console",
+    "detailed_metrics": true,
+    "export_json": false,
+    "export_path": "./benchmark_results.json"
+  },
+  "environment": {
+    "node_version_min": "18.0.0",
+    "memory_limit_mb": 1024,
+    "timeout_per_test_ms": 30000
+  }
+}

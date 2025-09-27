@@ -20,7 +20,37 @@
         "relativePath": "specs/001-a-vs-code/spec.md",
         "order": 1
       }
+    },
+    {
+      "id": "focus-1758861674377-233i6ms75",
+      "uriString": "file:///Volumes/Projects/evtx-viewer/src/extension.ts",
+      "type": "file",
+      "metadata": {
+        "dateAdded": 1758861674377,
+        "relativePath": "src/extension.ts",
+        "order": 2
+      }
+    },
+    {
+      "id": "focus-1758862895381-c3g8dnli7",
+      "uriString": "file:///Volumes/Projects/evtx-viewer/README.md",
+      "type": "file",
+      "metadata": {
+        "dateAdded": 1758862895381,
+        "relativePath": "README.md",
+        "order": 3
+      }
+    },
+    {
+      "id": "focus-1758863749377-3rp49pm4i",
+      "uriString": "file:///Volumes/Projects/evtx-viewer/specs/001-a-vs-code/tasks.md",
+      "type": "file",
+      "metadata": {
+        "dateAdded": 1758863749377,
+        "relativePath": "specs/001-a-vs-code/tasks.md",
+        "order": 4
+      }
     }
   ],
-  "lastModified": 1758850253771
+  "lastModified": 1758863749882
 }
