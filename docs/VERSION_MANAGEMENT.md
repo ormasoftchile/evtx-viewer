@@ -61,6 +61,9 @@ git commit -m "Add new feature [version:minor]"
 ## Recommended Workflow
 
 1. **Development:** Use manual version bumping for local testing
-2. **CI/CD:** Use semantic-release for automatic versioning
+2. **CI/CD:** Use semantic-release for automatic versioning  
 3. **Hotfixes:** Use `[version:patch]` commit tag for quick patches
 4. **New Features:** Use conventional commits (`feat:`) for automatic minor bumps
+
+---
+*Last updated: September 27, 2025*
