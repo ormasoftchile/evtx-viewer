@@ -61,11 +61,73 @@ if (typeof (global as any).AbortController === 'undefined') {
   };
 }
 
-// Now safely import JSDOM using require() to avoid ES6 module hoisting
-const { JSDOM: JSXDOMClass } = require('jsdom');
+// Lazy-load JSDOM only when actually used
+let JSDOMClass: any = null;
 
-// Export JSDOM class with proper typing
-export const JSDOM = JSXDOMClass as typeof import('jsdom').JSDOM;
+export class JSDOM {
+  private _dom: any;
+
+  constructor(html?: string, options?: any) {
+    // Load JSDOM only when constructor is called
+    if (!JSDOMClass) {
+      JSDOMClass = require('jsdom').JSDOM;
+    }
+    this._dom = new JSDOMClass(html, options);
+  }
+
+  get window() {
+    return this._dom.window;
+  }
+
+  get document() {
+    return this._dom.window.document;
+  }
+
+  get virtualConsole() {
+    return this._dom.virtualConsole;
+  }
+
+  get cookieJar() {
+    return this._dom.cookieJar;
+  }
+
+  nodeLocation(node: any) {
+    return this._dom.nodeLocation(node);
+  }
+
+  getInternalVMContext() {
+    return this._dom.getInternalVMContext();
+  }
+
+  serialize() {
+    return this._dom.serialize();
+  }
+
+  reconfigure(settings: any) {
+    return this._dom.reconfigure(settings);
+  }
+
+  static fragment(html?: string) {
+    if (!JSDOMClass) {
+      JSDOMClass = require('jsdom').JSDOM;
+    }
+    return JSDOMClass.fragment(html);
+  }
+
+  static fromURL(url: string, options?: any) {
+    if (!JSDOMClass) {
+      JSDOMClass = require('jsdom').JSDOM;
+    }
+    return JSDOMClass.fromURL(url, options);
+  }
+
+  static fromFile(filename: string, options?: any) {
+    if (!JSDOMClass) {
+      JSDOMClass = require('jsdom').JSDOM;
+    }
+    return JSDOMClass.fromFile(filename, options);
+  }
+}
 
 // Export a helper function that ensures everything is set up
 export const ensureJSDOMGlobals = () => {
