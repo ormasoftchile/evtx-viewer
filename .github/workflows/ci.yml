@@ -66,13 +66,15 @@ jobs:
       run: npm run test:performance
       if: matrix.os == 'ubuntu-latest' && matrix.node-version == '18.x'
 
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v4
-      with:
-        file: ./coverage/lcov.info
-        flags: unittests
-        name: codecov-umbrella
-      if: matrix.os == 'ubuntu-latest' && matrix.node-version == '18.x'
+    # Coverage upload disabled - enable when coverage generation is configured
+    # - name: Upload coverage reports
+    #   uses: codecov/codecov-action@v4
+    #   with:
+    #     file: ./coverage/lcov.info
+    #     flags: unittests
+    #     name: codecov-umbrella
+    #     fail_ci_if_error: false
+    #   if: matrix.os == 'ubuntu-latest' && matrix.node-version == '18.x'
 
   build:
     name: Build Extension
