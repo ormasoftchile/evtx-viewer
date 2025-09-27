@@ -37,12 +37,19 @@ jobs:
     - name: Run unit tests
       run: npm test
 
-    - name: Run VS Code extension tests
-      uses: coactions/setup-xvfb@v1
-      with:
-        run: npm run test:vscode
-        options: --server-args="-screen 0 1024x768x24"
+    - name: Setup Xvfb for VS Code tests (Linux)
       if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb
+
+    - name: Run VS Code extension tests
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          xvfb-run -a npm run test:vscode
+        else
+          npm run test:vscode
+        fi
 
     - name: Run performance benchmarks
       run: npm run test:performance
