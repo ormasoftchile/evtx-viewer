@@ -98,7 +98,7 @@
     "test:performance": "jest --testPathPattern=tests/performance --testTimeout=30000 --passWithNoTests",
     "test:security": "jest --testPathPattern=tests/security --passWithNoTests",
     "test:accessibility": "jest --testPathPattern=tests/accessibility --passWithNoTests",
-    "package": "vsce package",
+    "package": "node -r ./scripts/node-globals-polyfill.js ./node_modules/@vscode/vsce/vsce package",
     "deploy": "vsce publish"
   },
   "devDependencies": {
