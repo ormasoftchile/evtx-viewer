@@ -13,6 +13,12 @@ A high-performance Windows Event Log (EVTX) viewer for Visual Studio Code that p
 - **Real-Time Filtering**: Advanced event filtering with multiple criteria
 - **Interactive Webview**: Rich HTML/CSS/JS interface for event exploration
 
+## 🎬 Demo
+
+![EVTX Viewer Demo](videos/demo.gif)
+
+*Watch the EVTX Viewer in action: opening event logs, filtering events, and exploring Windows Event Log data with real-time performance.*
+
 ## 📋 Constitutional Requirements
 
 This extension is built with strict performance guarantees:

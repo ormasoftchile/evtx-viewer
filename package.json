@@ -141,5 +141,10 @@
     "url": "https://github.com/ormasoftchile/evtx-viewer/issues"
   },
   "license": "MIT",
-  "icon": "resources/icon.png"
+  "icon": "resources/icon.png",
+  "preview": true,
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  }
 }
