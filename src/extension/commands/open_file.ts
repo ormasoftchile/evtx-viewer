@@ -138,7 +138,6 @@ export class OpenFileCommand {
       vscode.window.showInformationMessage(`Opened EVTX file: ${fileName}`);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Failed to open EVTX file:', error);
       vscode.window.showErrorMessage(`Failed to open EVTX file: ${errorMessage}`);
     }
   }
@@ -206,17 +205,18 @@ export class OpenFileCommand {
         // Read first 8 bytes to check EVTX magic signature
         const buffer = Buffer.allocUnsafe(8);
         const { bytesRead } = await handle.read(buffer, 0, 8, 0);
-        
+
         if (bytesRead < 8) {
-          console.warn('File may be too small to contain EVTX header, but proceeding with parsing');
+          // If we can't read enough bytes, continue with a warning but don't fail
         } else {
           // EVTX files start with "ElfFile\0" signature - check but don't fail
           const expectedSignature = Buffer.from('ElfFile\0', 'ascii');
           if (!buffer.equals(expectedSignature)) {
-            const actualSignature = buffer.toString('ascii', 0, Math.min(7, bytesRead)).replace(/\0/g, '');
-            const bufferHex = buffer.subarray(0, 8).toString('hex');
-            console.warn(`File signature check - Expected: ElfFile\\0 (${expectedSignature.toString('hex')}), Found: '${actualSignature}' (${bufferHex})`);
-            
+            const actualSignature = buffer
+              .toString('ascii', 0, Math.min(7, bytesRead))
+              .replace(/\0/g, '');
+            const _bufferHex = buffer.subarray(0, 8).toString('hex');
+
             // Show warning but don't fail - let the parser handle it
             const response = await vscode.window.showWarningMessage(
               `File may not be a valid EVTX file (signature: '${actualSignature}'). Attempt to open anyway?`,

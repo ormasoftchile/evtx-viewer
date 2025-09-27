@@ -60,9 +60,9 @@ export class AddFileCommand {
             throw new Error('No valid EVTX files to add');
           }
 
-          progress.report({ 
+          progress.report({
             message: `Adding ${validFiles.length} file${validFiles.length > 1 ? 's' : ''} to viewer...`,
-            increment: 50 
+            increment: 50,
           });
 
           // Add files to current view
@@ -83,7 +83,6 @@ export class AddFileCommand {
       vscode.window.showInformationMessage(message);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Failed to add files:', error);
 
       if (errorMessage.includes('Webview disposed')) {
         vscode.window.showErrorMessage('Failed to add files to viewer: Webview disposed');

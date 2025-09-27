@@ -31,7 +31,7 @@ import { EvtxFile, EvtxFileHeader, EvtxFileStatus } from '../models/evtx_file';
  * @constitutional These constants ensure proper binary format validation
  * and maintain parsing accuracy within performance constraints
  */
-const EVTX_SIGNATURE = 'ElfFile\0';
+const _EVTX_SIGNATURE = 'ElfFile\0';
 const CHUNK_SIZE = 65536; // 64KB standard chunk size for optimal memory usage
 const FILE_HEADER_SIZE = 4096;
 
@@ -285,7 +285,6 @@ export class EvtxParser {
    * const events = await EvtxParser.parseFile(
    *   evtxFile,
    *   { maxEvents: 5000, validateChecksums: true },
-   *   (progress) => console.log(`Parsed: ${progress.eventsProcessed}`)
    * );
    * ```
    */
@@ -328,18 +327,13 @@ export class EvtxParser {
       }
 
       // Parse file header
-      // console.log('Starting parseFileHeader');
       evtxFile._updateStatus(EvtxFileStatus.PARSING_HEADER);
       await this.parseFileHeader(context);
-      // console.log(`parseFileHeader completed: totalChunks=${context.totalChunks}`);
 
       // Parse chunks and extract events
-      // console.log('Starting parseChunks');
       evtxFile._updateStatus(EvtxFileStatus.PARSING_CHUNKS);
       const events = await this.parseChunks(context, mergedOptions);
-      // console.log(`parseChunks completed: found ${events.length} events`);
 
-      // console.log('Setting status to READY');
       evtxFile._updateStatus(EvtxFileStatus.READY);
       return events;
     } catch (error) {
@@ -352,12 +346,10 @@ export class EvtxParser {
    * Parse file header
    */
   private static async parseFileHeader(context: ParsingContext): Promise<void> {
-    // console.log('parseFileHeader: Reading file header buffer');
     const buffer = Buffer.alloc(FILE_HEADER_SIZE);
     await context.fileHandle.read(buffer, 0, FILE_HEADER_SIZE, 0);
 
     // Verify signature - more robust checking
-    // console.log('parseFileHeader: Checking signature');
     const signatureBuffer = buffer.subarray(0, 8);
     const expectedSignature = Buffer.from('ElfFile\0', 'ascii');
 
@@ -389,10 +381,8 @@ export class EvtxParser {
           headerBlockSize: 0x1000,
           chunkCount: 0,
         };
-        // console.log('parseFileHeader: Setting test header with chunkCount=0');
         context.file._setHeader(testHeader);
         context.totalChunks = 0;
-        // console.log('parseFileHeader: Test file setup complete');
         return; // Exit early for test files
       }
 
@@ -425,10 +415,8 @@ export class EvtxParser {
     context: ParsingContext,
     options: ParsingOptions
   ): Promise<EventRecord[]> {
-    // console.log(
     //   `Starting parseChunks: totalChunks=${context.totalChunks}, fileSize=${context.fileSize}`
     // );
-    // console.log(`Options:`, {
     //   bufferSize: options.bufferSize,
     //   maxEvents: options.maxEvents,
     //   validateChecksums: options.validateChecksums,
@@ -439,32 +427,24 @@ export class EvtxParser {
     // Early exit for test files with no chunks
     if (context.totalChunks === 0) {
       console.warn('No chunks to process - test file or empty EVTX file');
-      // console.log('Returning empty events array from parseChunks');
       return events;
     }
 
-    // console.log(`About to allocate buffer with size: ${options.bufferSize}`);
-
     try {
-      const buffer = Buffer.alloc(options.bufferSize!);
-      // console.log(`Buffer allocated successfully, size: ${buffer.length}`);
+      const _buffer = Buffer.alloc(options.bufferSize!);
     } catch (error) {
       console.error(`Error allocating buffer:`, error);
       throw error;
     }
 
     const buffer = Buffer.alloc(options.bufferSize!);
-    // console.log(`Buffer ready for parsing`);
 
     let offset = FILE_HEADER_SIZE;
     let lastProgressUpdate = 0;
     let loopCount = 0;
 
-    // console.log(`Starting chunk parsing loop: offset=${offset}, fileSize=${context.fileSize}`);
-
     while (offset < context.fileSize && !context.cancelled) {
       loopCount++;
-      // console.log(
       //   `Loop iteration ${loopCount}: offset=${offset}, remaining=${context.fileSize - offset}`
       // );
 
@@ -567,7 +547,6 @@ export class EvtxParser {
       const maxRecords = 10000; // Safety limit to prevent runaway parsing
       let lastOffset = -1; // Track last offset to detect infinite loops
 
-
       while (offset < chunkBuffer.length - 4 && recordCount < maxRecords) {
         // Detect infinite loop - if offset hasn't changed
         if (offset === lastOffset) {
@@ -578,7 +557,6 @@ export class EvtxParser {
         recordCount++;
 
         try {
-
           // First, check if we have a valid event record signature
           // EVTX spec: Event record signature should be \x2a\x2a\x00\x00 (0x00002a2a in little-endian)
           const signature = chunkBuffer.readUInt32LE(offset);
@@ -762,7 +740,7 @@ export class EvtxParser {
       // Fallback to binary extraction
       message = this.extractEventMessage(xmlData, eventData) || eventData.message;
     }
-    
+
     // Apply message fixes for known Event IDs
     message = this.fixMessageForEventId(eventData.eventId, message || '');
 
@@ -798,25 +776,25 @@ export class EvtxParser {
    */
   private static parseEventDataFromXml(xmlString: string): { eventId?: number; level?: number } {
     const result: { eventId?: number; level?: number } = {};
-    
+
     try {
       // Extract EventID
       const eventIdMatch = xmlString.match(/<EventID>(\d+)<\/EventID>/i);
       if (eventIdMatch && eventIdMatch[1]) {
         result.eventId = parseInt(eventIdMatch[1], 10);
       }
-      
+
       // Extract Level
       const levelMatch = xmlString.match(/<Level>(\d+)<\/Level>/i);
       if (levelMatch && levelMatch[1]) {
         result.level = parseInt(levelMatch[1], 10);
       }
-      
+
       console.debug(`XML parsing found: Event ID ${result.eventId}, Level ${result.level}`);
     } catch (error) {
       console.debug('XML parsing failed:', error);
     }
-    
+
     return result;
   }
 
@@ -853,7 +831,12 @@ export class EvtxParser {
 
       // Debug: Log first few bytes to understand structure
       if (xmlData.length >= 16) {
-        console.debug('Binary XML first 16 bytes:', Array.from(xmlData.subarray(0, 16)).map(b => '0x' + b.toString(16).padStart(2, '0')).join(' '));
+        console.debug(
+          'Binary XML first 16 bytes:',
+          Array.from(xmlData.subarray(0, 16))
+            .map((b) => '0x' + b.toString(16).padStart(2, '0'))
+            .join(' ')
+        );
       }
 
       // Check for fragment header (0x0f 0x01 0x01 0x00)
@@ -921,7 +904,8 @@ export class EvtxParser {
 
       switch (token) {
         case 0x01: // OpenStartElementTag (no attributes)
-        case 0x41: // OpenStartElementTag (with attributes)
+        case 0x41: {
+          // OpenStartElementTag (with attributes)
           const elementResult = this.parseStartElement(data, offset, context, token === 0x41);
           if (elementResult) {
             Object.assign(result, elementResult.data);
@@ -930,6 +914,7 @@ export class EvtxParser {
             offset++;
           }
           break;
+        }
 
         case 0x02: // CloseStartElementTag
           offset++;
@@ -944,7 +929,8 @@ export class EvtxParser {
           break;
 
         case 0x05: // Value token (no more data)
-        case 0x45: // Value token (more data follows)
+        case 0x45: {
+          // Value token (more data follows)
           const valueResult = this.parseValue(data, offset, context);
           if (valueResult) {
             if (valueResult.name) {
@@ -955,9 +941,11 @@ export class EvtxParser {
             offset++;
           }
           break;
+        }
 
         case 0x06: // Attribute (no more attributes)
-        case 0x46: // Attribute (more attributes follow)
+        case 0x46: {
+          // Attribute (more attributes follow)
           const attrResult = this.parseAttribute(data, offset, context);
           if (attrResult) {
             Object.assign(result, attrResult.data);
@@ -966,8 +954,10 @@ export class EvtxParser {
             offset++;
           }
           break;
+        }
 
-        case 0x0c: // Template instance - CRITICAL
+        case 0x0c: {
+          // Template instance - CRITICAL
           const templateResult = this.parseTemplateInstance(data, offset, context);
           if (templateResult) {
             Object.assign(result, templateResult);
@@ -977,8 +967,10 @@ export class EvtxParser {
             offset++;
           }
           break;
+        }
 
-        case 0x0d: // Normal substitution
+        case 0x0d: {
+          // Normal substitution
           const normalSubResult = this.parseNormalSubstitution(data, offset, context);
           if (normalSubResult) {
             Object.assign(result, normalSubResult.data);
@@ -987,8 +979,10 @@ export class EvtxParser {
             offset++;
           }
           break;
+        }
 
-        case 0x0e: // Optional substitution
+        case 0x0e: {
+          // Optional substitution
           const optionalSubResult = this.parseOptionalSubstitution(data, offset, context);
           if (optionalSubResult) {
             Object.assign(result, optionalSubResult.data);
@@ -997,6 +991,7 @@ export class EvtxParser {
             offset++;
           }
           break;
+        }
 
         case 0x00: // EOF
           return result;
@@ -1024,12 +1019,12 @@ export class EvtxParser {
       let currentOffset = offset + 1; // Skip token
 
       // Read dependency identifier (optional - may not be present in template resources)
-      let dependencyId: number | null = null;
+      let _dependencyId: number | null = null;
       if (currentOffset + 2 <= data.length) {
         const depId = data.readUInt16LE(currentOffset);
         if (depId !== 0xffff) {
           // -1 means not set
-          dependencyId = depId;
+          _dependencyId = depId;
         }
         currentOffset += 2;
       }
@@ -1289,7 +1284,7 @@ export class EvtxParser {
         console.debug(`Direct scan found Event ID ${targetEventId} as UInt16LE at offset ${i}`);
         return true;
       }
-      
+
       // Check as UInt32LE
       if (data.readUInt32LE(i) === targetEventId) {
         console.debug(`Direct scan found Event ID ${targetEventId} as UInt32LE at offset ${i}`);
@@ -1304,10 +1299,10 @@ export class EvtxParser {
    */
   private static parseByHeuristics(data: Buffer): any {
     console.debug('Using heuristic parsing for binary XML data');
-    
+
     // Log the binary XML header for debugging
     this.logBinaryXmlHeader(data);
-    
+
     const result: any = {
       eventId: 0,
       level: 4,
@@ -1321,21 +1316,23 @@ export class EvtxParser {
     // Extract basic information using patterns
     result.eventId = this.extractEventId(data);
     console.debug('Extracted Event ID:', result.eventId);
-    
+
     result.level = this.extractLevel(data);
     console.debug('Extracted Level:', result.level);
-    
+
     result.provider = this.extractProvider(data);
     console.debug('Extracted Provider:', result.provider);
-    
+
     result.channel = this.extractChannel(data);
     console.debug('Extracted Channel:', result.channel);
-    
+
     result.computer = this.extractComputer(data);
     console.debug('Extracted Computer:', result.computer);
 
     // DEBUG: Show natural parsing results without any overrides
-    console.debug(`NATURAL PARSING: Event ID ${result.eventId}, Level ${result.level}, Provider ${result.provider}`);
+    console.debug(
+      `NATURAL PARSING: Event ID ${result.eventId}, Level ${result.level}, Provider ${result.provider}`
+    );
 
     return result;
   }
@@ -1349,7 +1346,7 @@ export class EvtxParser {
         .map((b) => '0x' + b.toString(16).padStart(2, '0'))
         .join(' ');
       console.debug(`Binary XML Header (first 16 bytes): ${headerBytes}`);
-      
+
       // Check for fragment headers and templates
       if (data.length >= 4) {
         const fragmentSignature = data.readUInt32LE(0);
@@ -1359,7 +1356,7 @@ export class EvtxParser {
           console.debug(`Unknown Binary XML signature: ${fragmentSignature.toString(16)}`);
         }
       }
-      
+
       // Look for template references that might be causing identical headers
       this.detectTemplateUsage(data);
     }
@@ -1381,9 +1378,11 @@ export class EvtxParser {
         }
       }
     }
-    
+
     if (templateReferences > 0) {
-      console.debug(`Found ${templateReferences} template references - this may explain identical headers`);
+      console.debug(
+        `Found ${templateReferences} template references - this may explain identical headers`
+      );
     } else {
       console.debug('No template references found in binary XML');
     }
@@ -1922,13 +1921,13 @@ export class EvtxParser {
   private static extractEventId(data: Buffer): number {
     // FIXED: Use precise byte pattern matching for known Event IDs
     // Based on binary analysis, we know the file contains 1097, 1098, and 3072
-    
+
     const eventIdPatterns = [
       { id: 1097, pattern: Buffer.from([0x49, 0x04]) }, // 1097 little-endian
-      { id: 1098, pattern: Buffer.from([0x4A, 0x04]) }, // 1098 little-endian  
-      { id: 3072, pattern: Buffer.from([0x00, 0x0C]) }, // 3072 little-endian
+      { id: 1098, pattern: Buffer.from([0x4a, 0x04]) }, // 1098 little-endian
+      { id: 3072, pattern: Buffer.from([0x00, 0x0c]) }, // 3072 little-endian
     ];
-    
+
     // Search for Event ID patterns in the binary data
     for (const { id, pattern } of eventIdPatterns) {
       for (let i = 0; i <= data.length - pattern.length; i++) {
@@ -1938,9 +1937,9 @@ export class EvtxParser {
         }
       }
     }
-    
+
     console.debug('No known Event ID patterns found, using fallback search');
-    
+
     // Fallback: Original heuristic search for other Event IDs
     for (let i = 0; i < Math.min(data.length - 2, 200); i++) {
       const value = data.readUInt16LE(i);
@@ -1962,31 +1961,36 @@ export class EvtxParser {
   private static extractLevel(data: Buffer): number {
     // FIXED: Level is stored 4 bytes before the Event ID
     // Based on binary analysis: level appears at offset (eventId_offset - 4)
-    
+
     const eventIdPatterns = [
       { id: 1097, pattern: Buffer.from([0x49, 0x04]), expectedLevel: 3 }, // Warning
-      { id: 1098, pattern: Buffer.from([0x4A, 0x04]), expectedLevel: 2 }, // Error  
-      { id: 3072, pattern: Buffer.from([0x00, 0x0C]), expectedLevel: 2 }, // Error
+      { id: 1098, pattern: Buffer.from([0x4a, 0x04]), expectedLevel: 2 }, // Error
+      { id: 3072, pattern: Buffer.from([0x00, 0x0c]), expectedLevel: 2 }, // Error
     ];
-    
+
     // Find Event ID and extract level from 4 bytes before it
     for (const { id, pattern, expectedLevel } of eventIdPatterns) {
-      for (let i = 4; i <= data.length - pattern.length; i++) { // Start at 4 to ensure -4 offset exists
+      for (let i = 4; i <= data.length - pattern.length; i++) {
+        // Start at 4 to ensure -4 offset exists
         if (data.subarray(i, i + pattern.length).equals(pattern)) {
           const levelOffset = i - 4;
           const level = data.readUInt8(levelOffset);
           if (level >= 1 && level <= 5) {
-            console.debug(`Found Event ID ${id} at offset ${i}, level ${level} at offset ${levelOffset}`);
+            console.debug(
+              `Found Event ID ${id} at offset ${i}, level ${level} at offset ${levelOffset}`
+            );
             return level;
           }
-          console.debug(`Found Event ID ${id} at offset ${i}, but invalid level ${level} at offset ${levelOffset}, using expected level ${expectedLevel}`);
+          console.debug(
+            `Found Event ID ${id} at offset ${i}, but invalid level ${level} at offset ${levelOffset}, using expected level ${expectedLevel}`
+          );
           return expectedLevel; // Fallback to expected level
         }
       }
     }
-    
+
     console.debug('Level extraction failed - using fallback pattern search');
-    
+
     // Fallback: Original pattern search
     for (let i = 0; i < data.length - 8; i++) {
       const token = data.readUInt8(i);
@@ -2095,7 +2099,7 @@ export class EvtxParser {
    */
   private static extractProvider(data: Buffer): string {
     console.debug('Starting provider extraction...');
-    
+
     // Pattern 1: PRIORITY - Look for AAD provider first (common in user's logs)
     if (this.findUnicodeString(data, 'AAD')) {
       console.debug('Found AAD provider via Unicode search');
@@ -2116,7 +2120,12 @@ export class EvtxParser {
             // NullTerminatedString - handle with better encoding detection
             const strStart = i + 6;
             const provider = this.extractNullTerminatedString(data, strStart);
-            if (provider && provider.length > 0 && provider.length < 100 && !provider.includes('\ufffd')) {
+            if (
+              provider &&
+              provider.length > 0 &&
+              provider.length < 100 &&
+              !provider.includes('\ufffd')
+            ) {
               console.debug(`Found provider via null-terminated string: "${provider}"`);
               return provider;
             }
@@ -2124,7 +2133,12 @@ export class EvtxParser {
             // BinXmlType - improved Unicode extraction
             const strStart = i + 6;
             const provider = this.extractUnicodeStringAt(data, strStart);
-            if (provider && provider.length > 0 && provider.length < 100 && !provider.includes('\ufffd')) {
+            if (
+              provider &&
+              provider.length > 0 &&
+              provider.length < 100 &&
+              !provider.includes('\ufffd')
+            ) {
               console.debug(`Found provider via BinXml Unicode: "${provider}"`);
               return provider;
             }
@@ -2160,8 +2174,8 @@ export class EvtxParser {
       // Look for ASCII 'AAD' pattern (0x41 0x41 0x44)
       if (data[i] === 0x41 && data[i + 1] === 0x41 && data[i + 2] === 0x44) {
         // Check that we're not in the middle of a larger string
-        const prevChar = i > 0 ? (data[i - 1] || 0) : 0;
-        const nextChar = i + 3 < data.length ? (data[i + 3] || 0) : 0;
+        const prevChar = i > 0 ? data[i - 1] || 0 : 0;
+        const nextChar = i + 3 < data.length ? data[i + 3] || 0 : 0;
         if ((prevChar === 0 || prevChar < 32) && (nextChar === 0 || nextChar < 32)) {
           console.debug('Found AAD provider via ASCII pattern search');
           return 'AAD';
@@ -2171,7 +2185,12 @@ export class EvtxParser {
 
     // Pattern 5: Try to extract any reasonable string that doesn't contain corrupted characters
     const extracted = this.extractUnicodeString(data, 'Provider');
-    if (extracted && extracted.length > 2 && extracted.length < 100 && !extracted.includes('\ufffd')) {
+    if (
+      extracted &&
+      extracted.length > 2 &&
+      extracted.length < 100 &&
+      !extracted.includes('\ufffd')
+    ) {
       const cleaned = extracted.replace(/[^\w\-\.]/g, '');
       if (cleaned.length > 2) {
         console.debug(`Found provider via general extraction: "${cleaned}"`);
@@ -2359,7 +2378,7 @@ export class EvtxParser {
       const maxLength = Math.min(500, data.length - offset);
       if (maxLength > 10) {
         const stringData = data.subarray(offset, offset + maxLength);
-        
+
         // Try UTF-8
         const utf8Text = stringData.toString('utf8');
         const cleanUtf8 = this.cleanCorruptedText(utf8Text);
@@ -2416,7 +2435,10 @@ export class EvtxParser {
 
     try {
       // Generate message based on event ID and provider
-      if ((eventData.eventId === 1098 || eventData.eventId === 3072) && eventData.provider === 'AAD') {
+      if (
+        (eventData.eventId === 1098 || eventData.eventId === 3072) &&
+        eventData.provider === 'AAD'
+      ) {
         const errorMsg = this.extractAADTokenBrokerError(xmlData, eventData.eventId);
         if (errorMsg) {
           messages.push(errorMsg);
@@ -2451,7 +2473,7 @@ export class EvtxParser {
         // This is an authentication failure
         return 'AAD authentication operation failed. The token broker encountered an error during sign-in.';
       }
-      
+
       if (eventId === 1098) {
         // This is a token broker error
         return 'AAD token broker operation failed. Unable to obtain authentication token.';
@@ -2521,17 +2543,19 @@ export class EvtxParser {
    * Clean corrupted text by removing/replacing invalid Unicode and control characters
    */
   private static cleanCorruptedText(text: string): string {
-    return text
-      // Remove null bytes
-      .replace(/\0+/g, ' ')
-      // Replace Unicode replacement character (corrupted Unicode)
-      .replace(/\uFFFD/g, '')
-      // Remove non-printable control characters except newlines and tabs
-      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, ' ')
-      // Replace multiple spaces with single space
-      .replace(/\s+/g, ' ')
-      // Trim whitespace
-      .trim();
+    return (
+      text
+        // Remove null bytes
+        .replace(/\0+/g, ' ')
+        // Replace Unicode replacement character (corrupted Unicode)
+        .replace(/\uFFFD/g, '')
+        // Remove non-printable control characters except newlines and tabs
+        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, ' ')
+        // Replace multiple spaces with single space
+        .replace(/\s+/g, ' ')
+        // Trim whitespace
+        .trim()
+    );
   }
 
   /**
@@ -3029,7 +3053,7 @@ export class EvtxParser {
         /<Data Name="ErrorMessage">([^<]+)<\/Data>/i,
         /<Data Name="Details">([^<]+)<\/Data>/i,
         /<Data Name="Error">([^<]+)<\/Data>/i,
-        /<Data Name="Description">([^<]+)<\/Data>/i
+        /<Data Name="Description">([^<]+)<\/Data>/i,
       ];
 
       for (const pattern of messagePatterns) {
@@ -3049,7 +3073,13 @@ export class EvtxParser {
           const match = element.match(/>([^<]+)</);
           if (match && match[1]) {
             const text = match[1].trim();
-            if (text.length > 20 && (text.includes('error') || text.includes('failed') || text.includes('Error') || text.includes('Failed'))) {
+            if (
+              text.length > 20 &&
+              (text.includes('error') ||
+                text.includes('failed') ||
+                text.includes('Error') ||
+                text.includes('Failed'))
+            ) {
               return text;
             }
           }
@@ -3080,13 +3110,13 @@ export class EvtxParser {
           return 'AAD authentication operation started';
         }
         break;
-      
+
       case 1098:
         if (!cleaned.includes('authentication') && !cleaned.includes('AAD')) {
           return 'AAD authentication operation completed';
         }
         break;
-      
+
       case 3072:
         if (!cleaned.includes('failed') && !cleaned.includes('error')) {
           return 'AAD authentication operation failed';

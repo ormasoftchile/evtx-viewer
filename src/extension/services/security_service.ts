@@ -11,10 +11,7 @@
  *
  * if (validation.valid) {
  *   // Safe to proceed with file operations
- *   console.log('File validation passed');
  * } else {
- *   console.error('Security issues:', validation.issues);
- *   console.log('Recommendations:', validation.recommendations);
  * }
  * ```
  *
@@ -140,9 +137,7 @@ export interface SecurityIssue {
  *
  * if (!validation.valid) {
  *   validation.issues.forEach(issue => {
- *     console.error(`${issue.severity}: ${issue.message}`);
  *     if (issue.recommendation) {
- *       console.log(`Recommendation: ${issue.recommendation}`);
  *     }
  *   });
  * }

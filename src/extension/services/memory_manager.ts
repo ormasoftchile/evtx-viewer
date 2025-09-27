@@ -20,15 +20,11 @@
  * // Retrieve cached events
  * const cachedEvents = memoryManager.get('large.evtx');
  * if (cachedEvents) {
- *   console.log('Cache hit - serving from memory');
  * } else {
- *   console.log('Cache miss - need to parse file');
  * }
  *
  * // Monitor memory usage
  * const stats = memoryManager.getStats();
- * console.log(`Memory usage: ${stats.utilizationPercent}%`);
- * console.log(`Cache hit ratio: ${stats.hitRatio}`);
  * ```
  *
  * @constitutional
@@ -123,11 +119,9 @@ export interface MemoryManagerOptions {
  *
  * // Monitor performance
  * manager.on('eviction', (keys) => {
- *   console.log(`Evicted ${keys.length} entries due to memory pressure`);
  * });
  *
  * manager.on('memoryPressure', (stats) => {
- *   console.warn(`High memory usage: ${stats.utilizationPercent}%`);
  * });
  * ```
  *
@@ -209,9 +203,7 @@ export class MemoryManager<T> extends EventEmitter {
    * ```typescript
    * const events = manager.get('security.evtx');
    * if (events) {
-   *   console.log(`Found ${events.length} cached events`);
    * } else {
-   *   console.log('Cache miss - need to load from disk');
    * }
    * ```
    *
@@ -275,7 +267,6 @@ export class MemoryManager<T> extends EventEmitter {
    * });
    *
    * if (!stored) {
-   *   console.warn('Entry rejected - insufficient memory or max entries exceeded');
    * }
    * ```
    *

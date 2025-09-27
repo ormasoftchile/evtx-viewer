@@ -67,7 +67,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const openFileDisposable = openFileCommand.register();
     const openFolderDisposable = openFolderCommand.register();
     const addFileDisposable = addFileCommand.register();
-    
+
     context.subscriptions.push(
       openFileDisposable,
       openFolderDisposable,
@@ -77,9 +77,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
     // Show activation message
     vscode.window.showInformationMessage('EVTX Viewer extension is now active!');
-    vscode.window.showWarningMessage('EVTX DEBUG: Extension activated successfully with debugging enabled!');
+    vscode.window.showWarningMessage(
+      'EVTX DEBUG: Extension activated successfully with debugging enabled!'
+    );
   } catch (error) {
-    console.error('Error during extension activation:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     vscode.window.showErrorMessage(`Failed to activate EVTX Viewer extension: ${errorMessage}`);
   }

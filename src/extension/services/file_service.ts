@@ -437,7 +437,6 @@ export class FileService extends EventEmitter {
       // Log warning only in development
       if (process.env.NODE_ENV === 'development') {
         // eslint-disable-next-line no-console
-        console.warn(`Failed to watch file ${filePath}:`, error);
       }
     }
   }

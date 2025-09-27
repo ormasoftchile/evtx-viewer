@@ -83,7 +83,6 @@ export class EvtxWebviewProvider {
     panel: vscode.WebviewPanel,
     fileUris: vscode.Uri[]
   ): Promise<void> {
-    
     // Track this panel
     this.trackWebviewPanel(panel, fileUris);
 
@@ -173,7 +172,7 @@ export class EvtxWebviewProvider {
    * Get HTML content for webview - Enhanced for real event data display
    */
   private getWebviewContent(fileUris: vscode.Uri[]): string {
-    const fileNames = fileUris.map((uri) => path.basename(uri.fsPath)).join(', ');
+    const _fileNames = fileUris.map((uri) => path.basename(uri.fsPath)).join(', ');
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -1296,7 +1295,6 @@ export class EvtxWebviewProvider {
         const fileUri = vscode.Uri.file(filePath);
 
         // Send progress update
-        // console.log(`Sending parsing progress for ${path.basename(filePath)}`);
         // await panel.webview.postMessage({
         //   command: 'loadProgress',
         //   file: path.basename(filePath),
@@ -1305,13 +1303,10 @@ export class EvtxWebviewProvider {
 
         try {
           // Create EvtxFile instance
-          // console.log(`Creating EvtxFile instance for ${filePath}`);
           const evtxFile = new EvtxFile(fileUri.fsPath);
-          
+
           // Parse file to get EventRecord objects (already includes XML conversion)
-          // console.log(`Starting EvtxParser.parseFile for ${filePath}`);
           const eventRecords = await EvtxParser.parseFile(evtxFile);
-          // console.log(`EvtxParser.parseFile completed for ${filePath}, found ${eventRecords.length} records`);
 
           // Send progress update after parsing binary data
           // await panel.webview.postMessage({
@@ -1340,17 +1335,25 @@ export class EvtxWebviewProvider {
           //   eventCount: extractionResult.data.length,
           //   statistics: extractionResult.statistics,
           // });
-
         } catch (parseError) {
           // Send error for this file but continue with others
           let errorMessage: string;
-          
+
           if (parseError instanceof Error) {
-            if (parseError.message.includes('Invalid EVTX file format') || parseError.message.includes('signature')) {
+            if (
+              parseError.message.includes('Invalid EVTX file format') ||
+              parseError.message.includes('signature')
+            ) {
               errorMessage = `Invalid EVTX file format: ${parseError.message}`;
-            } else if (parseError.message.includes('Permission denied') || parseError.message.includes('EACCES')) {
+            } else if (
+              parseError.message.includes('Permission denied') ||
+              parseError.message.includes('EACCES')
+            ) {
               errorMessage = 'Permission denied - cannot read file';
-            } else if (parseError.message.includes('ENOENT') || parseError.message.includes('not found')) {
+            } else if (
+              parseError.message.includes('ENOENT') ||
+              parseError.message.includes('not found')
+            ) {
               errorMessage = 'File not found or has been moved';
             } else {
               errorMessage = `Parse error: ${parseError.message}`;
@@ -1358,9 +1361,7 @@ export class EvtxWebviewProvider {
           } else {
             errorMessage = 'Unknown parse error';
           }
-          
-          console.error(`Failed to parse ${path.basename(filePath)}:`, parseError);
-          
+
           await panel.webview.postMessage({
             command: 'loadError',
             file: path.basename(filePath),
@@ -1385,13 +1386,11 @@ export class EvtxWebviewProvider {
           timeRange: summary.timeRange,
           commonEventIds: summary.commonEventIds,
         },
-        files: filePaths.map(fp => path.basename(fp)),
+        files: filePaths.map((fp) => path.basename(fp)),
       });
-
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Failed to load files:', error);
-      
+
       await panel.webview.postMessage({
         command: 'loadError',
         error: errorMessage,
@@ -1426,7 +1425,7 @@ export class EvtxWebviewProvider {
   private async handleExportEvents(panel: vscode.WebviewPanel, exportOptions: any): Promise<void> {
     try {
       const { format, events, filename } = exportOptions;
-      
+
       if (!events || !Array.isArray(events) || events.length === 0) {
         await panel.webview.postMessage({
           command: 'exportError',
@@ -1465,13 +1464,19 @@ export class EvtxWebviewProvider {
             case 'csv':
               exportData = this.exportToCsv(events, (processed) => {
                 const percentage = Math.round((processed / totalEvents) * 90);
-                progress.report({ message: `Processing events... ${processed}/${totalEvents}`, increment: percentage });
+                progress.report({
+                  message: `Processing events... ${processed}/${totalEvents}`,
+                  increment: percentage,
+                });
               });
               break;
             case 'xml':
               exportData = this.exportToXml(events, (processed) => {
                 const percentage = Math.round((processed / totalEvents) * 90);
-                progress.report({ message: `Processing events... ${processed}/${totalEvents}`, increment: percentage });
+                progress.report({
+                  message: `Processing events... ${processed}/${totalEvents}`,
+                  increment: percentage,
+                });
               });
               break;
             default:
@@ -1481,10 +1486,7 @@ export class EvtxWebviewProvider {
           progress.report({ message: 'Writing file...', increment: 90 });
 
           // Write to file
-          await vscode.workspace.fs.writeFile(
-            saveUri,
-            Buffer.from(exportData, 'utf-8')
-          );
+          await vscode.workspace.fs.writeFile(saveUri, Buffer.from(exportData, 'utf-8'));
 
           progress.report({ message: 'Export completed', increment: 100 });
         }
@@ -1500,10 +1502,8 @@ export class EvtxWebviewProvider {
         path: saveUri.fsPath,
         eventCount: events.length,
       });
-
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Export failed';
-      console.error('Export error:', error);
 
       await panel.webview.postMessage({
         command: 'exportError',
@@ -1517,7 +1517,10 @@ export class EvtxWebviewProvider {
   /**
    * Show save dialog for export
    */
-  private async showSaveDialog(defaultName: string, format: string): Promise<vscode.Uri | undefined> {
+  private async showSaveDialog(
+    defaultName: string,
+    format: string
+  ): Promise<vscode.Uri | undefined> {
     const extensions: { [key: string]: string[] } = {
       json: ['json'],
       csv: ['csv'],
@@ -1623,7 +1626,9 @@ export class EvtxWebviewProvider {
     events.forEach((event, index) => {
       xmlLines.push('    <Event>');
       xmlLines.push(`      <Timestamp>${this.escapeXml(event.core.timestamp)}</Timestamp>`);
-      xmlLines.push(`      <EventRecordID>${this.escapeXml(event.core.eventRecordId)}</EventRecordID>`);
+      xmlLines.push(
+        `      <EventRecordID>${this.escapeXml(event.core.eventRecordId)}</EventRecordID>`
+      );
       xmlLines.push(`      <EventID>${this.escapeXml(event.core.eventId)}</EventID>`);
       xmlLines.push(`      <Level>${this.escapeXml(this.getLevelName(event.core.level))}</Level>`);
       xmlLines.push(`      <Provider>${this.escapeXml(event.core.provider)}</Provider>`);
@@ -1632,9 +1637,12 @@ export class EvtxWebviewProvider {
 
       if (event.system) {
         xmlLines.push('      <System>');
-        if (event.system.processId) xmlLines.push(`        <ProcessID>${event.system.processId}</ProcessID>`);
-        if (event.system.threadId) xmlLines.push(`        <ThreadID>${event.system.threadId}</ThreadID>`);
-        if (event.system.userId) xmlLines.push(`        <UserID>${this.escapeXml(event.system.userId)}</UserID>`);
+        if (event.system.processId)
+          xmlLines.push(`        <ProcessID>${event.system.processId}</ProcessID>`);
+        if (event.system.threadId)
+          xmlLines.push(`        <ThreadID>${event.system.threadId}</ThreadID>`);
+        if (event.system.userId)
+          xmlLines.push(`        <UserID>${this.escapeXml(event.system.userId)}</UserID>`);
         xmlLines.push('      </System>');
       }
 
@@ -1645,7 +1653,9 @@ export class EvtxWebviewProvider {
       if (event.eventData) {
         xmlLines.push('      <EventData>');
         for (const [key, value] of Object.entries(event.eventData)) {
-          xmlLines.push(`        <Data Name="${this.escapeXml(key)}">${this.escapeXml(String(value))}</Data>`);
+          xmlLines.push(
+            `        <Data Name="${this.escapeXml(key)}">${this.escapeXml(String(value))}</Data>`
+          );
         }
         xmlLines.push('      </EventData>');
       }
@@ -1683,12 +1693,12 @@ export class EvtxWebviewProvider {
    */
   private escapeCsvValue(value: any): string {
     const stringValue = String(value || '');
-    
+
     // If the value contains comma, quote, or newline, wrap in quotes and escape quotes
     if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
       return '"' + stringValue.replace(/"/g, '""') + '"';
     }
-    
+
     return stringValue;
   }
 
@@ -1723,7 +1733,6 @@ export class EvtxWebviewProvider {
       };
       panel.webview.postMessage(message);
     } catch (error) {
-      console.error('Error in loadFilesIntoWebview:', error);
       // Failed to load files - show error to user
       vscode.window.showErrorMessage('Failed to load EVTX files');
     }
