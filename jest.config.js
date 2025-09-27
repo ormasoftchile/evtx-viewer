@@ -6,6 +6,9 @@
  */
 
 module.exports = {
+  // Global setup that runs before any test environments
+  globalSetup: '<rootDir>/tests/setup/global-setup.js',
+  
   // Use projects configuration for different test environments
   projects: [
     {
@@ -64,7 +67,7 @@ module.exports = {
       ],
     },
     {
-      // Accessibility tests - JSDOM environment
+      // Accessibility tests - JSDOM environment with global setup
       displayName: 'accessibility-tests',
       testEnvironment: 'jsdom',
       preset: 'ts-jest',
@@ -89,11 +92,6 @@ module.exports = {
 
       // Module resolution
       moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-      
-      // Critical: Setup files that run BEFORE test files are loaded
-      setupFiles: [
-        '<rootDir>/tests/setup/jsdom.setup.ts'
-      ],
       
       // Setup files that run after test framework is available
       setupFilesAfterEnv: [

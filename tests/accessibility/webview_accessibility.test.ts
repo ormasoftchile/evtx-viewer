@@ -17,7 +17,10 @@
  */
 
 import { describe, beforeEach, afterEach, test, expect } from '@jest/globals';
-import { JSDOM } from 'jsdom';
+import { JSDOM, ensureJSDOMGlobals } from '../utils/jsdom-helper';
+
+// Ensure JSDOM globals are properly set up
+ensureJSDOMGlobals();
 
 // Mock webview environment
 const mockWebviewEnvironment = () => {
