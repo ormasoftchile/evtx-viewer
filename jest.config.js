@@ -93,9 +93,9 @@ module.exports = {
       // Module resolution
       moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
       
-      // Setup files that run BEFORE test files are loaded
+      // Setup files that run BEFORE test files are loaded - use JS file
       setupFiles: [
-        '<rootDir>/tests/setup/jsdom.setup.ts'
+        '<rootDir>/tests/setup/pre-jsdom.js'
       ],
       
       // Setup files that run after test framework is available
