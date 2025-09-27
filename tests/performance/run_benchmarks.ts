@@ -11,8 +11,6 @@ import PerformanceTestRunner from './test_runner';
 import * as path from 'path';
 
 async function main() {
-  console.log('🚀 EVTX Viewer Performance Benchmark Suite');
-  console.log('==========================================\n');
 
   const runner = new PerformanceTestRunner();
   
@@ -25,18 +23,11 @@ async function main() {
     const passedTests = results.filter(r => r.passed).length;
     const totalTests = results.length;
     
-    console.log(`\n🎯 Final Summary:`);
-    console.log(`   Total Runtime: ${(totalTime / 1000).toFixed(1)}s`);
-    console.log(`   Tests Passed: ${passedTests}/${totalTests} (${((passedTests/totalTests)*100).toFixed(1)}%)`);
     
     if (passedTests === totalTests) {
-      console.log('   ✅ All performance benchmarks PASSED!');
       process.exit(0);
     } else {
-      console.log('   ❌ Some performance benchmarks FAILED!');
-      console.log('\n   Failed tests:');
       results.filter(r => !r.passed).forEach(test => {
-        console.log(`     • ${test.testName}: ${test.error?.message || 'Performance requirements not met'}`);
       });
       process.exit(1);
     }

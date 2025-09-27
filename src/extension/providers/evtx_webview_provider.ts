@@ -83,26 +83,20 @@ export class EvtxWebviewProvider {
     panel: vscode.WebviewPanel,
     fileUris: vscode.Uri[]
   ): Promise<void> {
-    console.log(`initializeWebview called with ${fileUris.length} files:`, fileUris.map(uri => uri.fsPath));
     
     // Track this panel
     this.trackWebviewPanel(panel, fileUris);
-    console.log('Panel tracked');
 
     // Set webview HTML content
     panel.webview.html = this.getWebviewContent(fileUris);
-    console.log('Webview HTML content set');
 
     // Handle messages from webview
     panel.webview.onDidReceiveMessage((message) => {
       this.handleWebviewMessage(panel, message);
     });
-    console.log('Message handler set up');
 
     // Load file data
-    console.log('Calling loadFilesIntoWebview');
     await this.loadFilesIntoWebview(panel, fileUris);
-    console.log('loadFilesIntoWebview completed');
   }
 
   /**
@@ -684,9 +678,7 @@ export class EvtxWebviewProvider {
     </div>
 
     <script>
-        console.log('EVTX Webview JavaScript starting...');
         const vscode = acquireVsCodeApi();
-        console.log('vscode API acquired');
         
         let loadedEvents = [];
         let filteredEvents = [];
@@ -1178,15 +1170,12 @@ export class EvtxWebviewProvider {
         });
         
         // Message handling
-        console.log('Setting up message listener...');
         window.addEventListener('message', event => {
-            console.log('Webview received message:', event.data);
             const message = event.data;
             
             switch (message.command) {
                 case 'filesLoaded':
                     // Files have been loaded, now request parsing
-                    console.log('Received filesLoaded message, requesting parsing...');
                     vscode.postMessage({
                         command: 'loadFiles',
                         files: message.files.map(f => f.path)
@@ -1272,10 +1261,8 @@ export class EvtxWebviewProvider {
    * Handle messages from webview - Enhanced with export support
    */
   private async handleWebviewMessage(panel: vscode.WebviewPanel, message: any): Promise<void> {
-    console.log('handleWebviewMessage received:', message.command, message);
     switch (message.command) {
       case 'loadFiles':
-        console.log('Calling handleLoadFiles with files:', message.files);
         await this.handleLoadFiles(panel, message.files);
         break;
       case 'filter':
@@ -1300,13 +1287,11 @@ export class EvtxWebviewProvider {
    * Handle file loading request from webview - Enhanced to use real EVTX parsing
    */
   private async handleLoadFiles(panel: vscode.WebviewPanel, filePaths: string[]): Promise<void> {
-    console.log(`handleLoadFiles called with ${filePaths.length} files:`, filePaths);
     try {
       const allExtractedEvents = [];
       let totalEventCount = 0;
 
       for (const filePath of filePaths) {
-        console.log(`Processing file: ${filePath}`);
         // Parse EVTX file using the enhanced parser
         const fileUri = vscode.Uri.file(filePath);
 
@@ -1356,16 +1341,6 @@ export class EvtxWebviewProvider {
           //   statistics: extractionResult.statistics,
           // });
 
-          // Log extraction statistics for debugging
-          console.log(`File ${path.basename(filePath)} extraction stats:`, {
-            totalRecords: extractionResult.statistics.totalRecords,
-            successfulExtractions: extractionResult.statistics.successfulExtractions,
-            failedExtractions: extractionResult.statistics.failedExtractions,
-            warnings: extractionResult.statistics.warnings,
-            processingTime: Math.round(extractionResult.statistics.processingTime),
-            averageTimePerRecord: Math.round(extractionResult.statistics.averageTimePerRecord * 1000) / 1000,
-          });
-
         } catch (parseError) {
           // Send error for this file but continue with others
           let errorMessage: string;
@@ -1397,17 +1372,6 @@ export class EvtxWebviewProvider {
       // Generate summary of all loaded events
       const summary = EventExtractor.getSummary(allExtractedEvents);
 
-      // DEBUG: Log what we're about to send to webview
-      console.log('About to send to webview - sample events:', 
-        allExtractedEvents.slice(0, 2).map(e => ({
-          eventId: e.core?.eventId,
-          level: e.core?.level,
-          levelType: typeof e.core?.level,
-          provider: e.core?.provider,
-          hasCore: !!e.core
-        }))
-      );
-
       // Send all loaded events and summary to webview
       await panel.webview.postMessage({
         command: 'eventsLoaded',
@@ -1423,10 +1387,6 @@ export class EvtxWebviewProvider {
         },
         files: filePaths.map(fp => path.basename(fp)),
       });
-
-      // Log overall statistics
-      console.log('Total events loaded:', totalEventCount);
-      console.log('Event summary:', summary);
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -1752,7 +1712,6 @@ export class EvtxWebviewProvider {
     panel: vscode.WebviewPanel,
     fileUris: vscode.Uri[]
   ): Promise<void> {
-    console.log(`loadFilesIntoWebview called with ${fileUris.length} files`);
     try {
       // Send file loaded message to webview
       const message = {
@@ -1762,9 +1721,7 @@ export class EvtxWebviewProvider {
           name: path.basename(uri.fsPath),
         })),
       };
-      console.log('Sending filesLoaded message to webview:', message);
       panel.webview.postMessage(message);
-      console.log('filesLoaded message sent successfully');
     } catch (error) {
       console.error('Error in loadFilesIntoWebview:', error);
       // Failed to load files - show error to user

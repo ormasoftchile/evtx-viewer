@@ -484,33 +484,25 @@ export class EvtxParser {
 
       // Check limits
       if (options.maxEvents && events.length >= options.maxEvents) {
-        console.log('Reached maxEvents limit, breaking');
         break;
       }
 
       try {
-        console.log(`Reading chunk data: bytesToRead calculation...`);
         // Read chunk
         const bytesToRead = Math.min(CHUNK_SIZE, context.fileSize - offset);
-        console.log(`Attempting to read ${bytesToRead} bytes at offset ${offset}`);
         const { bytesRead } = await context.fileHandle.read(buffer, 0, bytesToRead, offset);
-        console.log(`Successfully read ${bytesRead} bytes`);
 
         if (bytesRead === 0) {
-          console.log('Read 0 bytes, breaking loop');
           break;
         }
 
         // Parse chunk
-        console.log(`Calling parseChunk with ${bytesRead} bytes of data`);
         const chunkEvents = await this.parseChunk(buffer.subarray(0, bytesRead), context, options);
-        console.log(`parseChunk returned ${chunkEvents.length} events`);
 
         events.push(...chunkEvents);
         context.eventsProcessed += chunkEvents.length;
         context.chunksProcessed++;
         offset += bytesRead;
-        console.log(`Updated offset to ${offset}, total events so far: ${events.length}`);
 
         // Update progress
         if (context.eventsProcessed - lastProgressUpdate >= options.progressInterval!) {
@@ -558,14 +550,11 @@ export class EvtxParser {
     context: ParsingContext,
     options: ParsingOptions
   ): Promise<EventRecord[]> {
-    console.log(`parseChunk called with buffer size: ${chunkBuffer.length}`);
     const events: EventRecord[] = [];
 
     try {
       // Parse chunk header
-      console.log(`Parsing chunk header...`);
       const chunkHeader = this.parseChunkHeader(chunkBuffer);
-      console.log(`Chunk header parsed, signature: ${chunkHeader.signature}`);
 
       // Validate chunk if enabled
       if (options.validateChecksums && !this.validateChunkChecksum(chunkBuffer, chunkHeader)) {
@@ -578,7 +567,6 @@ export class EvtxParser {
       const maxRecords = 10000; // Safety limit to prevent runaway parsing
       let lastOffset = -1; // Track last offset to detect infinite loops
 
-      console.log(`Starting to parse event records from offset ${offset}`);
 
       while (offset < chunkBuffer.length - 4 && recordCount < maxRecords) {
         // Detect infinite loop - if offset hasn't changed
@@ -590,22 +578,17 @@ export class EvtxParser {
         recordCount++;
 
         try {
-          console.log(`Parsing event record at offset ${offset}`);
 
           // First, check if we have a valid event record signature
           // EVTX spec: Event record signature should be \x2a\x2a\x00\x00 (0x00002a2a in little-endian)
           const signature = chunkBuffer.readUInt32LE(offset);
           if (signature !== 0x00002a2a) {
-            console.log(
-              `Invalid signature at offset ${offset}: 0x${signature.toString(16)}, skipping`
-            );
             offset += 4; // Move forward to find next potential record
             continue;
           }
 
           // Read record size with validation
           const recordSize = chunkBuffer.readUInt32LE(offset + 4);
-          console.log(`Record size at offset ${offset}: ${recordSize}`);
 
           // Validate record size
           if (recordSize === 0) {
@@ -631,14 +614,10 @@ export class EvtxParser {
 
           if (eventRecord) {
             events.push(eventRecord);
-            console.log(`Added event record, total events in chunk: ${events.length}`);
           }
 
           // Move to next record
           offset += recordSize;
-          console.log(
-            `Moving to next record, new offset: ${offset}, record size was: ${recordSize}`
-          );
         } catch (error) {
           console.warn(`Error parsing event record at offset ${offset}:`, error);
           // Skip corrupted record with a reasonable increment
@@ -648,7 +627,6 @@ export class EvtxParser {
           } else {
             offset += 4; // Minimal increment if record size is invalid
           }
-          console.log(`Skipped to offset ${offset} due to parsing error`);
           continue;
         }
       }
@@ -657,9 +635,6 @@ export class EvtxParser {
         console.warn(`Reached maximum record limit (${maxRecords}), stopping chunk parsing`);
       }
 
-      console.log(
-        `Finished parsing chunk, found ${events.length} events, processed ${recordCount} records`
-      );
       return events;
     } catch (error) {
       console.error(`Error in parseChunk:`, error);

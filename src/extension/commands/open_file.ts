@@ -104,21 +104,16 @@ export class OpenFileCommand {
    * ```
    */
   private async execute(): Promise<void> {
-    console.log('OpenFileCommand.execute() called');
     try {
       // Show file selection dialog
       const fileUri = await this.showOpenDialog();
       if (!fileUri) {
         // User cancelled the dialog
-        console.log('User cancelled file dialog');
         return;
       }
 
-      console.log('Selected file:', fileUri.fsPath);
-
       // Validate selected file
       await this.validateFile(fileUri);
-      console.log('File validation completed');
 
       const fileName = path.basename(fileUri.fsPath);
 
@@ -131,11 +126,9 @@ export class OpenFileCommand {
         },
         async (progress) => {
           progress.report({ message: 'Initializing viewer...' });
-          console.log('Creating webview for file');
 
           // Create webview for the file
           await this.createWebviewForFile(fileUri);
-          console.log('Webview creation completed');
 
           progress.report({ message: 'File opened successfully', increment: 100 });
         }
@@ -234,7 +227,7 @@ export class OpenFileCommand {
               throw new Error('File opening cancelled by user');
             }
           } else {
-            console.log('EVTX file signature verified successfully');
+            // File signature is valid
           }
         }
       } finally {
@@ -262,7 +255,6 @@ export class OpenFileCommand {
    */
   private async createWebviewForFile(fileUri: vscode.Uri): Promise<void> {
     const fileName = path.basename(fileUri.fsPath);
-    console.log(`createWebviewForFile called for: ${fileName}`);
 
     // Create webview panel
     const panel = vscode.window.createWebviewPanel(
@@ -278,12 +270,9 @@ export class OpenFileCommand {
         ],
       }
     );
-    console.log('Webview panel created');
 
     // Initialize webview with file
-    console.log('Calling webviewProvider.initializeWebview');
     await this.webviewProvider.initializeWebview(panel, [fileUri]);
-    console.log('webviewProvider.initializeWebview completed');
   }
 
   /**

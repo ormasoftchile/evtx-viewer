@@ -47,31 +47,23 @@ import { EvtxCustomEditorProvider } from './extension/providers/evtx_custom_edit
  * ```
  */
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
-  console.log('EVTX Viewer extension activation started');
   try {
     // Initialize webview provider
-    console.log('Initializing webview provider');
     const webviewProvider = new EvtxWebviewProvider(context);
-    console.log('Webview provider initialized');
 
     // Initialize commands
-    console.log('Initializing commands');
     const openFileCommand = new OpenFileCommand(context, webviewProvider);
     const openFolderCommand = new OpenFolderCommand(context, webviewProvider);
     const addFileCommand = new AddFileCommand(context, webviewProvider);
-    console.log('Commands initialized');
 
     // Initialize and register custom editor provider
-    console.log('Initializing custom editor provider');
     const customEditorProvider = new EvtxCustomEditorProvider(context, webviewProvider);
     const customEditorDisposable = vscode.window.registerCustomEditorProvider(
       EvtxCustomEditorProvider.viewType,
       customEditorProvider
     );
-    console.log('Custom editor provider registered');
 
     // Register commands
-    console.log('Registering commands');
     const openFileDisposable = openFileCommand.register();
     const openFolderDisposable = openFolderCommand.register();
     const addFileDisposable = addFileCommand.register();
@@ -82,13 +74,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       addFileDisposable,
       customEditorDisposable
     );
-    console.log('Commands registered successfully');
-    console.log('Open File Command ID:', OpenFileCommand.getCommandId());
 
     // Show activation message
     vscode.window.showInformationMessage('EVTX Viewer extension is now active!');
     vscode.window.showWarningMessage('EVTX DEBUG: Extension activated successfully with debugging enabled!');
-    console.log('EVTX Viewer extension activation completed successfully');
   } catch (error) {
     console.error('Error during extension activation:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';

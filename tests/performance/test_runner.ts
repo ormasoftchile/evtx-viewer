@@ -103,8 +103,6 @@ export class PerformanceTestRunner {
    * Run all performance tests
    */
   public async runAllTests(): Promise<TestResult[]> {
-    console.log('🚀 Starting EVTX Viewer Performance Test Suite...');
-    console.log('===============================================\n');
 
     this.testResults = [];
 
@@ -134,7 +132,6 @@ export class PerformanceTestRunner {
    * Test EVTX parsing performance with various file sizes
    */
   private async runParsingPerformanceTests(): Promise<void> {
-    console.log('📊 Running Parsing Performance Tests...');
 
     const testSizes = [
       { size: 1 * 1024 * 1024, name: '1MB' },
@@ -173,7 +170,6 @@ export class PerformanceTestRunner {
    * Test memory management performance
    */
   private async runMemoryManagementTests(): Promise<void> {
-    console.log('🧠 Running Memory Management Tests...');
 
     // Test cache performance
     await this.runTest(
@@ -253,7 +249,6 @@ export class PerformanceTestRunner {
    * Test filtering performance
    */
   private async runFilteringPerformanceTests(): Promise<void> {
-    console.log('🔍 Running Filtering Performance Tests...');
 
     const eventCounts = [1000, 10000, 100000, 500000];
 
@@ -291,7 +286,6 @@ export class PerformanceTestRunner {
    * Test file service performance
    */
   private async runFileServiceTests(): Promise<void> {
-    console.log('📁 Running File Service Tests...');
 
     const testSizes = [5, 25, 50]; // MB
 
@@ -356,7 +350,6 @@ export class PerformanceTestRunner {
    * Test large file handling
    */
   private async runLargeFileTests(): Promise<void> {
-    console.log('📈 Running Large File Tests...');
 
     await this.runTest(
       'large-file-200MB',
@@ -407,7 +400,6 @@ export class PerformanceTestRunner {
    * Test concurrent operations
    */
   private async runConcurrencyTests(): Promise<void> {
-    console.log('⚡ Running Concurrency Tests...');
 
     await this.runTest(
       'concurrent-operations',
@@ -454,7 +446,6 @@ export class PerformanceTestRunner {
    * Test UI response times
    */
   private async runUIResponseTests(): Promise<void> {
-    console.log('🖥️ Running UI Response Tests...');
 
     const uiOperations = [
       {
@@ -504,7 +495,6 @@ export class PerformanceTestRunner {
    * Run stress tests
    */
   private async runStressTests(): Promise<void> {
-    console.log('💥 Running Stress Tests...');
 
     await this.runTest(
       'stress-memory-pressure',
@@ -553,7 +543,6 @@ export class PerformanceTestRunner {
     testFunction: () => Promise<any>
   ): Promise<void> {
     try {
-      console.log(`  🔄 Running ${testName}...`);
       
       const startTime = Date.now();
       const metrics = await testFunction();
@@ -572,7 +561,6 @@ export class PerformanceTestRunner {
       this.testResults.push(result);
 
       const status = passed ? '✅' : '❌';
-      console.log(`  ${status} ${testName}: ${duration}ms`);
 
     } catch (error) {
       const result: TestResult = {
@@ -584,7 +572,6 @@ export class PerformanceTestRunner {
       };
 
       this.testResults.push(result);
-      console.log(`  ❌ ${testName}: FAILED - ${(error as Error).message}`);
     }
   }
 
@@ -616,38 +603,19 @@ export class PerformanceTestRunner {
    * Generate final performance report
    */
   private generateFinalReport(): void {
-    console.log('\n📊 Performance Test Results Summary');
-    console.log('=====================================');
 
     const totalTests = this.testResults.length;
     const passedTests = this.testResults.filter(r => r.passed).length;
     const failedTests = totalTests - passedTests;
 
-    console.log(`\nOverall Results:
-    Total Tests: ${totalTests}
-    Passed: ${passedTests} ✅
-    Failed: ${failedTests} ${failedTests > 0 ? '❌' : '✅'}
-    Success Rate: ${((passedTests / totalTests) * 100).toFixed(1)}%`);
-
     // Constitutional compliance summary
-    const constitutionalValidation = this.benchmark.validateConstitutionalRequirements();
-    console.log(`\n🏛️ Constitutional Compliance:
-    Overall: ${constitutionalValidation.passing ? '✅ PASSING' : '❌ FAILING'}
-    
-    Parsing Throughput: ${constitutionalValidation.results.parsingThroughput.actual.toFixed(1)} MB/s ${constitutionalValidation.results.parsingThroughput.passing ? '✅' : '❌'} (required: >${constitutionalValidation.results.parsingThroughput.required} MB/s)
-    Memory Usage: ${constitutionalValidation.results.memoryUsage.actual.toFixed(1)} MB ${constitutionalValidation.results.memoryUsage.passing ? '✅' : '❌'} (required: <${constitutionalValidation.results.memoryUsage.required} MB)
-    UI Response Time: ${constitutionalValidation.results.uiResponseTime.actual.toFixed(1)} ms ${constitutionalValidation.results.uiResponseTime.passing ? '✅' : '❌'} (required: <${constitutionalValidation.results.uiResponseTime.required} ms)`);
-
-    // Failed tests details
+    const constitutionalValidation = this.benchmark.validateConstitutionalRequirements();    // Failed tests details
     const failedTestsDetails = this.testResults.filter(r => !r.passed);
     if (failedTestsDetails.length > 0) {
-      console.log(`\n❌ Failed Tests:`);
       for (const test of failedTestsDetails) {
-        console.log(`  • ${test.testName}: ${test.error?.message || 'Performance requirements not met'}`);
       }
     }
 
-    console.log('\n✅ Performance testing complete!\n');
   }
 
   // Helper methods for generating test data

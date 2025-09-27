@@ -25,12 +25,10 @@ export class EvtxCustomEditorProvider implements vscode.CustomReadonlyEditorProv
     openContext: vscode.CustomDocumentOpenContext,
     _token: vscode.CancellationToken
   ): Promise<vscode.CustomDocument> {
-    console.log(`Opening EVTX document: ${uri.fsPath}`);
     
     return {
       uri,
       dispose: () => {
-        console.log(`Disposing EVTX document: ${uri.fsPath}`);
       }
     };
   }
@@ -43,7 +41,6 @@ export class EvtxCustomEditorProvider implements vscode.CustomReadonlyEditorProv
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
-    console.log(`Resolving EVTX custom editor for: ${document.uri.fsPath}`);
 
     // Configure webview options to match the working command exactly
     webviewPanel.webview.options = {
@@ -58,12 +55,9 @@ export class EvtxCustomEditorProvider implements vscode.CustomReadonlyEditorProv
     webviewPanel.title = `EVTX Viewer - ${document.uri.path.split('/').pop()}`;
 
     try {
-      console.log(`Starting webview initialization...`);
       
       // Use the exact same call as the working command
       await this.webviewProvider.initializeWebview(webviewPanel, [document.uri]);
-      
-      console.log(`initializeWebview completed, now making webview active...`);
       
       // Try to make the webview active/visible - this might be the difference
       webviewPanel.reveal();
@@ -71,7 +65,6 @@ export class EvtxCustomEditorProvider implements vscode.CustomReadonlyEditorProv
       // Add a small delay to let the webview settle
       await new Promise(resolve => setTimeout(resolve, 100));
       
-      console.log(`Successfully opened EVTX file in custom editor: ${document.uri.fsPath}`);
     } catch (error) {
       console.error(`Failed to open EVTX file in custom editor:`, error);
       
