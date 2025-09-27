@@ -90,7 +90,12 @@ module.exports = {
       // Module resolution
       moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
       
-      // Setup files
+      // Critical: Setup files that run BEFORE test files are loaded
+      setupFiles: [
+        '<rootDir>/tests/setup/jsdom.setup.ts'
+      ],
+      
+      // Setup files that run after test framework is available
       setupFilesAfterEnv: [
         '<rootDir>/tests/setup/jest.setup.ts'
       ],
@@ -99,9 +104,6 @@ module.exports = {
       moduleNameMapper: {
         '^vscode$': '<rootDir>/tests/__mocks__/vscode.ts'
       },
-
-      // Test timeout for accessibility tests
-      // timeout: 30000, // Use global timeout instead
 
       // Additional ignore patterns for Jest haste map
       modulePathIgnorePatterns: [
@@ -113,13 +115,7 @@ module.exports = {
       testEnvironmentOptions: {
         url: 'http://localhost',
         userAgent: 'Mozilla/5.0 (compatible; JSDOM)'
-      },
-
-      // Add global setup for Node.js globals in jsdom
-      setupFilesAfterEnv: [
-        '<rootDir>/tests/setup/jest.setup.ts',
-        '<rootDir>/tests/setup/jsdom.setup.ts'
-      ]
+      }
     }
   ],
 
