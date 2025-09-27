@@ -20,12 +20,20 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "no-console": "warn"
+    "no-console": "off"
   },
   "env": {
     "node": true,
     "es6": true
   },
+  "overrides": [
+    {
+      "files": ["src/extension.ts", "src/webview/**/*"],
+      "rules": {
+        "no-console": "warn"
+      }
+    }
+  ],
   "ignorePatterns": [
     "out",
     "dist",
