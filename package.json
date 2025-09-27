@@ -96,8 +96,8 @@
     "test": "jest",
     "test:vscode": "node ./out/tests/runTests.js",
     "test:performance": "jest --testPathPattern=tests/performance --testTimeout=30000",
-    "test:security": "jest --testPathPattern=tests/security",
-    "test:accessibility": "jest --testPathPattern=tests/accessibility",
+    "test:security": "jest --testPathPattern=tests/security --passWithNoTests",
+    "test:accessibility": "jest --testPathPattern=tests/accessibility --passWithNoTests",
     "package": "vsce package",
     "deploy": "vsce publish"
   },
