@@ -12,6 +12,23 @@ global.TextDecoder = TextDecoder;
 global.URL = URL;
 global.URLSearchParams = URLSearchParams;
 
+// Add missing ArrayBuffer properties that webidl-conversions expects
+if (!ArrayBuffer.prototype.hasOwnProperty('resizable')) {
+  Object.defineProperty(ArrayBuffer.prototype, 'resizable', {
+    get: function() { return false; },
+    configurable: true,
+    enumerable: false
+  });
+}
+
+if (!SharedArrayBuffer.prototype.hasOwnProperty('growable')) {
+  Object.defineProperty(SharedArrayBuffer.prototype, 'growable', {
+    get: function() { return false; },
+    configurable: true,
+    enumerable: false
+  });
+}
+
 global.performance = global.performance || {
   now: () => Date.now(),
   mark: () => {},
