@@ -52,5 +52,11 @@ module.exports = {
     '/node_modules/',
     '/out/',
     '/.vscode-test/'
-  ]
+  ],
+
+  // Additional ignore patterns for Jest haste map
+  modulePathIgnorePatterns: [
+    '/out/',
+    '/.vscode-test/'
+  ],
 };
