@@ -61,8 +61,11 @@ if (typeof (global as any).AbortController === 'undefined') {
   };
 }
 
-// Now safely import and export JSDOM
-export { JSDOM } from 'jsdom';
+// Now safely import JSDOM using require() to avoid ES6 module hoisting
+const { JSDOM: JSXDOMClass } = require('jsdom');
+
+// Export JSDOM class with proper typing
+export const JSDOM = JSXDOMClass as typeof import('jsdom').JSDOM;
 
 // Export a helper function that ensures everything is set up
 export const ensureJSDOMGlobals = () => {

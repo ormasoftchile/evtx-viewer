@@ -18,6 +18,7 @@
 
 import { describe, beforeEach, afterEach, test, expect } from '@jest/globals';
 import { JSDOM, ensureJSDOMGlobals } from '../utils/jsdom-helper';
+import type { JSDOM as JSDOMType } from 'jsdom';
 
 // Ensure JSDOM globals are properly set up
 ensureJSDOMGlobals();
@@ -78,7 +79,7 @@ const mockReactComponents = () => {
 };
 
 describe('EVTX Viewer Accessibility Compliance', () => {
-  let dom: JSDOM;
+  let dom: JSDOMType;
   let mockComponents: ReturnType<typeof mockReactComponents>;
 
   beforeEach(() => {
