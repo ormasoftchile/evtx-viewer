@@ -2,7 +2,7 @@
   "name": "evtx-viewer",
   "displayName": "EVTX Viewer",
   "description": "A Visual Studio Code extension for viewing, filtering, searching, and exporting Windows Event Log (.evtx) files",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "focus-space",
   "engines": {
     "vscode": "^1.80.0",
@@ -99,9 +99,16 @@
     "test:security": "jest --testPathPattern=tests/security --passWithNoTests",
     "test:accessibility": "jest --testPathPattern=tests/accessibility --passWithNoTests",
     "package": "node -r ./scripts/node-globals-polyfill.js ./node_modules/@vscode/vsce/vsce package",
-    "deploy": "vsce publish"
+    "deploy": "vsce publish",
+    "release": "semantic-release",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor", 
+    "version:major": "npm version major"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.6",
     "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.5",
     "@types/jsdom": "^21.1.7",
@@ -120,6 +127,7 @@
     "jsdom": "^27.0.0",
     "mocha": "^11.7.2",
     "prettier": "^3.0.3",
+    "semantic-release": "^24.2.9",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },

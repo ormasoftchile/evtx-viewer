@@ -191,7 +191,39 @@ jobs:
       with:
         name: evtx-viewer-vsix
 
+    - name: Configure Git for version bumping
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+    - name: Auto version bump (patch)
+      if: "contains(github.event.head_commit.message, '[version:patch]')"
+      run: |
+        npm run version:patch
+        git push origin main --tags
+
+    - name: Auto version bump (minor)  
+      if: "contains(github.event.head_commit.message, '[version:minor]')"
+      run: |
+        npm run version:minor
+        git push origin main --tags
+
+    - name: Auto version bump (major)
+      if: "contains(github.event.head_commit.message, '[version:major]')"
+      run: |
+        npm run version:major
+        git push origin main --tags
+
     - name: Semantic Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      run: |
+        if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          npm run release
+        fi
+
+    - name: Manual Deploy (if VSCE_PAT available)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VSCE_PAT: ${{ secrets.VSCE_PAT }}
