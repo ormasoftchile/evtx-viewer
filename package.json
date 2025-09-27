@@ -101,9 +101,9 @@
     "package": "node -r ./scripts/node-globals-polyfill.js ./node_modules/@vscode/vsce/vsce package",
     "deploy": "vsce publish",
     "release": "semantic-release",
-    "version:patch": "npm version patch",
-    "version:minor": "npm version minor", 
-    "version:major": "npm version major"
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version", 
+    "version:major": "npm version major --no-git-tag-version"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",

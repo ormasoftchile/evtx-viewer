@@ -2,6 +2,16 @@
 
 This project supports multiple version bumping strategies:
 
+## GitHub Repository Requirements
+
+For automatic version bumping to work in CI:
+
+1. **Repository Settings** → **Actions** → **General**
+2. Set **Workflow permissions** to: "Read and write permissions"
+3. Check "Allow GitHub Actions to create and approve pull requests"
+
+OR ensure the repository has proper permissions configured for the GITHUB_TOKEN.
+
 ## 1. Manual Version Bumping
 
 Edit `package.json` directly and update the version field:
@@ -28,10 +38,12 @@ Uses conventional commits to automatically determine version bumps:
 Use npm commands locally or in CI:
 
 ```bash
-npm run version:patch   # 0.1.0 → 0.1.1
-npm run version:minor   # 0.1.0 → 0.2.0  
-npm run version:major   # 0.1.0 → 1.0.0
+npm run version:patch   # 0.1.0 → 0.1.1 (no git operations)
+npm run version:minor   # 0.1.0 → 0.2.0 (no git operations)
+npm run version:major   # 0.1.0 → 1.0.0 (no git operations)
 ```
+
+**Note:** These commands only update package.json. In CI, git operations (commit, tag, push) are handled separately for proper authentication.
 
 ### CI Trigger with Commit Messages
 
