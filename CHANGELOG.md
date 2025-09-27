@@ -1,3 +1,19 @@
+# 1.0.0 (2025-09-27)
+
+
+### Bug Fixes
+
+* GitHub Actions permissions for version bumping ([57f0735](https://github.com/ormasoftchile/evtx-viewer/commit/57f07359f154661368f7de4defdaee8108815dcb))
+* Resolve React component test failures ([6faf68b](https://github.com/ormasoftchile/evtx-viewer/commit/6faf68bbf60f52980b8586e53e51f1bcc2997718))
+* Resolve test compilation and linting errors after console.log cleanup ([b87cff4](https://github.com/ormasoftchile/evtx-viewer/commit/b87cff426bf9647f4ff3822fe27fedfb6a0ea315))
+* update Node.js version for semantic-release compatibility ([ca31a1a](https://github.com/ormasoftchile/evtx-viewer/commit/ca31a1a24f43f3d99118d614f4a498547e64220e))
+
+
+### Features
+
+* Complete webview UI overhaul with comprehensive improvements ([a11be90](https://github.com/ormasoftchile/evtx-viewer/commit/a11be900084cae32e8ab69a89667862dcf86b703))
+* implement comprehensive version management system ([5b6d3bd](https://github.com/ormasoftchile/evtx-viewer/commit/5b6d3bd7cd773755d01d14818dd54b2105682fc5))
+
 # Changelog
 
 All notable changes to the EVTX Viewer extension will be documented in this file.
