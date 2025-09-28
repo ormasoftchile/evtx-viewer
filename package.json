@@ -2,7 +2,7 @@
   "name": "evtx-viewer",
   "displayName": "EVTX Viewer",
   "description": "A Visual Studio Code extension for viewing, filtering, searching, and exporting Windows Event Log (.evtx) files",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "publisher": "focus-space",
   "engines": {
     "vscode": "^1.80.0",
@@ -105,7 +105,7 @@
     "deploy": "vsce publish",
     "release": "semantic-release",
     "version:patch": "npm version patch --no-git-tag-version",
-    "version:minor": "npm version minor --no-git-tag-version", 
+    "version:minor": "npm version minor --no-git-tag-version",
     "version:major": "npm version major --no-git-tag-version"
   },
   "devDependencies": {
