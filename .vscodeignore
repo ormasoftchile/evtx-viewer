@@ -4,6 +4,7 @@ out/test/**
 src/**
 .gitignore
 tsconfig.json
+webpack.config.js
 vsc-extension-quickstart.md
 **/tsconfig.json
 **/.eslintrc.json
@@ -13,7 +14,12 @@ vsc-extension-quickstart.md
 !out/**/*.json
 !out/**/*.html
 !out/**/*.css
+!resources/**
 node_modules
+!node_modules/@xmldom/
+!node_modules/react/
+!node_modules/react-dom/
+!node_modules/react-window/
 .git
 .DS_Store
 *.vsix
