@@ -11,11 +11,8 @@ import { App } from './components/app';
 
 // Initialize the webview application
 function initializeWebview() {
-    console.log('EVTX Viewer webview initialized successfully');
-    
     const rootElement = document.getElementById('root');
     if (!rootElement) {
-        console.error('Root element not found');
         return;
     }
 

@@ -77,9 +77,6 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
     // Show activation message
     vscode.window.showInformationMessage('EVTX Viewer extension is now active!');
-    vscode.window.showWarningMessage(
-      'EVTX DEBUG: Extension activated successfully with debugging enabled!'
-    );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     vscode.window.showErrorMessage(`Failed to activate EVTX Viewer extension: ${errorMessage}`);
