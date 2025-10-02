@@ -79,6 +79,13 @@ export interface EventRecordData {
   task?: number;
 
   /**
+   * Task category name (friendly name for task ID)
+   *
+   * @constitutional Optional field for human-readable task categorization
+   */
+  taskName?: string;
+
+  /**
    * Event opcode for operation classification
    *
    * @constitutional Enables operation-specific event filtering
@@ -86,11 +93,25 @@ export interface EventRecordData {
   opcode?: number;
 
   /**
+   * Event opcode name (friendly name for opcode)
+   *
+   * @constitutional Optional field for human-readable opcode display
+   */
+  opcodeName?: string;
+
+  /**
    * Event keywords bitmask for advanced categorization
    *
    * @constitutional Enables keyword-based filtering and event classification
    */
   keywords?: bigint;
+
+  /**
+   * Event keywords names (friendly names for keywords bitmask)
+   *
+   * @constitutional Optional field for human-readable keywords display
+   */
+  keywordsNames?: string[];
 
   /**
    * Event timestamp for chronological ordering
@@ -105,6 +126,13 @@ export interface EventRecordData {
    * @constitutional Required for source-based filtering and accessibility labels
    */
   provider: string;
+
+  /**
+   * Event provider GUID for unique identification
+   *
+   * @constitutional Optional field for provider identification
+   */
+  providerGuid?: string;
 
   /**
    * Event channel/log name for log categorization
@@ -300,6 +328,18 @@ export class EventRecord {
   }
   public get provider(): string {
     return this._data.provider;
+  }
+  public get providerGuid(): string | undefined {
+    return this._data.providerGuid;
+  }
+  public get taskName(): string | undefined {
+    return this._data.taskName;
+  }
+  public get opcodeName(): string | undefined {
+    return this._data.opcodeName;
+  }
+  public get keywordsNames(): string[] | undefined {
+    return this._data.keywordsNames;
   }
   public get channel(): string {
     return this._data.channel;

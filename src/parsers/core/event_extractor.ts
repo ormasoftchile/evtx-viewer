@@ -169,6 +169,7 @@ export class EventExtractor {
       const eventId = this.extractElementTextAsNumber(systemElement, 'EventID') || 0;
       const level = this.extractElementTextAsNumber(systemElement, 'Level') || 4;
       const provider = this.extractProviderName(systemElement) || 'Unknown';
+      const providerGuid = this.extractProviderGuid(systemElement);
       const channel = this.extractElementText(systemElement, 'Channel') || 'Unknown';
       const computer = this.extractElementText(systemElement, 'Computer') || 'Unknown';
       const timestamp = this.extractTimestamp(systemElement) || new Date();
@@ -176,8 +177,11 @@ export class EventExtractor {
       // Extract optional system fields
       const version = this.extractElementTextAsNumber(systemElement, 'Version');
       const task = this.extractElementTextAsNumber(systemElement, 'Task');
+      const taskName = this.extractTaskName(systemElement);
       const opcode = this.extractElementTextAsNumber(systemElement, 'Opcode');
+      const opcodeName = this.extractOpcodeName(systemElement);
       const keywords = this.extractKeywords(systemElement);
+      const keywordsNames = this.extractKeywordsNames(systemElement);
       const processId = this.extractElementTextAsNumber(systemElement, 'Execution', 'ProcessID');
       const threadId = this.extractElementTextAsNumber(systemElement, 'Execution', 'ThreadID');
       const userId = this.extractSecurityUserId(systemElement);
@@ -205,10 +209,14 @@ export class EventExtractor {
         ...(version !== undefined && { version }),
         level,
         ...(task !== undefined && { task }),
+        ...(taskName && { taskName }),
         ...(opcode !== undefined && { opcode }),
+        ...(opcodeName && { opcodeName }),
         ...(keywords !== undefined && { keywords }),
+        ...(keywordsNames && keywordsNames.length > 0 && { keywordsNames }),
         timestamp,
         provider,
+        ...(providerGuid && { providerGuid }),
         channel,
         computer,
         ...(userId && { userId }),
@@ -297,6 +305,51 @@ export class EventExtractor {
     if (!securityElement) return undefined;
 
     return securityElement.getAttribute('UserID') || undefined;
+  }
+
+  /**
+   * Extract Provider GUID
+   */
+  private static extractProviderGuid(systemElement: any): string | undefined {
+    const providerElement = systemElement.getElementsByTagName('Provider')[0];
+    if (!providerElement) return undefined;
+
+    return providerElement.getAttribute('Guid') || undefined;
+  }
+
+  /**
+   * Extract Task friendly name
+   */
+  private static extractTaskName(systemElement: any): string | undefined {
+    const taskElement = systemElement.getElementsByTagName('Task')[0];
+    if (!taskElement) return undefined;
+
+    return taskElement.getAttribute('Name') || undefined;
+  }
+
+  /**
+   * Extract Opcode friendly name
+   */
+  private static extractOpcodeName(systemElement: any): string | undefined {
+    const opcodeElement = systemElement.getElementsByTagName('Opcode')[0];
+    if (!opcodeElement) return undefined;
+
+    return opcodeElement.getAttribute('Name') || undefined;
+  }
+
+  /**
+   * Extract Keywords friendly names as array
+   */
+  private static extractKeywordsNames(systemElement: any): string[] | undefined {
+    const keywordsElement = systemElement.getElementsByTagName('Keywords')[0];
+    if (!keywordsElement) return undefined;
+
+    const nameAttr = keywordsElement.getAttribute('Name');
+    if (nameAttr) {
+      return nameAttr.split(',').map((k: string) => k.trim()).filter((k: string) => k.length > 0);
+    }
+
+    return undefined;
   }
 
   /**
