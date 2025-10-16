@@ -124,7 +124,10 @@ describe('BinaryXmlIntegration', () => {
       });
 
       expect(extracted.core.eventId).toBe(4001);
-      expect(extracted.eventData).toBeUndefined();
+      // Even without EventData section, System fields are extracted
+      expect(extracted.eventData).toBeDefined();
+      expect(extracted.eventData?.EventID).toBe(4001);
+      expect(extracted.eventData?.Channel).toBe('System');
     });
   });
 });

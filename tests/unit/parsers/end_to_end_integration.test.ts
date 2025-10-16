@@ -237,7 +237,10 @@ describe('EndToEndBinaryXmlIntegration', () => {
       });
 
       expect(extracted.core.eventId).toBe(1);
-      expect(extracted.eventData).toBeUndefined(); // No EventData section
+      // Even without EventData section, System fields are extracted
+      expect(extracted.eventData).toBeDefined();
+      expect(extracted.eventData?.EventID).toBe(1);
+      expect(extracted.eventData?.Channel).toBe('System');
 
       // Test with malformed data (should not crash)
       const malformedXml = `<?xml version="1.0" encoding="utf-8"?>
