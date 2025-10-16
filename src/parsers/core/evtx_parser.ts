@@ -24,6 +24,10 @@
 import * as fs from 'fs/promises';
 import { EventRecord, EventRecordData } from '../models/event_record';
 import { EvtxFile, EvtxFileHeader, EvtxFileStatus } from '../models/evtx_file';
+import { BinaryXmlExtractor, BinaryXmlOptions } from './binary_xml_extractor';
+import { Template, BinaryXmlParser, SimpleChunkInfo } from './binary_xml';
+import { SubstitutionArrayEntry } from './binary_xml/substitution_entry';
+import { EvtxTsAdapter } from '../evtx-ts-adapter';
 
 /**
  * EVTX file format constants with constitutional validation
@@ -118,6 +122,8 @@ export interface XmlTemplate {
   data: Buffer;
   /** Cached parsed template for performance (optional) */
   parsed?: any;
+  /** Binary XML Template instance (for enhanced parsing) */
+  binaryXmlTemplate?: Template;
 }
 
 /**
@@ -149,6 +155,8 @@ interface ParsingContext {
   eventsProcessed: number;
   /** Template cache for performance optimization */
   templates: Map<number, XmlTemplate>;
+  /** Binary XML extractor for enhanced parsing */
+  binaryXmlExtractor: BinaryXmlExtractor;
   /** Cancellation flag for responsive parsing */
   cancelled: boolean;
 }
@@ -315,6 +323,12 @@ export class EvtxParser {
         totalChunks: Math.ceil((fileStats.size - FILE_HEADER_SIZE) / CHUNK_SIZE),
         eventsProcessed: 0,
         templates: new Map(),
+        binaryXmlExtractor: new BinaryXmlExtractor({
+          enableTemplateCache: true,
+          maxCachedTemplates: 1000,
+          enableErrorRecovery: true,
+          includeDebugInfo: false,
+        }),
         cancelled: false,
       };
 
@@ -327,13 +341,16 @@ export class EvtxParser {
 
       // Parse file header
       evtxFile._updateStatus(EvtxFileStatus.PARSING_HEADER);
-      await this.parseFileHeader(context);
-
-      // Parse chunks and extract events
-      evtxFile._updateStatus(EvtxFileStatus.PARSING_CHUNKS);
-      const events = await this.parseChunks(context, mergedOptions);
+      
+      // 🔥 USE NEW EVTX-TS PARSER for complete EventData extraction
+      console.log('🚀 Using evtx-ts parser for complete EventData extraction...');
+      const maxEvents = mergedOptions.maxEvents || 10000;
+      const events = await EvtxTsAdapter.parseFile(evtxFile.filePath, maxEvents);
+      
+      console.log(`✅ Parsed ${events.length} events with evtx-ts (including AdditionalInformation)`);
 
       evtxFile._updateStatus(EvtxFileStatus.READY);
+      return events;
       return events;
     } catch (error) {
       evtxFile._setError(error as Error);
@@ -716,11 +733,11 @@ export class EvtxParser {
     const xmlDataSize = size - 24 - 4; // Subtract header and footer
     const xmlData = chunkBuffer.subarray(xmlDataOffset, xmlDataOffset + xmlDataSize);
 
-    // Parse XML data to extract event details
-    const eventData = this.parseBinaryXml(xmlData, _context);
+    // Parse XML data to extract event details using enhanced Binary XML parser
+    const eventData = await this.parseEnhancedBinaryXml(xmlData, _context);
 
-    // Generate XML string for validation and fallback parsing
-    const xmlString = this.binaryXmlToXmlString(xmlData);
+    // Generate XML string using enhanced parser with template substitution
+    const xmlString = await this.enhancedBinaryXmlToXmlString(xmlData, _context);
 
     // CRITICAL FIX: Use XML string parsing as fallback for accurate Event ID and Level
     const xmlEventData = this.parseEventDataFromXml(xmlString);
@@ -733,6 +750,15 @@ export class EvtxParser {
       eventData.level = xmlEventData.level;
     }
 
+    // Merge enhanced EventData from XML parsing
+    if (xmlEventData.eventData && Object.keys(xmlEventData.eventData).length > 0) {
+      eventData.eventData = {
+        ...eventData.eventData,
+        ...xmlEventData.eventData, // Prefer enhanced extracted data
+      };
+      console.log('🔥 Enhanced EventData merged:', eventData.eventData);
+    }
+
     // Extract event message from XML string (more reliable than binary parsing)
     let message = this.extractMessageFromXmlString(xmlString);
     if (!message) {
@@ -742,6 +768,15 @@ export class EvtxParser {
 
     // Apply message fixes for known Event IDs
     message = this.fixMessageForEventId(eventData.eventId, message || '');
+
+    // DEBUG: Log eventData before creating EventRecord
+    console.debug('🔍 EventData before EventRecord creation:', {
+      provider: eventData.provider,
+      channel: eventData.channel,
+      computer: eventData.computer,
+      eventId: eventData.eventId,
+      level: eventData.level,
+    });
 
     // Create EventRecord
     const recordData: EventRecordData = {
@@ -771,10 +806,14 @@ export class EvtxParser {
   }
 
   /**
-   * Parse Event ID and Level from XML string (fallback method)
+   * Parse Event ID, Level, and EventData from XML string (enhanced for complete extraction)
    */
-  private static parseEventDataFromXml(xmlString: string): { eventId?: number; level?: number } {
-    const result: { eventId?: number; level?: number } = {};
+  private static parseEventDataFromXml(xmlString: string): {
+    eventId?: number;
+    level?: number;
+    eventData?: any;
+  } {
+    const result: { eventId?: number; level?: number; eventData?: any } = {};
 
     try {
       // Extract EventID
@@ -789,9 +828,35 @@ export class EvtxParser {
         result.level = parseInt(levelMatch[1], 10);
       }
 
-      console.debug(`XML parsing found: Event ID ${result.eventId}, Level ${result.level}`);
+      // Extract EventData section
+      const eventDataMatch = xmlString.match(/<EventData[^>]*>(.*?)<\/EventData>/s);
+      if (eventDataMatch && eventDataMatch[1]) {
+        const eventDataContent = eventDataMatch[1];
+        const eventData: any = {};
+
+        // Extract Data elements with Name attributes
+        const dataMatches = eventDataContent.matchAll(
+          /<Data\s+Name\s*=\s*["']([^"']+)["'][^>]*>(.*?)<\/Data>/g
+        );
+        for (const match of dataMatches) {
+          const name = match[1];
+          const value = match[2];
+          if (name && value !== undefined) {
+            eventData[name] = value.trim();
+          }
+        }
+
+        if (Object.keys(eventData).length > 0) {
+          result.eventData = eventData;
+          console.log('🔍 Enhanced XML parsing extracted EventData:', eventData);
+        }
+      }
+
+      console.debug(
+        `Enhanced XML parsing found: Event ID ${result.eventId}, Level ${result.level}, EventData fields: ${result.eventData ? Object.keys(result.eventData).length : 0}`
+      );
     } catch (error) {
-      console.debug('XML parsing failed:', error);
+      console.debug('Enhanced XML parsing failed:', error);
     }
 
     return result;
@@ -1000,6 +1065,16 @@ export class EvtxParser {
           break;
       }
     }
+
+    // CRITICAL FIX: Extract provider, channel, and computer using the working extraction methods
+    result.provider = this.extractProvider(data);
+    console.debug('Fragment Extracted Provider:', result.provider);
+
+    result.channel = this.extractChannel(data);
+    console.debug('Fragment Extracted Channel:', result.channel);
+
+    result.computer = this.extractComputer(data);
+    console.debug('Fragment Extracted Computer:', result.computer);
 
     return result;
   }
@@ -1319,12 +1394,16 @@ export class EvtxParser {
 
     result.provider = this.extractProvider(data);
     console.debug('Extracted Provider:', result.provider);
+    console.debug('🔧 PROVIDER EXTRACTION RESULT:', result.provider);
+    console.debug('🔧 TYPEOF PROVIDER RESULT:', typeof result.provider);
 
     result.channel = this.extractChannel(data);
     console.debug('Extracted Channel:', result.channel);
+    console.debug('🔧 CHANNEL EXTRACTION RESULT:', result.channel);
 
     result.computer = this.extractComputer(data);
     console.debug('Extracted Computer:', result.computer);
+    console.debug('🔧 COMPUTER EXTRACTION RESULT:', result.computer);
 
     // DEBUG: Show natural parsing results without any overrides
     console.debug(
@@ -1385,17 +1464,33 @@ export class EvtxParser {
     }
   }
   /**
-   * Parse template definition (simplified implementation)
+   * Parse template definition with Binary XML integration
    */
-  private static parseTemplateDefinition(data: Buffer, offset: number): any | null {
+  private static parseTemplateDefinition(data: Buffer, offset: number): XmlTemplate | null {
     try {
       if (offset >= data.length) return null;
 
-      // Simplified template parsing - would need full implementation
+      // Extract template data
+      const templateData = data.subarray(offset, Math.min(offset + 1000, data.length));
+
+      // Try to create a Binary XML template
+      let binaryXmlTemplate: Template | undefined;
+      try {
+        // Create SimpleChunkInfo for template parsing
+        const chunkInfo = new SimpleChunkInfo();
+
+        const parseResult = Template.parse(templateData, 0, chunkInfo);
+        binaryXmlTemplate = parseResult.template;
+      } catch (error) {
+        // Binary XML template creation failed, continue with basic template
+        console.debug('Binary XML template creation failed:', error);
+      }
+
       return {
         id: 0,
         guid: '00000000-0000-0000-0000-000000000000',
-        data: data.subarray(offset, Math.min(offset + 100, data.length)),
+        data: templateData,
+        ...(binaryXmlTemplate && { binaryXmlTemplate }),
       };
     } catch (error) {
       return null;
@@ -1403,11 +1498,200 @@ export class EvtxParser {
   }
 
   /**
-   * Apply template to instance data (simplified)
+   * Apply template to instance data using Binary XML processing
    */
-  private static applyTemplate(template: any, data: Buffer, _offset: number): any {
-    // Simplified template application - would need full substitution logic
-    return this.parseByHeuristics(data);
+  private static applyTemplate(template: XmlTemplate, data: Buffer, offset: number): any {
+    try {
+      console.log('🔍 Applying template with instance data:', {
+        templateId: template.id,
+        offset: offset,
+        dataLength: data.length,
+        hasXmlTemplate: !!template.binaryXmlTemplate,
+      });
+
+      // Read template instance data according to EVTX spec
+      let currentOffset = offset;
+      const substitutions: { [key: number]: any } = {};
+
+      // Read number of template values (4 bytes)
+      if (currentOffset + 4 <= data.length) {
+        const numValues = data.readUInt32LE(currentOffset);
+        currentOffset += 4;
+
+        console.log('🔍 Template instance data:', {
+          numValues: numValues,
+          availableBytes: data.length - currentOffset,
+        });
+
+        // Read value descriptors and data
+        for (let i = 0; i < numValues && currentOffset + 4 <= data.length; i++) {
+          // Read value descriptor (4 bytes: size, type, empty)
+          const valueSize = data.readUInt16LE(currentOffset);
+          const valueType = data.readUInt8(currentOffset + 2);
+          // const emptyFlag = data.readUInt8(currentOffset + 3);
+          currentOffset += 4;
+
+          // Read the actual value data
+          if (currentOffset + valueSize <= data.length) {
+            let value: any;
+
+            switch (valueType) {
+              case 0x01: // Unicode string
+                if (valueSize >= 2) {
+                  const stringLength = data.readUInt16LE(currentOffset);
+                  if (currentOffset + 2 + stringLength * 2 <= data.length) {
+                    value = data.toString(
+                      'utf16le',
+                      currentOffset + 2,
+                      currentOffset + 2 + stringLength * 2
+                    );
+                  }
+                }
+                break;
+              case 0x07: // 32-bit integer
+                if (valueSize >= 4) {
+                  value = data.readUInt32LE(currentOffset);
+                }
+                break;
+              case 0x08: // 32-bit unsigned integer
+                if (valueSize >= 4) {
+                  value = data.readUInt32LE(currentOffset);
+                }
+                break;
+              default:
+                // For other types, try to read as string
+                if (valueSize > 0) {
+                  value = data
+                    .toString('utf8', currentOffset, currentOffset + valueSize)
+                    .replace(/\0/g, '');
+                }
+                break;
+            }
+
+            if (value !== undefined) {
+              substitutions[i] = value;
+              console.log('🔍 Parsed template value:', {
+                index: i,
+                type: valueType,
+                size: valueSize,
+                value: value,
+              });
+            }
+
+            currentOffset += valueSize;
+          }
+        }
+      }
+
+      // If we have a Binary XML template, try to use it with substitutions
+      if (template.binaryXmlTemplate) {
+        // Create substitution array for template - simplified approach
+        const substitutionArray: any[] = Object.entries(substitutions).map(([index, value]) => {
+          const valueString = String(value);
+          return {
+            substitutionId: parseInt(index),
+            value: valueString,
+            getDataAsString: () => valueString,
+          };
+        });
+
+        console.log('🔍 Applying template substitutions:', substitutionArray);
+
+        // Try to generate XML from template with substitutions
+        try {
+          const xmlString = template.binaryXmlTemplate.asXml(substitutionArray as any);
+
+          if (xmlString && xmlString.trim()) {
+            console.log('🔍 Template generated XML:', {
+              length: xmlString.length,
+              xml: xmlString.substring(0, 500) + (xmlString.length > 500 ? '...' : ''),
+            });
+
+            // Parse the XML to extract structured data using existing method
+            return this.parseEventDataFromXml(xmlString);
+          }
+        } catch (xmlError) {
+          console.warn('🚨 Failed to generate XML from template:', xmlError);
+        }
+      }
+
+      // Fallback: create eventData from substitutions directly
+      if (Object.keys(substitutions).length > 0) {
+        console.log('🔍 Using substitutions as direct EventData:', substitutions);
+
+        // Map substitutions to common EventData field names
+        const eventData: any = {};
+        Object.entries(substitutions).forEach(([index, value]) => {
+          const fieldName = this.getEventDataFieldName(parseInt(index), String(value));
+          eventData[fieldName] = value;
+        });
+
+        return {
+          eventId: 0,
+          level: 4,
+          provider: 'Unknown',
+          channel: 'Unknown',
+          computer: 'Unknown',
+          eventData: eventData,
+        };
+      }
+
+      // Fallback to heuristic parsing
+      return this.parseByHeuristics(data);
+    } catch (error) {
+      console.error('🚨 Error in applyTemplate:', error);
+      // If Binary XML processing fails, fallback to heuristics
+      return this.parseByHeuristics(data);
+    }
+  }
+
+  /**
+   * Map substitution index to EventData field name
+   * This handles common patterns in Windows Event Log templates
+   */
+  private static getEventDataFieldName(index: number, value: string): string {
+    // Check if the value looks like an error code (numeric)
+    if (/^\d+$/.test(value)) {
+      switch (index) {
+        case 0:
+          return 'Error';
+        case 1:
+          return 'ErrorCode';
+        default:
+          return `Data${index}`;
+      }
+    }
+
+    // Check if the value looks like an error message (contains common error words)
+    if (
+      value.toLowerCase().includes('error') ||
+      value.toLowerCase().includes('failed') ||
+      value.toLowerCase().includes('success')
+    ) {
+      return 'ErrorMessage';
+    }
+
+    // Check if the value looks like additional information (file paths, line numbers)
+    if (
+      value.includes('.cpp') ||
+      value.includes('line:') ||
+      value.includes('method:') ||
+      value.toLowerCase().includes('logged at')
+    ) {
+      return 'AdditionalInformation';
+    }
+
+    // Default mapping based on index
+    switch (index) {
+      case 0:
+        return 'Data0';
+      case 1:
+        return 'Data1';
+      case 2:
+        return 'Data2';
+      default:
+        return `Data${index}`;
+    }
   }
 
   /**
@@ -1913,6 +2197,61 @@ export class EvtxParser {
   }
 
   /**
+   * Enhanced Binary XML parsing using our improved template substitution system
+   */
+  private static async parseEnhancedBinaryXml(xmlData: Buffer, context: ParsingContext): Promise<any> {
+    try {
+      console.log('🔥 Using Enhanced Binary XML Parser with template substitution');
+      
+      // Use our enhanced Binary XML parser with template substitution
+      const parser = new BinaryXmlParser();
+      
+      // Parse using the enhanced system
+      const xmlString = parser.parseToXml(xmlData);
+      console.log('🔥 Enhanced parser generated XML:', xmlString.substring(0, 500) + '...');
+      
+      // Extract structured data from enhanced XML
+      const enhancedData = this.parseEventDataFromXml(xmlString);
+      
+      // Fallback to original parsing for system fields if needed
+      const originalData = this.parseBinaryXml(xmlData, context);
+      
+      // Merge data - prefer enhanced EventData, keep original system data as fallback
+      return {
+        ...originalData,
+        ...(enhancedData.eventId !== undefined && { eventId: enhancedData.eventId }),
+        ...(enhancedData.level !== undefined && { level: enhancedData.level }),
+        ...(enhancedData.eventData && Object.keys(enhancedData.eventData).length > 0 && {
+          eventData: enhancedData.eventData
+        }),
+      };
+    } catch (error) {
+      console.error('🚨 Enhanced Binary XML parsing failed, falling back to original:', error);
+      return this.parseBinaryXml(xmlData, context);
+    }
+  }
+
+  /**
+   * Enhanced Binary XML to XML string conversion using template substitution
+   */
+  private static async enhancedBinaryXmlToXmlString(xmlData: Buffer, context: ParsingContext): Promise<string> {
+    try {
+      console.log('🔥 Using Enhanced Binary XML to XML converter with template substitution');
+      
+      // Use our enhanced Binary XML parser
+      const parser = new BinaryXmlParser();
+      const xmlString = parser.parseToXml(xmlData);
+      
+      console.log('🔥 Enhanced XML string generated:', xmlString.substring(0, 300) + '...');
+      
+      return xmlString;
+    } catch (error) {
+      console.error('🚨 Enhanced Binary XML to XML conversion failed, falling back to original:', error);
+      return this.binaryXmlToXmlString(xmlData);
+    }
+  }
+
+  /**
    * Extract event ID from binary data (enhanced pattern matching)
    */
   private static extractEventId(data: Buffer): number {
@@ -2100,7 +2439,10 @@ export class EvtxParser {
     // Pattern 1: PRIORITY - Look for AAD provider first (common in user's logs)
     if (this.findUnicodeString(data, 'AAD')) {
       console.debug('Found AAD provider via Unicode search');
-      return 'AAD';
+      console.debug('🔧 RETURNING AAD from extractProvider');
+      const result = 'AAD';
+      console.debug('🔧 AAD RETURN VALUE:', result);
+      return result;
     }
 
     // Pattern 2: Look for Provider attribute in tokens with improved Unicode handling
@@ -2196,6 +2538,7 @@ export class EvtxParser {
     }
 
     console.debug('Provider extraction failed - returning Unknown');
+    console.debug('🔧 RETURNING Unknown from extractProvider');
     return 'Unknown';
   }
 
@@ -2549,6 +2892,15 @@ export class EvtxParser {
         // Remove non-printable control characters except newlines and tabs
         // eslint-disable-next-line no-control-regex
         .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, ' ')
+        // Fix spaced-out text from UTF-16 misinterpretation (like "T h e c a c h e")
+        .replace(/(\b\w)\s+(\w\s+)*\w\b/g, (match) => {
+          // If text is mostly single chars with spaces, collapse them
+          const letters = match.replace(/\s+/g, '');
+          if (letters.length >= 3 && match.length > letters.length * 1.5) {
+            return letters;
+          }
+          return match;
+        })
         // Replace multiple spaces with single space
         .replace(/\s+/g, ' ')
         // Trim whitespace

@@ -1,7 +1,7 @@
 /**
  * Event Data Extractor for EVTX Files
  *
- * Converts parsed EventRecord objects into structured ExtractedEventData format
+ * Converts parsed EventRecord objects into structured EvtxRecord format
  * with normalized fields, enhanced data extraction, and comprehensive error handling.
  *
  * @fileoverview EVTX Event Data Extraction with Constitutional Compliance
@@ -18,6 +18,25 @@
 import { DOMParser } from '@xmldom/xmldom';
 
 import { EventRecord } from '../models/event_record';
+import {
+  BinaryXmlExtractor,
+  BinaryXmlOptions,
+  BinaryXmlExtractionResult,
+} from './binary_xml_extractor';
+import {
+  EvtxRecord,
+  EvtxSystemData,
+  EvtxEventData,
+  DataElement,
+} from '../../shared/types/evtx_types';
+import {
+  normalizeEvtxRecord,
+  extractEventMessage,
+  getProviderName,
+  getTimestamp,
+  getExecutionInfo,
+  getUserId,
+} from '../../shared/utils/evtx_normalizer';
 
 /**
  * Event data extraction options
@@ -42,6 +61,21 @@ export interface ExtractionOptions {
    * Data type conversions
    */
   typeConversions?: { [field: string]: 'string' | 'number' | 'boolean' | 'date' };
+
+  /**
+   * Enable binary XML parsing for complete EventData extraction
+   */
+  enableBinaryXml?: boolean;
+
+  /**
+   * Binary XML parsing options
+   */
+  binaryXmlOptions?: BinaryXmlOptions;
+
+  /**
+   * Include binary XML debug information
+   */
+  includeBinaryXmlDebug?: boolean;
 }
 
 /**
@@ -103,6 +137,40 @@ export interface ExtractedEventData {
   rawXml?: string;
 
   /**
+   * Binary XML processing information
+   */
+  binaryXml?: {
+    /**
+     * Whether binary XML was detected and processed
+     */
+    wasBinaryXml: boolean;
+
+    /**
+     * Template ID used (if any)
+     */
+    templateId?: number;
+
+    /**
+     * Number of substitutions processed
+     */
+    substitutionCount?: number;
+
+    /**
+     * Any parsing errors encountered
+     */
+    errors?: string[];
+
+    /**
+     * Debug information (if enabled)
+     */
+    debugInfo?: {
+      templateCacheHits: number;
+      parsingTimeMs: number;
+      binaryDataSize: number;
+    };
+  };
+
+  /**
    * Extraction metadata
    */
   meta: {
@@ -138,10 +206,18 @@ export class EventExtractor {
     maxDepth: 10,
     fieldMappings: {},
     typeConversions: {},
+    enableBinaryXml: true, // Enable by default
+    includeBinaryXmlDebug: false,
   };
 
   private static readonly VERSION = '1.0.0';
   private static parser = new DOMParser();
+  private static binaryXmlExtractor = new BinaryXmlExtractor({
+    enableTemplateCache: true,
+    maxCachedTemplates: 1000,
+    enableErrorRecovery: true,
+    includeDebugInfo: false,
+  });
 
   /**
    * Convert XML event data to EventRecord object
@@ -192,11 +268,23 @@ export class EventExtractor {
         'RelatedActivityID'
       );
 
-      // Extract EventData
+      // Extract EventData using Binary XML parser
       const eventDataElement = eventElement.getElementsByTagName('EventData')[0];
-      const eventData = eventDataElement
-        ? this.extractEventDataFromXml(eventDataElement)
-        : undefined;
+      let eventData: { [key: string]: any } | undefined;
+      let binaryXmlResult: BinaryXmlExtractionResult | undefined;
+
+      if (eventDataElement) {
+        // Try binary XML extraction first (enhanced parsing)
+        binaryXmlResult = this.binaryXmlExtractor.extractEventData(xmlString);
+
+        if (binaryXmlResult.wasBinaryXml && Object.keys(binaryXmlResult.eventData).length > 0) {
+          // Use binary XML parsed data
+          eventData = binaryXmlResult.eventData;
+        } else {
+          // Fallback to regular XML parsing
+          eventData = this.extractEventDataFromXml(eventDataElement);
+        }
+      }
 
       // Extract UserData
       const userDataElement = eventElement.getElementsByTagName('UserData')[0];
@@ -346,7 +434,10 @@ export class EventExtractor {
 
     const nameAttr = keywordsElement.getAttribute('Name');
     if (nameAttr) {
-      return nameAttr.split(',').map((k: string) => k.trim()).filter((k: string) => k.length > 0);
+      return nameAttr
+        .split(',')
+        .map((k: string) => k.trim())
+        .filter((k: string) => k.length > 0);
     }
 
     return undefined;
@@ -567,6 +658,15 @@ export class EventExtractor {
 
     try {
       // Core event data - processing record
+      console.log('🔍 EventExtractor processing record:', {
+        eventId: record.eventId,
+        provider: record.provider,
+        channel: record.channel,
+        computer: record.computer,
+        level: record.level,
+        hasXml: !!record.xml,
+        xmlLength: record.xml?.length,
+      });
 
       const core = {
         eventId: record.eventId,
@@ -576,7 +676,6 @@ export class EventExtractor {
         timestamp: record.timestamp,
         computer: record.computer,
         eventRecordId: record.eventRecordId.toString(),
-        message: record.message,
       };
 
       // System data
@@ -589,8 +688,70 @@ export class EventExtractor {
       if (record.opcode !== undefined) system.opcode = record.opcode;
       if (record.keywords !== undefined) system.keywords = record.keywords.toString();
 
-      // Event data
-      const eventData = this.processEventData(record.eventData, mergedOptions, warnings);
+      // Event data - Enhanced with Binary XML support
+      let eventData = record.eventData;
+      let binaryXmlResult: BinaryXmlExtractionResult | undefined;
+      let messageContent: string | undefined;
+
+      // If Binary XML is enabled and we have raw XML, try enhanced parsing
+      if (mergedOptions.enableBinaryXml && record.xml) {
+        console.log('🔍 Raw XML for Binary XML processing:', record.xml?.substring(0, 500) + '...');
+
+        binaryXmlResult = this.binaryXmlExtractor.extractEventData(record.xml);
+
+        console.log('🔍 Binary XML extraction result:', {
+          wasBinaryXml: binaryXmlResult.wasBinaryXml,
+          eventDataKeys: Object.keys(binaryXmlResult.eventData),
+          eventDataSample: binaryXmlResult.eventData,
+          errors: binaryXmlResult.errors,
+        });
+
+        // DEBUG: Log the actual eventData content to see structured fields
+        console.log(
+          '🔍 Detailed eventData content:',
+          JSON.stringify(binaryXmlResult.eventData, null, 2)
+        );
+
+        if (binaryXmlResult.wasBinaryXml && Object.keys(binaryXmlResult.eventData).length > 0) {
+          // Merge binary XML parsed data with existing data, preferring binary XML fields
+          eventData = {
+            ...eventData, // Start with original event data
+            ...binaryXmlResult.eventData, // Overlay binary XML enhancements
+          };
+          warnings.push('Enhanced with Binary XML parsing');
+        } else if (Object.keys(binaryXmlResult.eventData).length > 0) {
+          // Even if not binary XML, merge any additional fields found
+          eventData = {
+            ...eventData,
+            ...binaryXmlResult.eventData,
+          };
+          warnings.push('Enhanced with additional XML parsing');
+        }
+
+        // Look for message content in the Binary XML results
+        if (binaryXmlResult.eventData.EventMessage) {
+          messageContent = binaryXmlResult.eventData.EventMessage;
+        } else if (binaryXmlResult.eventData.EventDataContent) {
+          // Try to extract message from EventData content
+          messageContent = this.extractMessageFromEventDataContent(
+            binaryXmlResult.eventData.EventDataContent
+          );
+        }
+      }
+
+      // If no message from Binary XML, try the record's message
+      if (!messageContent && record.message) {
+        messageContent = record.message;
+      }
+
+      // If still no message, try to extract from raw XML
+      if (!messageContent && record.xml) {
+        messageContent = this.extractMessageFromXml(record.xml);
+      }
+
+      console.log('🔍 Raw message content before resolution:', messageContent);
+
+      const processedEventData = this.processEventData(eventData, mergedOptions, warnings);
 
       // User data
       const userData = this.processUserData(record.userData, mergedOptions, warnings);
@@ -613,8 +774,8 @@ export class EventExtractor {
         extracted.system = system;
       }
 
-      if (eventData) {
-        extracted.eventData = eventData;
+      if (processedEventData) {
+        extracted.eventData = processedEventData;
       }
 
       if (userData) {
@@ -625,7 +786,51 @@ export class EventExtractor {
         extracted.correlation = correlation;
       }
 
-      if (record.message) {
+      if (messageContent) {
+        extracted.message = messageContent;
+        console.log('🔍 Setting message content:', messageContent);
+      } else {
+        console.log('🔍 No message content found');
+      }
+
+      if (mergedOptions.includeRawXml && record.xml) {
+        extracted.rawXml = record.xml;
+      }
+
+      // Use structured EventData to build proper messages
+      let finalMessage = messageContent;
+
+      if (eventData && typeof eventData === 'object') {
+        // Check for structured Windows event data fields
+        const error = eventData.Error || eventData.error;
+        const errorMessage = eventData.ErrorMessage || eventData.errorMessage;
+        const additionalInfo = eventData.AdditionalInformation || eventData.additionalInformation;
+
+        // If we have structured data, build a comprehensive message
+        if (error || errorMessage || additionalInfo) {
+          const messageParts = [];
+
+          if (error) {
+            messageParts.push(`Error ${error}`);
+          }
+
+          if (errorMessage) {
+            messageParts.push(`ErrorMessage: ${errorMessage}`);
+          }
+
+          if (additionalInfo) {
+            messageParts.push(`AdditionalInformation: ${additionalInfo}`);
+          }
+
+          finalMessage = messageParts.join(' ');
+          console.log('🔍 Built structured message:', finalMessage);
+        }
+      }
+
+      // Use the structured message if available, otherwise fall back to original
+      if (finalMessage) {
+        extracted.message = finalMessage;
+      } else if (record.message) {
         extracted.message = record.message;
       }
 
@@ -637,8 +842,20 @@ export class EventExtractor {
         extracted.rawXml = record.xml;
       }
 
+      // Include binary XML debug info if enabled
+      if (mergedOptions.includeBinaryXmlDebug && binaryXmlResult) {
+        extracted.binaryXml = binaryXmlResult;
+      }
+
       return extracted;
     } catch (error) {
+      console.error('🚨 EventExtractor error - falling back to Unknown values:', error);
+      console.error('🚨 Record data:', {
+        eventId: record.eventId,
+        provider: record.provider,
+        channel: record.channel,
+        computer: record.computer,
+      });
       // Return minimal data on error
       return {
         core: {
@@ -654,6 +871,178 @@ export class EventExtractor {
           extractedAt: new Date(),
           extractionVersion: this.VERSION,
           warnings: [`Extraction failed: ${(error as Error).message}`],
+        },
+      };
+    }
+  }
+
+  /**
+   * Extract data from a single event record in EvtxRecord format
+   * This is the new standardized format based on the proven WASM implementation
+   */
+  public static extractEvtxRecord(
+    record: EventRecord,
+    options: ExtractionOptions = {}
+  ): EvtxRecord {
+    const mergedOptions = { ...this.DEFAULT_OPTIONS, ...options };
+
+    try {
+      console.log('🔍 EventExtractor processing record for EvtxRecord format:', {
+        eventId: record.eventId,
+        provider: record.provider,
+        channel: record.channel,
+        computer: record.computer,
+        level: record.level,
+        hasXml: !!record.xml,
+        xmlLength: record.xml?.length,
+      });
+
+      // Build System section
+      const system: EvtxSystemData = {
+        Provider: {
+          Name: record.provider,
+        },
+        EventID: record.eventId,
+        Level: record.level,
+        Channel: record.channel,
+        Computer: record.computer,
+        EventRecordID: Number(record.eventRecordId),
+        TimeCreated: {
+          SystemTime: record.timestamp.toISOString(),
+        },
+      };
+
+      // Add optional system fields
+      if (record.processId !== undefined || record.threadId !== undefined) {
+        system.Execution = {};
+        if (record.processId !== undefined) system.Execution.ProcessID = record.processId;
+        if (record.threadId !== undefined) system.Execution.ThreadID = record.threadId;
+      }
+
+      if (record.userId) {
+        system.Security = {
+          UserID: record.userId,
+        };
+      }
+
+      if (record.version !== undefined) system.Version = record.version;
+      if (record.task !== undefined) system.Task = record.task;
+      if (record.opcode !== undefined) system.Opcode = record.opcode;
+      if (record.keywords !== undefined) system.Keywords = record.keywords.toString();
+
+      // Build EventData section
+      let eventData: EvtxEventData | undefined;
+      let binaryXmlResult: BinaryXmlExtractionResult | undefined;
+
+      // Try Binary XML extraction if enabled
+      if (mergedOptions.enableBinaryXml && record.xml) {
+        console.log('🔍 Attempting Binary XML extraction for EvtxRecord format');
+
+        binaryXmlResult = this.binaryXmlExtractor.extractEventData(record.xml);
+
+        console.log('🔍 Binary XML extraction result for EvtxRecord:', {
+          wasBinaryXml: binaryXmlResult.wasBinaryXml,
+          eventDataKeys: Object.keys(binaryXmlResult.eventData),
+          eventDataSample: binaryXmlResult.eventData,
+          errors: binaryXmlResult.errors,
+        });
+
+        // Convert extracted data to Data elements
+        if (Object.keys(binaryXmlResult.eventData).length > 0) {
+          const dataElements: DataElement[] = [];
+
+          for (const [key, value] of Object.entries(binaryXmlResult.eventData)) {
+            if (value !== undefined && value !== null) {
+              dataElements.push({
+                '#attributes': {
+                  Name: key,
+                },
+                '#text': String(value),
+              });
+            }
+          }
+
+          if (dataElements.length > 0) {
+            eventData = {
+              Data: dataElements,
+            };
+          }
+        }
+      }
+
+      // Fallback to basic eventData if no Binary XML result
+      if (!eventData && record.eventData && Object.keys(record.eventData).length > 0) {
+        const dataElements: DataElement[] = [];
+
+        for (const [key, value] of Object.entries(record.eventData)) {
+          if (value !== undefined && value !== null) {
+            dataElements.push({
+              '#attributes': {
+                Name: key,
+              },
+              '#text': String(value),
+            });
+          }
+        }
+
+        if (dataElements.length > 0) {
+          eventData = {
+            Data: dataElements,
+          };
+        }
+      }
+
+      // Build the EvtxRecord
+      const evtxRecord: EvtxRecord = {
+        Event: {
+          System: system,
+        },
+      };
+
+      // Add EventData if present
+      if (eventData) {
+        evtxRecord.Event.EventData = eventData;
+      }
+
+      // Add UserData if present
+      if (record.userData) {
+        evtxRecord.Event.UserData = record.userData;
+      }
+
+      // Normalize the record using the proven normalization logic
+      const normalizedRecord = normalizeEvtxRecord(evtxRecord);
+
+      console.log('🔍 Generated EvtxRecord:', {
+        system: normalizedRecord.Event.System,
+        eventData: normalizedRecord.Event.EventData,
+        message: extractEventMessage(normalizedRecord),
+      });
+
+      // 🧪 TEST: Compare old vs new format for debugging
+      console.log('🧪 EvtxRecord Format Comparison:');
+      console.log('🧪 Provider Name (new):', getProviderName(normalizedRecord.Event.System));
+      console.log('🧪 Event Message (new):', extractEventMessage(normalizedRecord));
+      console.log('🧪 Timestamp (new):', getTimestamp(normalizedRecord.Event.System));
+      console.log('🧪 Execution Info (new):', getExecutionInfo(normalizedRecord.Event.System));
+
+      return normalizedRecord;
+    } catch (error) {
+      console.error('🚨 EventExtractor error in EvtxRecord extraction:', error);
+
+      // Return minimal EvtxRecord on error
+      return {
+        Event: {
+          System: {
+            Provider: { Name: record.provider || 'Unknown' },
+            EventID: record.eventId || 0,
+            Level: record.level || 4,
+            Channel: record.channel || 'Unknown',
+            Computer: record.computer || 'Unknown',
+            EventRecordID: Number(record.eventRecordId) || 0,
+            TimeCreated: {
+              SystemTime: (record.timestamp || new Date()).toISOString(),
+            },
+          },
         },
       };
     }
@@ -839,6 +1228,78 @@ export class EventExtractor {
   }
 
   /**
+   * Extract data from multiple event records in EvtxRecord format with statistics
+   */
+  public static extractEvtxRecordBatch(
+    records: EventRecord[],
+    options: ExtractionOptions = {}
+  ): { data: EvtxRecord[]; statistics: ExtractionStatistics } {
+    const startTime = performance.now();
+    const initialMemory = process.memoryUsage().heapUsed;
+    let peakMemory = initialMemory;
+
+    const results: EvtxRecord[] = [];
+    let successCount = 0;
+    let failureCount = 0;
+    let warningCount = 0;
+
+    for (const record of records) {
+      try {
+        const extracted = this.extractEvtxRecord(record, options);
+        results.push(extracted);
+        successCount++;
+
+        // Track memory usage
+        const currentMemory = process.memoryUsage().heapUsed;
+        if (currentMemory > peakMemory) {
+          peakMemory = currentMemory;
+        }
+      } catch (error) {
+        failureCount++;
+        console.error(`Failed to extract record ${record.eventRecordId}:`, error);
+
+        // Add minimal record on failure
+        results.push({
+          Event: {
+            System: {
+              Provider: { Name: record.provider || 'Unknown' },
+              EventID: record.eventId || 0,
+              Level: record.level || 4,
+              Channel: record.channel || 'Unknown',
+              Computer: record.computer || 'Unknown',
+              EventRecordID: Number(record.eventRecordId) || 0,
+              TimeCreated: {
+                SystemTime: (record.timestamp || new Date()).toISOString(),
+              },
+            },
+          },
+        });
+      }
+    }
+
+    const endTime = performance.now();
+    const finalMemory = process.memoryUsage().heapUsed;
+
+    const statistics: ExtractionStatistics = {
+      totalRecords: records.length,
+      successfulExtractions: successCount,
+      failedExtractions: failureCount,
+      warnings: warningCount,
+      processingTime: endTime - startTime,
+      averageTimePerRecord: (endTime - startTime) / records.length,
+      memoryUsage: {
+        initial: initialMemory / 1024 / 1024,
+        peak: peakMemory / 1024 / 1024,
+        final: finalMemory / 1024 / 1024,
+      },
+    };
+
+    console.log('📊 EvtxRecord Batch Extraction Statistics:', statistics);
+
+    return { data: results, statistics };
+  }
+
+  /**
    * Create a standardized field mapping for common Windows event fields
    */
   public static createStandardFieldMapping(): { [key: string]: string } {
@@ -932,5 +1393,78 @@ export class EventExtractor {
       timeRange: earliest && latest ? { earliest, latest } : null,
       commonEventIds,
     };
+  }
+
+  /**
+   * Extract message content from EventData content string
+   */
+  private static extractMessageFromEventDataContent(eventDataContent: string): string | undefined {
+    if (!eventDataContent || typeof eventDataContent !== 'string') {
+      return undefined;
+    }
+
+    // Look for common error message patterns in the EventData content
+    const messagePatterns = [
+      /Error:\s*([^<\n\r]+)/i,
+      /Error\s*([0-9A-Fx]+[^<\n\r]*)/i,
+      /Logged\s+at\s+([^<\n\r]+)/i,
+      /<Data[^>]*>([^<]{20,})<\/Data>/i,
+      /([A-Z][a-z]+(?:\s+[a-z]+)*\s+(?:error|failed|success|completed)[^<\n\r]*)/i,
+    ];
+
+    for (const pattern of messagePatterns) {
+      const match = eventDataContent.match(pattern);
+      if (match && match[1] && match[1].trim().length > 10) {
+        return match[1].trim();
+      }
+    }
+
+    // If no specific patterns, look for the longest meaningful text
+    const dataElements = eventDataContent.match(/<Data[^>]*>([^<]+)<\/Data>/gi);
+    if (dataElements) {
+      let longestText = '';
+      for (const element of dataElements) {
+        const match = element.match(/>([^<]+)</);
+        if (match && match[1]) {
+          const text = match[1].trim();
+          if (text.length > longestText.length && text.length > 15) {
+            longestText = text;
+          }
+        }
+      }
+      if (longestText.length > 15) {
+        return longestText;
+      }
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Extract message content from raw XML
+   */
+  private static extractMessageFromXml(xml: string): string | undefined {
+    if (!xml || typeof xml !== 'string') {
+      return undefined;
+    }
+
+    // Look for message-like content in XML
+    const patterns = [
+      /<Data\s+Name\s*=\s*["']?Message["']?[^>]*>([^<]+)<\/Data>/i,
+      /<Data\s+Name\s*=\s*["']?ErrorMessage["']?[^>]*>([^<]+)<\/Data>/i,
+      /<Data\s+Name\s*=\s*["']?Description["']?[^>]*>([^<]+)<\/Data>/i,
+      /<Data\s+Name\s*=\s*["']?Details["']?[^>]*>([^<]+)<\/Data>/i,
+      /<Message[^>]*>([^<]+)<\/Message>/i,
+      /<Description[^>]*>([^<]+)<\/Description>/i,
+    ];
+
+    for (const pattern of patterns) {
+      const match = xml.match(pattern);
+      if (match && match[1] && match[1].trim().length > 5) {
+        return match[1].trim();
+      }
+    }
+
+    return undefined;
   }
 }

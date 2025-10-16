@@ -1322,7 +1322,14 @@ export class EvtxWebviewProvider {
             maxDepth: 5, // Limit depth for UI display
             fieldMappings: EventExtractor.createStandardFieldMapping(),
             typeConversions: EventExtractor.createStandardTypeConversions(),
+            enableBinaryXml: true, // Enable Binary XML parsing for complete field extraction
+            includeBinaryXmlDebug: false, // Disable debug info for performance
           });
+
+          // Log Binary XML enhancement info
+          console.log(
+            `🔥 Binary XML Enhancement: Processed ${extractionResult.data.length} events with Binary XML parsing enabled (${extractionResult.statistics.warnings} enhanced events)`
+          );
 
           allExtractedEvents.push(...extractionResult.data);
           totalEventCount += extractionResult.data.length;

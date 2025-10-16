@@ -1,0 +1,5 @@
+npm error Missing script: "test:extension"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/cormazab/.npm/_logs/2025-10-05T01_28_19_649Z-debug-0.log

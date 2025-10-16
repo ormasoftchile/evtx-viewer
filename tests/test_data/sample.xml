@@ -1,0 +1,1264 @@
+Record 1
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T05:44:32.047527Z">
+    </TimeCreated>
+    <EventRecordID>1</EventRecordID>
+    <Correlation ActivityID="491392F9-8BFF-0001-B09A-1349FF8BDB01">
+    </Correlation>
+    <Execution ProcessID="5600" ThreadID="5852">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1000">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069467</Data>
+    <Data Name="ErrorMessage">The cache has been partitioned successfully.</Data>
+    <Data Name="AdditionalInformation">Logged at CachePartitioning.cpp, line: 35, method: CachePartitioning::Apply.</Data>
+  </EventData>
+</Event>
+Record 2
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T05:44:32.057481Z">
+    </TimeCreated>
+    <EventRecordID>2</EventRecordID>
+    <Correlation ActivityID="491392F9-8BFF-0001-B09A-1349FF8BDB01">
+    </Correlation>
+    <Execution ProcessID="5600" ThreadID="5852">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1000">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069478</Data>
+    <Data Name="ErrorMessage">Enumeration status set for existing webaccounts successfully.</Data>
+    <Data Name="AdditionalInformation">Logged at AccountEnumerationStateMigration.cpp, line: 69, method: AccountEnumerationStateMigration::Apply.</Data>
+  </EventData>
+</Event>
+Record 3
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T05:44:32.074676Z">
+    </TimeCreated>
+    <EventRecordID>3</EventRecordID>
+    <Correlation ActivityID="491392F9-8BFF-0001-B09A-1349FF8BDB01">
+    </Correlation>
+    <Execution ProcessID="5600" ThreadID="5852">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1000">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069553</Data>
+    <Data Name="ErrorMessage">Clientid normalization update succeeded.</Data>
+    <Data Name="AdditionalInformation">Logged at ClientIdNormalizationUpgrade.cpp, line: 33, method: ClientIdNormalizationUpgrade::Apply.</Data>
+  </EventData>
+</Event>
+Record 4
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T05:44:32.087861Z">
+    </TimeCreated>
+    <EventRecordID>4</EventRecordID>
+    <Correlation ActivityID="491392F9-8BFF-0001-B09A-1349FF8BDB01">
+    </Correlation>
+    <Execution ProcessID="5600" ThreadID="5852">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1000">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">1252327664</Data>
+    <Data Name="ErrorMessage">Browser SSO data format successfully updated.</Data>
+    <Data Name="AdditionalInformation">Nonce: no; Authority: n/a; Cookies: 0
+Logged at CookieStoreFormatV2.cpp, line: 72, method: CookieStoreFormatV2::Apply.</Data>
+  </EventData>
+</Event>
+Record 5
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T05:44:32.094073Z">
+    </TimeCreated>
+    <EventRecordID>5</EventRecordID>
+    <Correlation ActivityID="491392F9-8BFF-0001-B09A-1349FF8BDB01">
+    </Correlation>
+    <Execution ProcessID="5600" ThreadID="5852">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1000">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2325807322</Data>
+    <Data Name="ErrorMessage">Upgrade default pawn task complete.</Data>
+    <Data Name="AdditionalInformation">Logged at UpdateDefaultPawn.cpp, line: 43, method: UpdateDefaultPawn::Apply.</Data>
+  </EventData>
+</Event>
+Record 6
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T08:22:05.590509Z">
+    </TimeCreated>
+    <EventRecordID>6</EventRecordID>
+    <Correlation ActivityID="1406069E-8C15-0003-FD33-0614158CDB01">
+    </Correlation>
+    <Execution ProcessID="2484" ThreadID="548">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069467</Data>
+    <Data Name="ErrorMessage">The cache has been partitioned successfully.</Data>
+    <Data Name="AdditionalInformation">Logged at CachePartitioning.cpp, line: 35, method: CachePartitioning::Apply.</Data>
+  </EventData>
+</Event>
+Record 7
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T08:22:05.655627Z">
+    </TimeCreated>
+    <EventRecordID>7</EventRecordID>
+    <Correlation ActivityID="1406069E-8C15-0003-FD33-0614158CDB01">
+    </Correlation>
+    <Execution ProcessID="2484" ThreadID="548">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069478</Data>
+    <Data Name="ErrorMessage">Enumeration status set for existing webaccounts successfully.</Data>
+    <Data Name="AdditionalInformation">Logged at AccountEnumerationStateMigration.cpp, line: 69, method: AccountEnumerationStateMigration::Apply.</Data>
+  </EventData>
+</Event>
+Record 8
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T08:22:05.724341Z">
+    </TimeCreated>
+    <EventRecordID>8</EventRecordID>
+    <Correlation ActivityID="1406069E-8C15-0003-FD33-0614158CDB01">
+    </Correlation>
+    <Execution ProcessID="2484" ThreadID="548">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069553</Data>
+    <Data Name="ErrorMessage">Clientid normalization update succeeded.</Data>
+    <Data Name="AdditionalInformation">Logged at ClientIdNormalizationUpgrade.cpp, line: 33, method: ClientIdNormalizationUpgrade::Apply.</Data>
+  </EventData>
+</Event>
+Record 9
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T08:22:05.742456Z">
+    </TimeCreated>
+    <EventRecordID>9</EventRecordID>
+    <Correlation ActivityID="1406069E-8C15-0003-FD33-0614158CDB01">
+    </Correlation>
+    <Execution ProcessID="2484" ThreadID="548">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">1252327664</Data>
+    <Data Name="ErrorMessage">Browser SSO data format successfully updated.</Data>
+    <Data Name="AdditionalInformation">Nonce: no; Authority: n/a; Cookies: 0
+Logged at CookieStoreFormatV2.cpp, line: 72, method: CookieStoreFormatV2::Apply.</Data>
+  </EventData>
+</Event>
+Record 10
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T08:22:05.779670Z">
+    </TimeCreated>
+    <EventRecordID>10</EventRecordID>
+    <Correlation ActivityID="1406069E-8C15-0003-C836-0614158CDB01">
+    </Correlation>
+    <Execution ProcessID="2484" ThreadID="420">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2325807322</Data>
+    <Data Name="ErrorMessage">Upgrade default pawn task complete.</Data>
+    <Data Name="AdditionalInformation">Logged at UpdateDefaultPawn.cpp, line: 43, method: UpdateDefaultPawn::Apply.</Data>
+  </EventData>
+</Event>
+Record 11
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T16:52:34.932190Z">
+    </TimeCreated>
+    <EventRecordID>11</EventRecordID>
+    <Correlation ActivityID="DCF926F0-8C3D-0001-F775-11DD3D8CDB01">
+    </Correlation>
+    <Execution ProcessID="4048" ThreadID="11404">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069365</Data>
+    <Data Name="ErrorMessage">User key parameter change, we are resetting context.</Data>
+    <Data Name="AdditionalInformation">Logged at AuthenticationContext.cpp, line: 899, method: AuthenticationContext::CompleteRequest.
+
+Request: authority: https://login.microsoftonline.com/d98fb852-f5f6-486d-a934-70b4a2eb56bc, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 3a64af6c-cbea-4d12-965d-6f7faef8c3b1</Data>
+  </EventData>
+</Event>
+Record 12
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T16:52:36.893123Z">
+    </TimeCreated>
+    <EventRecordID>12</EventRecordID>
+    <Correlation ActivityID="DCF926F0-8C3D-0001-9F82-11DD3D8CDB01">
+    </Correlation>
+    <Execution ProcessID="4748" ThreadID="1204">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069365</Data>
+    <Data Name="ErrorMessage">User key parameter change, we are resetting context.</Data>
+    <Data Name="AdditionalInformation">Logged at AuthenticationContext.cpp, line: 899, method: AuthenticationContext::CompleteRequest.
+
+Request: authority: https://login.microsoftonline.com/f1bd4fe0-215f-447d-80cf-1f6a469fb202, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 811a9db1-a63e-4843-b089-5da0b8d1e31b</Data>
+  </EventData>
+</Event>
+Record 13
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T16:54:18.113508Z">
+    </TimeCreated>
+    <EventRecordID>13</EventRecordID>
+    <Correlation ActivityID="DCF926F0-8C3D-0000-5E3F-16DD3D8CDB01">
+    </Correlation>
+    <Execution ProcessID="11748" ThreadID="13280">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069365</Data>
+    <Data Name="ErrorMessage">User key parameter change, we are resetting context.</Data>
+    <Data Name="AdditionalInformation">Logged at AuthenticationContext.cpp, line: 899, method: AuthenticationContext::CompleteRequest.
+
+Request: authority: https://login.microsoftonline.com/954d6652-9060-4378-8767-a5163bbd7cb0, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 4fc02e38-5897-4e1a-9a3d-851307018113</Data>
+  </EventData>
+</Event>
+Record 14
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-03-03T16:54:20.533118Z">
+    </TimeCreated>
+    <EventRecordID>14</EventRecordID>
+    <Correlation ActivityID="DCF926F0-8C3D-0001-323F-12DD3D8CDB01">
+    </Correlation>
+    <Execution ProcessID="3316" ThreadID="12456">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069365</Data>
+    <Data Name="ErrorMessage">User key parameter change, we are resetting context.</Data>
+    <Data Name="AdditionalInformation">Logged at AuthenticationContext.cpp, line: 899, method: AuthenticationContext::CompleteRequest.
+
+Request: authority: https://login.microsoftonline.com/db9ede59-e98d-447e-9d80-88ccf854468c, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): ed593d25-145c-42f1-88c8-07c120111f44</Data>
+  </EventData>
+</Event>
+Record 15
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-05-21T02:43:49.322943Z">
+    </TimeCreated>
+    <EventRecordID>15</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0002-E899-615349C9DB01">
+    </Correlation>
+    <Execution ProcessID="10548" ThreadID="7140">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399614467</Data>
+    <Data Name="ErrorMessage">Authorization grant failed for this assertion.</Data>
+    <Data Name="AdditionalInformation">Code: invalid_grant
+Description: V2Error: invalid_grant AADSTS50132: The session is not valid due the following reasons: password expiration or recent password change, SSO Artifact is invalid or expired, session is not fresh enough for application, or a silent sign-in request was sent but the user&apos;s session with Azure AD is invalid or has expired. Trace ID: b9bd23f1-4967-4562-8b82-430cd69f1200 Correlation ID: ec61c165-e0d5-4dc2-8489-775c0c62dbb3 Timestamp: 2025-05-21 02:43:49Z
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 505, method: OAuthTokenRequestBase::ProcessOAuthResponse.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): ec61c165-e0d5-4dc2-8489-775c0c62dbb3</Data>
+  </EventData>
+</Event>
+Record 16
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-05-21T02:43:49.323985Z">
+    </TimeCreated>
+    <EventRecordID>16</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0002-E899-615349C9DB01">
+    </Correlation>
+    <Execution ProcessID="10548" ThreadID="7140">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073220</Data>
+    <Data Name="ErrorMessage">Getting token by refresh token failed.</Data>
+    <Data Name="AdditionalInformation">Logged at RefreshTokenRequest.cpp, line: 148, method: RefreshTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): ec61c165-e0d5-4dc2-8489-775c0c62dbb3</Data>
+  </EventData>
+</Event>
+Record 17
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-02T00:28:05.896484Z">
+    </TimeCreated>
+    <EventRecordID>17</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0001-8120-825349C9DB01">
+    </Correlation>
+    <Execution ProcessID="6272" ThreadID="12012">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399614467</Data>
+    <Data Name="ErrorMessage">Authorization grant failed for this assertion.</Data>
+    <Data Name="AdditionalInformation">Code: invalid_grant
+Description: V2Error: invalid_grant AADSTS50132: The session is not valid due the following reasons: password expiration or recent password change, SSO Artifact is invalid or expired, session is not fresh enough for application, or a silent sign-in request was sent but the user&apos;s session with Azure AD is invalid or has expired. Trace ID: ca47c366-8332-49b2-b06e-0d43234a5500 Correlation ID: a0fd65e4-4b68-4bb9-98ae-5707778c7465 Timestamp: 2025-06-02 00:28:05Z
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 505, method: OAuthTokenRequestBase::ProcessOAuthResponse.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): a0fd65e4-4b68-4bb9-98ae-5707778c7465</Data>
+  </EventData>
+</Event>
+Record 18
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-06-02T00:28:05.897186Z">
+    </TimeCreated>
+    <EventRecordID>18</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0001-8120-825349C9DB01">
+    </Correlation>
+    <Execution ProcessID="6272" ThreadID="12012">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073220</Data>
+    <Data Name="ErrorMessage">Getting token by refresh token failed.</Data>
+    <Data Name="AdditionalInformation">Logged at RefreshTokenRequest.cpp, line: 148, method: RefreshTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): a0fd65e4-4b68-4bb9-98ae-5707778c7465</Data>
+  </EventData>
+</Event>
+Record 19
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-02T01:19:48.833341Z">
+    </TimeCreated>
+    <EventRecordID>19</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0003-4155-6D5349C9DB01">
+    </Correlation>
+    <Execution ProcessID="10564" ThreadID="15008">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399614467</Data>
+    <Data Name="ErrorMessage">Authorization grant failed for this assertion.</Data>
+    <Data Name="AdditionalInformation">Code: invalid_grant
+Description: V2Error: invalid_grant AADSTS50132: The session is not valid due the following reasons: password expiration or recent password change, SSO Artifact is invalid or expired, session is not fresh enough for application, or a silent sign-in request was sent but the user&apos;s session with Azure AD is invalid or has expired. Trace ID: d07bdc72-b6cf-4a60-8f91-20c0675f4d00 Correlation ID: 550ebca2-bd72-4abe-9ed8-5b1bf5b4b4bb Timestamp: 2025-06-02 01:19:48Z
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 505, method: OAuthTokenRequestBase::ProcessOAuthResponse.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 550ebca2-bd72-4abe-9ed8-5b1bf5b4b4bb</Data>
+  </EventData>
+</Event>
+Record 20
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-06-02T01:19:48.833693Z">
+    </TimeCreated>
+    <EventRecordID>20</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0003-4155-6D5349C9DB01">
+    </Correlation>
+    <Execution ProcessID="10564" ThreadID="15008">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073220</Data>
+    <Data Name="ErrorMessage">Getting token by refresh token failed.</Data>
+    <Data Name="AdditionalInformation">Logged at RefreshTokenRequest.cpp, line: 148, method: RefreshTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 550ebca2-bd72-4abe-9ed8-5b1bf5b4b4bb</Data>
+  </EventData>
+</Event>
+Record 21
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-02T01:41:06.777359Z">
+    </TimeCreated>
+    <EventRecordID>21</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0003-9A7D-6D5349C9DB01">
+    </Correlation>
+    <Execution ProcessID="17364" ThreadID="4596">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399614467</Data>
+    <Data Name="ErrorMessage">Authorization grant failed for this assertion.</Data>
+    <Data Name="AdditionalInformation">Code: invalid_grant
+Description: V2Error: invalid_grant AADSTS50132: The session is not valid due the following reasons: password expiration or recent password change, SSO Artifact is invalid or expired, session is not fresh enough for application, or a silent sign-in request was sent but the user&apos;s session with Azure AD is invalid or has expired. Trace ID: 731ce621-b4a9-420f-9b2e-2c72814e6d00 Correlation ID: 9d824342-aa31-432c-bba6-1a715df10443 Timestamp: 2025-06-02 01:41:06Z
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 505, method: OAuthTokenRequestBase::ProcessOAuthResponse.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 9d824342-aa31-432c-bba6-1a715df10443</Data>
+  </EventData>
+</Event>
+Record 22
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-06-02T01:41:06.777469Z">
+    </TimeCreated>
+    <EventRecordID>22</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0003-9A7D-6D5349C9DB01">
+    </Correlation>
+    <Execution ProcessID="17364" ThreadID="4596">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073220</Data>
+    <Data Name="ErrorMessage">Getting token by refresh token failed.</Data>
+    <Data Name="AdditionalInformation">Logged at RefreshTokenRequest.cpp, line: 148, method: RefreshTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 9d824342-aa31-432c-bba6-1a715df10443</Data>
+  </EventData>
+</Event>
+Record 23
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-02T01:43:11.249587Z">
+    </TimeCreated>
+    <EventRecordID>23</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0001-5491-885349C9DB01">
+    </Correlation>
+    <Execution ProcessID="9896" ThreadID="11164">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399614467</Data>
+    <Data Name="ErrorMessage">Authorization grant failed for this assertion.</Data>
+    <Data Name="AdditionalInformation">Code: invalid_grant
+Description: V2Error: invalid_grant AADSTS50132: The session is not valid due the following reasons: password expiration or recent password change, SSO Artifact is invalid or expired, session is not fresh enough for application, or a silent sign-in request was sent but the user&apos;s session with Azure AD is invalid or has expired. Trace ID: 72ab4eee-a1d2-4ab6-8536-da9640a00900 Correlation ID: de4b9958-64fc-4dd4-932a-acdda653bb05 Timestamp: 2025-06-02 01:43:11Z
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 505, method: OAuthTokenRequestBase::ProcessOAuthResponse.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): de4b9958-64fc-4dd4-932a-acdda653bb05</Data>
+  </EventData>
+</Event>
+Record 24
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-06-02T01:43:11.250003Z">
+    </TimeCreated>
+    <EventRecordID>24</EventRecordID>
+    <Correlation ActivityID="53561917-C949-0001-5491-885349C9DB01">
+    </Correlation>
+    <Execution ProcessID="9896" ThreadID="11164">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073220</Data>
+    <Data Name="ErrorMessage">Getting token by refresh token failed.</Data>
+    <Data Name="AdditionalInformation">Logged at RefreshTokenRequest.cpp, line: 148, method: RefreshTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): de4b9958-64fc-4dd4-932a-acdda653bb05</Data>
+  </EventData>
+</Event>
+Record 25
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-08T20:18:33.284431Z">
+    </TimeCreated>
+    <EventRecordID>25</EventRecordID>
+    <Correlation ActivityID="0E01B65E-D694-0003-59E1-330E94D6DB01">
+    </Correlation>
+    <Execution ProcessID="22060" ThreadID="13600">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399614467</Data>
+    <Data Name="ErrorMessage">Authorization grant failed for this assertion.</Data>
+    <Data Name="AdditionalInformation">Code: invalid_grant
+Description: V2Error: invalid_grant AADSTS50020: User account &apos;{EUII Hidden}&apos; from identity provider &apos;live.com&apos; does not exist in tenant &apos;Microsoft Services&apos; and cannot access the application &apos;04f0c124-f2bc-4f59-8241-bf6df9866bbd&apos;(Visual Studio) in that tenant. The account needs to be added as an external user in the tenant first. Sign out and sign in again with a different Azure Active Directory user account. Trace ID: 1b05a87f-6f9b-4f94-8d89-6406079a5d01 Correlation ID: a226f9d7-e70b-4379-842e-0172f55bc196 Timestamp: 2025-06-08 20:18:33Z
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 505, method: OAuthTokenRequestBase::ProcessOAuthResponse.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): a226f9d7-e70b-4379-842e-0172f55bc196</Data>
+  </EventData>
+</Event>
+Record 26
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-08T20:18:33.285152Z">
+    </TimeCreated>
+    <EventRecordID>26</EventRecordID>
+    <Correlation ActivityID="0E01B65E-D694-0003-59E1-330E94D6DB01">
+    </Correlation>
+    <Execution ProcessID="22060" ThreadID="13600">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073295</Data>
+    <Data Name="ErrorMessage">Getting token by SAML token is failed.</Data>
+    <Data Name="AdditionalInformation">Logged at SAMLAssertionTokenRequest.cpp, line: 33, method: SAMLAssertionTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): a226f9d7-e70b-4379-842e-0172f55bc196</Data>
+  </EventData>
+</Event>
+Record 27
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-06-08T23:40:48.061028Z">
+    </TimeCreated>
+    <EventRecordID>27</EventRecordID>
+    <Correlation ActivityID="0E01B65E-D694-0003-8B25-380E94D6DB01">
+    </Correlation>
+    <Execution ProcessID="22636" ThreadID="21260">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">2326069365</Data>
+    <Data Name="ErrorMessage">User key parameter change, we are resetting context.</Data>
+    <Data Name="AdditionalInformation">Logged at AuthenticationContext.cpp, line: 899, method: AuthenticationContext::CompleteRequest.
+
+Request: authority: https://login.microsoftonline.com/organizations, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 209826c3-8169-438d-b37c-5b17bb1f2e08</Data>
+  </EventData>
+</Event>
+Record 28
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-09T04:02:57.575967Z">
+    </TimeCreated>
+    <EventRecordID>28</EventRecordID>
+    <Correlation ActivityID="0E01B65E-D694-0003-FFF3-3D0E94D6DB01">
+    </Correlation>
+    <Execution ProcessID="22880" ThreadID="20984">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399614467</Data>
+    <Data Name="ErrorMessage">Authorization grant failed for this assertion.</Data>
+    <Data Name="AdditionalInformation">Code: invalid_grant
+Description: V2Error: invalid_grant AADSTS50020: User account &apos;{EUII Hidden}&apos; from identity provider &apos;live.com&apos; does not exist in tenant &apos;Microsoft Services&apos; and cannot access the application &apos;04f0c124-f2bc-4f59-8241-bf6df9866bbd&apos;(Visual Studio) in that tenant. The account needs to be added as an external user in the tenant first. Sign out and sign in again with a different Azure Active Directory user account. Trace ID: b0e44fed-0146-4ec3-bd95-36451f8a2e01 Correlation ID: f277c174-45e1-4f5d-a5d1-c68575d10b20 Timestamp: 2025-06-09 04:02:57Z
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 505, method: OAuthTokenRequestBase::ProcessOAuthResponse.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): f277c174-45e1-4f5d-a5d1-c68575d10b20</Data>
+  </EventData>
+</Event>
+Record 29
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-09T04:02:57.576927Z">
+    </TimeCreated>
+    <EventRecordID>29</EventRecordID>
+    <Correlation ActivityID="0E01B65E-D694-0003-FFF3-3D0E94D6DB01">
+    </Correlation>
+    <Execution ProcessID="22880" ThreadID="20984">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073295</Data>
+    <Data Name="ErrorMessage">Getting token by SAML token is failed.</Data>
+    <Data Name="AdditionalInformation">Logged at SAMLAssertionTokenRequest.cpp, line: 33, method: SAMLAssertionTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): f277c174-45e1-4f5d-a5d1-c68575d10b20</Data>
+  </EventData>
+</Event>
+Record 30
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-09T04:03:04.632981Z">
+    </TimeCreated>
+    <EventRecordID>30</EventRecordID>
+    <Correlation ActivityID="0E01B65E-D694-0000-A869-860E94D6DB01">
+    </Correlation>
+    <Execution ProcessID="21608" ThreadID="22776">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399614467</Data>
+    <Data Name="ErrorMessage">Authorization grant failed for this assertion.</Data>
+    <Data Name="AdditionalInformation">Code: invalid_grant
+Description: V2Error: invalid_grant AADSTS50020: User account &apos;{EUII Hidden}&apos; from identity provider &apos;live.com&apos; does not exist in tenant &apos;Microsoft Services&apos; and cannot access the application &apos;04f0c124-f2bc-4f59-8241-bf6df9866bbd&apos;(Visual Studio) in that tenant. The account needs to be added as an external user in the tenant first. Sign out and sign in again with a different Azure Active Directory user account. Trace ID: bec052c9-f537-4e0d-b758-21daaa7f6700 Correlation ID: 2e92a09b-6de5-442f-9fec-cbe5d0acfff0 Timestamp: 2025-06-09 04:03:04Z
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 505, method: OAuthTokenRequestBase::ProcessOAuthResponse.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 2e92a09b-6de5-442f-9fec-cbe5d0acfff0</Data>
+  </EventData>
+</Event>
+Record 31
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-09T04:03:04.633128Z">
+    </TimeCreated>
+    <EventRecordID>31</EventRecordID>
+    <Correlation ActivityID="0E01B65E-D694-0000-A869-860E94D6DB01">
+    </Correlation>
+    <Execution ProcessID="21608" ThreadID="22776">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073295</Data>
+    <Data Name="ErrorMessage">Getting token by SAML token is failed.</Data>
+    <Data Name="AdditionalInformation">Logged at SAMLAssertionTokenRequest.cpp, line: 33, method: SAMLAssertionTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): 2e92a09b-6de5-442f-9fec-cbe5d0acfff0</Data>
+  </EventData>
+</Event>
+Record 32
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-29T04:54:10.798245Z">
+    </TimeCreated>
+    <EventRecordID>32</EventRecordID>
+    <Correlation ActivityID="A8D6D395-E8B1-0001-AA45-D8A8B1E8DB01">
+    </Correlation>
+    <Execution ProcessID="11256" ThreadID="4588">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400019682</Data>
+    <Data Name="ErrorMessage">The request has timed out.</Data>
+    <Data Name="AdditionalInformation">Exception of type &apos;class HttpException&apos; at XMLHTTPWebRequest.cpp, line: 176, method: XMLHTTPWebRequest::ReceiveResponse.
+
+Log: 0xcaa90051 Sending OAuth request failed.
+Logged at OAuthTokenRequestBase.cpp, line: 323, method: OAuthTokenRequestBase::SendRequest.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): db078273-dbb3-498a-aae8-2a8a36514d89</Data>
+  </EventData>
+</Event>
+Record 33
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-29T04:54:10.798315Z">
+    </TimeCreated>
+    <EventRecordID>33</EventRecordID>
+    <Correlation ActivityID="A8D6D395-E8B1-0001-AA45-D8A8B1E8DB01">
+    </Correlation>
+    <Execution ProcessID="11256" ThreadID="4588">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400019682</Data>
+    <Data Name="ErrorMessage">The request has timed out.</Data>
+    <Data Name="AdditionalInformation">Code: authentication_failed
+Description: The request has timed out.
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 323, method: OAuthTokenRequestBase::SendRequest.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): db078273-dbb3-498a-aae8-2a8a36514d89</Data>
+  </EventData>
+</Event>
+Record 34
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1097</EventID>
+    <Version>0</Version>
+    <Level>3</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000030</Keywords>
+    <TimeCreated SystemTime="2025-06-29T04:54:10.798777Z">
+    </TimeCreated>
+    <EventRecordID>34</EventRecordID>
+    <Correlation ActivityID="A8D6D395-E8B1-0001-AA45-D8A8B1E8DB01">
+    </Correlation>
+    <Execution ProcessID="11256" ThreadID="4588">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073220</Data>
+    <Data Name="ErrorMessage">Getting token by refresh token failed.</Data>
+    <Data Name="AdditionalInformation">Logged at RefreshTokenRequest.cpp, line: 148, method: RefreshTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): db078273-dbb3-498a-aae8-2a8a36514d89</Data>
+  </EventData>
+</Event>
+Record 35
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-06-29T04:54:10.802254Z">
+    </TimeCreated>
+    <EventRecordID>35</EventRecordID>
+    <Correlation ActivityID="A8D6D395-E8B1-0001-AA45-D8A8B1E8DB01">
+    </Correlation>
+    <Execution ProcessID="11256" ThreadID="4764">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399811100</Data>
+    <Data Name="ErrorMessage">Token broker operation failed.</Data>
+    <Data Name="AdditionalInformation">Operation name: GetTokenSilently, Error: -894947614 (0xcaa82ee2), Description: The request has timed out.
+Logged at WebAccountProcessor.cpp, line: 723, method: AAD::Core::WebAccountProcessor::ReportOperationError.</Data>
+  </EventData>
+</Event>
+Record 36
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-07-01T23:09:16.064102Z">
+    </TimeCreated>
+    <EventRecordID>36</EventRecordID>
+    <Correlation ActivityID="AABB2BEE-EA35-0002-8F50-C4AA35EADB01">
+    </Correlation>
+    <Execution ProcessID="11500" ThreadID="5920">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399942154</Data>
+    <Data Name="ErrorMessage">The Internet connection has timed out.</Data>
+    <Data Name="AdditionalInformation">Exception of type &apos;class HttpException&apos; at XMLHTTPWebRequest.cpp, line: 184, method: XMLHTTPWebRequest::ReceiveResponse.
+
+Log: 0xcaa90051 Sending OAuth request failed.
+Logged at OAuthTokenRequestBase.cpp, line: 323, method: OAuthTokenRequestBase::SendRequest.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): ec0edf6d-f354-440d-8494-9e10beb45e0e</Data>
+  </EventData>
+</Event>
+Record 37
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-07-01T23:09:16.064291Z">
+    </TimeCreated>
+    <EventRecordID>37</EventRecordID>
+    <Correlation ActivityID="AABB2BEE-EA35-0002-8F50-C4AA35EADB01">
+    </Correlation>
+    <Execution ProcessID="11500" ThreadID="5920">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399942154</Data>
+    <Data Name="ErrorMessage">The Internet connection has timed out.</Data>
+    <Data Name="AdditionalInformation">Code: authentication_failed
+Description: The Internet connection has timed out.
+TokenEndpoint: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a/oauth2/token
+Logged at OAuthTokenRequestBase.cpp, line: 323, method: OAuthTokenRequestBase::SendRequest.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): ec0edf6d-f354-440d-8494-9e10beb45e0e</Data>
+  </EventData>
+</Event>
+Record 38
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-07-01T23:09:16.065153Z">
+    </TimeCreated>
+    <EventRecordID>38</EventRecordID>
+    <Correlation ActivityID="AABB2BEE-EA35-0002-8F50-C4AA35EADB01">
+    </Correlation>
+    <Execution ProcessID="11500" ThreadID="5920">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3400073295</Data>
+    <Data Name="ErrorMessage">Getting token by SAML token is failed.</Data>
+    <Data Name="AdditionalInformation">Logged at SAMLAssertionTokenRequest.cpp, line: 33, method: SAMLAssertionTokenRequest::AcquireToken.
+
+Request: authority: https://login.microsoftonline.com/f8cdef31-a31e-4b4a-93e4-5f571e91255a, client: 04f0c124-f2bc-4f59-8241-bf6df9866bbd, redirect URI: ms-appx-web://Microsoft.AAD.BrokerPlugin/04f0c124-f2bc-4f59-8241-bf6df9866bbd, resource: , correlation ID (request): ec0edf6d-f354-440d-8494-9e10beb45e0e</Data>
+  </EventData>
+</Event>
+Record 39
+<?xml version="1.0" encoding="utf-8"?>
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-AAD" Guid="4DE9BC9C-B27A-43C9-8994-0915F1A5E24F">
+    </Provider>
+    <EventID>1098</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>103</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x4000000000000012</Keywords>
+    <TimeCreated SystemTime="2025-07-01T23:09:16.073353Z">
+    </TimeCreated>
+    <EventRecordID>39</EventRecordID>
+    <Correlation ActivityID="AABB2BEE-EA35-0002-8F50-C4AA35EADB01">
+    </Correlation>
+    <Execution ProcessID="11500" ThreadID="5920">
+    </Execution>
+    <Channel>Microsoft-Windows-AAD/Operational</Channel>
+    <Computer>DESKTOP-1D5ALF0</Computer>
+    <Security UserID="S-1-5-21-349816100-2283152293-646300561-1001">
+    </Security>
+  </System>
+  <EventData>
+    <Data Name="Error">3399811100</Data>
+    <Data Name="ErrorMessage">Token broker operation failed.</Data>
+    <Data Name="AdditionalInformation">Operation name: GetTokenSilently, Error: -895025142 (0xcaa7000a), Description: The Internet connection has timed out.
+Logged at WebAccountProcessor.cpp, line: 723, method: AAD::Core::WebAccountProcessor::ReportOperationError.</Data>
+  </EventData>
+</Event>

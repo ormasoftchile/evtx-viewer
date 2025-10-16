@@ -20,13 +20,15 @@ import * as vscode from 'vscode';
 import { OpenFileCommand } from './extension/commands/open_file';
 import { OpenFolderCommand } from './extension/commands/open_folder';
 import { AddFileCommand } from './extension/commands/add_file';
+import { TestBinaryXmlCommand } from './extension/commands/test_binary_xml';
 import { EvtxWebviewProvider } from './extension/providers/evtx_webview_provider';
 import { EvtxCustomEditorProvider } from './extension/providers/evtx_custom_editor_provider';
 
 /**
  * Extension activation function with constitutional compliance validation
  *
- * Initializes the EVTX Viewer extension with all required services, command registration,
+ * Initializes the EVTX Viewer extenError: 0x8AA500DB The cache has been partitioned successfully.
+Logged at CachePartitioning.cpp, line: 35, method: CachePartitioning::Apply.sion with all required services, command registration,
  * and constitutional requirement enforcement. Handles graceful error recovery and user
  * notification.
  *
@@ -55,6 +57,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const openFileCommand = new OpenFileCommand(context, webviewProvider);
     const openFolderCommand = new OpenFolderCommand(context, webviewProvider);
     const addFileCommand = new AddFileCommand(context, webviewProvider);
+    const testBinaryXmlCommand = new TestBinaryXmlCommand(context);
 
     // Initialize and register custom editor provider
     const customEditorProvider = new EvtxCustomEditorProvider(context, webviewProvider);
