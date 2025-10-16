@@ -596,3 +596,14 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - [Feature Specification](/specs/001-a-vs-code/spec.md)
 - [Implementation Plan](/specs/001-a-vs-code/plan.md)
 - [Task Breakdown](/specs/001-a-vs-code/tasks.md)
+
+## Credits
+TypeScript port inspired by and partially translated from the Rust project
+**evtx** by Omer Ben-Amram and contributors. Original repo: https://github.com/omerbenamram/evtx.
+Original work is dual-licensed MIT OR Apache-2.0; this port is MIT.
+
+## Legal
+This project is independent and not affiliated with or endorsed by Microsoft.
+"Windows" and any related names are Microsoft trademarks. We use them only
+nominatively to describe file compatibility (EVTX). No Microsoft logos or icons
+are included.

@@ -1,3 +1,6 @@
+// Ported from the Rust project "evtx" by Omer Ben-Amram and contributors.
+// SPDX-License-Identifier: MIT
+// © 2025 Cristian Ormazábal (translation); original authors retain their copyrights.
 /**
  * VS Code "Open Folder" Command Implementation
  * Handles opening folders and scanning for EVTX files

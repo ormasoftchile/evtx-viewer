@@ -1,3 +1,7 @@
+// Ported from the Rust project "evtx" by Omer Ben-Amram and contributors.
+// SPDX-License-Identifier: MIT
+// © 2025 Cristian Ormazábal (translation); original authors retain their copyrights.
+
 /* eslint-disable */
 // import { EVTX_CHUNK_SIZE } from './evtx_parser.js';
 import { EvtxRecord, EvtxRecordHeaderImpl } from './evtx_record.js';
