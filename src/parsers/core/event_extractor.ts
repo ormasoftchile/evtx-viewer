@@ -35,7 +35,7 @@ import {
   getProviderName,
   getTimestamp,
   getExecutionInfo,
-  getUserId,
+  // getUserId,
 } from '../../shared/utils/evtx_normalizer';
 
 /**

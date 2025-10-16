@@ -19,10 +19,10 @@
 import {
   BinaryXmlParser,
   Template,
-  TemplateInstance,
-  SubstitutionArrayEntry,
+  // TemplateInstance,
+  // SubstitutionArrayEntry,
   BinXmlTokenType,
-  BinXmlParseError,
+  // BinXmlParseError,
 } from './binary_xml';
 
 /**
