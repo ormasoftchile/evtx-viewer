@@ -8,7 +8,6 @@
 import { IBinXmlToken, ChunkInfo, SubstitutionArrayEntry, BinXmlParseError } from './tokens/base';
 import { TokenParser } from './token_parser';
 import { Template, TemplateCache } from './template';
-import { TemplateInstance } from './template_instance';
 import { BinXmlTokenType } from './value_types';
 
 /**

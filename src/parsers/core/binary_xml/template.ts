@@ -47,7 +47,7 @@ export class Template implements ITemplate {
    * @param substitutions Array of substitution values
    * @returns XML string representation
    */
-  public asXml(substitutions: SubstitutionArrayEntry[]): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[]): string {
     // Create a dummy ChunkInfo for the template conversion
     // In practice, this would be provided by the parser
     const dummyChunkInfo: ChunkInfo = {
@@ -57,7 +57,7 @@ export class Template implements ITemplate {
       getString: () => undefined,
     };
 
-    return this.rootToken.asXml(substitutions, dummyChunkInfo);
+    return this.rootToken.asXml(_substitutions, dummyChunkInfo);
   }
 
   /**
@@ -77,7 +77,7 @@ export class Template implements ITemplate {
   public static parse(
     buffer: Buffer,
     offset: number,
-    chunkInfo: ChunkInfo
+    _chunkInfo: ChunkInfo
   ): { template: Template; nextOffset: number } {
     if (offset + 24 > buffer.length) {
       throw new Error(`Buffer too small for Template header at offset ${offset}`);
@@ -217,7 +217,7 @@ export class TemplateCache {
 class PlaceholderToken implements IBinXmlToken {
   public readonly tokenType = BinXmlTokenType.ValueToken;
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     return '[Template Content]';
   }
 

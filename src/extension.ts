@@ -57,7 +57,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const openFileCommand = new OpenFileCommand(context, webviewProvider);
     const openFolderCommand = new OpenFolderCommand(context, webviewProvider);
     const addFileCommand = new AddFileCommand(context, webviewProvider);
-    const testBinaryXmlCommand = new TestBinaryXmlCommand(context);
+    // const testBinaryXmlCommand = new TestBinaryXmlCommand(context);
 
     // Initialize and register custom editor provider
     const customEditorProvider = new EvtxCustomEditorProvider(context, webviewProvider);
