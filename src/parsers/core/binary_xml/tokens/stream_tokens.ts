@@ -17,7 +17,7 @@ export class StartOfStreamToken implements IBinXmlToken {
     // Start of stream token has no additional data
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     // Start of stream doesn't generate XML content
     return '';
   }
@@ -54,7 +54,7 @@ export class EndOfStreamToken implements IBinXmlToken {
     // End of stream token has no additional data
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     // End of stream doesn't generate XML content
     return '';
   }
@@ -98,7 +98,7 @@ export class FragmentHeaderToken implements IBinXmlToken {
     this.flags = flags;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     // Fragment header doesn't generate XML content
     return '';
   }
