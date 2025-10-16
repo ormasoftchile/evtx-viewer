@@ -1,0 +1,6 @@
+This project includes a TypeScript translation/derivative of the Rust project "evtx"
+by Omer Ben-Amram and contributors (https://github.com/omerbenamram/evtx).
+The original project is dual-licensed under MIT OR Apache-2.0 at the user's option.
+This repository is distributed under the MIT License and preserves original
+copyright notices.
+© Original authors of "evtx" and © 2025 Cristian Ormazábal and contributors.
