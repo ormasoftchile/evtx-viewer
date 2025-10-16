@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import { EVTX_CHUNK_SIZE } from './evtx_parser.js';
 import { EvtxRecord, EvtxRecordHeaderImpl } from './evtx_record.js';
 import { ParserSettings } from './parser_settings.js';

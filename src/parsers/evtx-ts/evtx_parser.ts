@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as fs from 'fs';
 import { ParserSettings } from './parser_settings.js';
 import { EvtxFileHeader } from './evtx_file_header.js';

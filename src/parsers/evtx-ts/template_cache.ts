@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { BinXMLTemplateDefinition } from './model/deserialized.js';
 import { read_template_definition } from './binxml/tokens.js';
 

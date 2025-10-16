@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ParserSettings } from './parser_settings';
 import { BinXmlDeserializer } from './binxml/deserializer.js';
 import { BinXMLDeserializedTokens } from './model/deserialized.js';

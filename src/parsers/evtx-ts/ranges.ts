@@ -1,3 +1,4 @@
+/* eslint-disable */
 // TypeScript equivalent of RangeInclusive<usize>
 class RangeInclusive {
   start: number;

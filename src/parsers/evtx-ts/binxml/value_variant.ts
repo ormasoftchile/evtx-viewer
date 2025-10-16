@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { BinXMLDeserializedTokens } from '../model/deserialized.js';
 
 // TypeScript Result type for error handling

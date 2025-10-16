@@ -24,9 +24,9 @@
 import * as fs from 'fs/promises';
 import { EventRecord, EventRecordData } from '../models/event_record';
 import { EvtxFile, EvtxFileHeader, EvtxFileStatus } from '../models/evtx_file';
-import { BinaryXmlExtractor, BinaryXmlOptions } from './binary_xml_extractor';
+import { BinaryXmlExtractor /*, BinaryXmlOptions */ } from './binary_xml_extractor';
 import { Template, BinaryXmlParser, SimpleChunkInfo } from './binary_xml';
-import { SubstitutionArrayEntry } from './binary_xml/substitution_entry';
+// import { SubstitutionArrayEntry } from './binary_xml/substitution_entry';
 import { EvtxTsAdapter } from '../evtx-ts-adapter';
 
 /**
@@ -341,16 +341,17 @@ export class EvtxParser {
 
       // Parse file header
       evtxFile._updateStatus(EvtxFileStatus.PARSING_HEADER);
-      
+
       // 🔥 USE NEW EVTX-TS PARSER for complete EventData extraction
       console.log('🚀 Using evtx-ts parser for complete EventData extraction...');
       const maxEvents = mergedOptions.maxEvents || 10000;
       const events = await EvtxTsAdapter.parseFile(evtxFile.filePath, maxEvents);
-      
-      console.log(`✅ Parsed ${events.length} events with evtx-ts (including AdditionalInformation)`);
+
+      console.log(
+        `✅ Parsed ${events.length} events with evtx-ts (including AdditionalInformation)`
+      );
 
       evtxFile._updateStatus(EvtxFileStatus.READY);
-      return events;
       return events;
     } catch (error) {
       evtxFile._setError(error as Error);
@@ -2199,31 +2200,35 @@ export class EvtxParser {
   /**
    * Enhanced Binary XML parsing using our improved template substitution system
    */
-  private static async parseEnhancedBinaryXml(xmlData: Buffer, context: ParsingContext): Promise<any> {
+  private static async parseEnhancedBinaryXml(
+    xmlData: Buffer,
+    context: ParsingContext
+  ): Promise<any> {
     try {
       console.log('🔥 Using Enhanced Binary XML Parser with template substitution');
-      
+
       // Use our enhanced Binary XML parser with template substitution
       const parser = new BinaryXmlParser();
-      
+
       // Parse using the enhanced system
       const xmlString = parser.parseToXml(xmlData);
       console.log('🔥 Enhanced parser generated XML:', xmlString.substring(0, 500) + '...');
-      
+
       // Extract structured data from enhanced XML
       const enhancedData = this.parseEventDataFromXml(xmlString);
-      
+
       // Fallback to original parsing for system fields if needed
       const originalData = this.parseBinaryXml(xmlData, context);
-      
+
       // Merge data - prefer enhanced EventData, keep original system data as fallback
       return {
         ...originalData,
         ...(enhancedData.eventId !== undefined && { eventId: enhancedData.eventId }),
         ...(enhancedData.level !== undefined && { level: enhancedData.level }),
-        ...(enhancedData.eventData && Object.keys(enhancedData.eventData).length > 0 && {
-          eventData: enhancedData.eventData
-        }),
+        ...(enhancedData.eventData &&
+          Object.keys(enhancedData.eventData).length > 0 && {
+            eventData: enhancedData.eventData,
+          }),
       };
     } catch (error) {
       console.error('🚨 Enhanced Binary XML parsing failed, falling back to original:', error);
@@ -2234,19 +2239,25 @@ export class EvtxParser {
   /**
    * Enhanced Binary XML to XML string conversion using template substitution
    */
-  private static async enhancedBinaryXmlToXmlString(xmlData: Buffer, context: ParsingContext): Promise<string> {
+  private static async enhancedBinaryXmlToXmlString(
+    xmlData: Buffer,
+    _context: ParsingContext
+  ): Promise<string> {
     try {
       console.log('🔥 Using Enhanced Binary XML to XML converter with template substitution');
-      
+
       // Use our enhanced Binary XML parser
       const parser = new BinaryXmlParser();
       const xmlString = parser.parseToXml(xmlData);
-      
+
       console.log('🔥 Enhanced XML string generated:', xmlString.substring(0, 300) + '...');
-      
+
       return xmlString;
     } catch (error) {
-      console.error('🚨 Enhanced Binary XML to XML conversion failed, falling back to original:', error);
+      console.error(
+        '🚨 Enhanced Binary XML to XML conversion failed, falling back to original:',
+        error
+      );
       return this.binaryXmlToXmlString(xmlData);
     }
   }

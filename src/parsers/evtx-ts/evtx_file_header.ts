@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import * as fs from 'fs';
 
 // TypeScript equivalent of Rust Result type

@@ -5,7 +5,7 @@
  * Handles Binary XML quirks and data structure normalization.
  */
 
-import { EvtxRecord, EvtxSystemData, EvtxEventData } from '../types/evtx_types';
+import { EvtxRecord, EvtxSystemData /*, EvtxEventData */ } from '../types/evtx_types';
 
 /**
  * Normalizes an EVTX record to handle Binary XML quirks

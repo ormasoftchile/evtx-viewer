@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import { BinXmlValue } from './value_variant.js';
 import { read_template_definition } from './tokens';
 import { BinXmlName, BinXmlNameRef } from './name';

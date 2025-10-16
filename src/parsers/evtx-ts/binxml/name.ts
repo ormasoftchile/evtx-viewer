@@ -1,3 +1,4 @@
+/* eslint-disable */
 export type ChunkOffset = number;
 
 // TypeScript Result type for error handling

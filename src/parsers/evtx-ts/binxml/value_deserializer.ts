@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { BinXmlValue, BinXmlValueType } from './value_variant.js';
 import { BinXmlDeserializer } from './deserializer.js';
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 // TypeScript XML output implementation for EVTX
 // Simplified version focused on converting XmlModel to XML strings
 

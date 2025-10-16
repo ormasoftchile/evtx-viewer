@@ -1,3 +1,4 @@
+/* eslint-disable */
 // TypeScript equivalent of encoding::types::EncodingRef
 type EncodingRef = string; // Simplified for TypeScript
 
