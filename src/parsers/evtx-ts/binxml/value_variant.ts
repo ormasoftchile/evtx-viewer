@@ -3,11 +3,11 @@ import { BinXMLDeserializedTokens } from '../model/deserialized.js';
 // TypeScript Result type for error handling
 type Result<T, E = Error> = { kind: 'ok'; value: T } | { kind: 'err'; error: E };
 
-function ok<T>(value: T): Result<T> {
+function _ok<T>(value: T): Result<T> {
   return { kind: 'ok', value };
 }
 
-function err<E extends Error>(error: E): Result<never, E> {
+function _err<E extends Error>(error: E): Result<never, E> {
   return { kind: 'err', error };
 }
 

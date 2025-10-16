@@ -1,4 +1,4 @@
-import { BinXmlValue } from './value_variant.js';
+// import { BinXmlValue } from './value_variant.js';
 import { read_template_definition } from './tokens';
 import { BinXmlName, BinXmlNameRef } from './name';
 import {
@@ -385,7 +385,7 @@ export function expand_templates(
   const stack: Cow<BinXMLDeserializedTokens>[] = [];
 
   for (let i = 0; i < token_tree.length; i++) {
-    const token = token_tree[i];
+    // const token = token_tree[i];
     // console.log(`DEBUG expandTemplates: Processing token ${i}: ${token.kind}`);
     const expandResult = _expand_templates(
       owned(token_tree[i]! as BinXMLDeserializedTokens),

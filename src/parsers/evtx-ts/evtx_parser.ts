@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { ParserSettings } from './parser_settings.js';
 import { EvtxFileHeader } from './evtx_file_header.js';
 import { EvtxChunkData } from './evtx_chunk.js';
-import { EvtxRecord } from './evtx_record.js';
+// import { EvtxRecord } from './evtx_record.js';
 
 // Constants from Rust
 export const EVTX_CHUNK_SIZE = 65536;

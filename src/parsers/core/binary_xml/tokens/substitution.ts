@@ -6,7 +6,7 @@
  */
 
 import { BinXmlTokenType } from '../value_types';
-import { IBinXmlToken, ISubstitutionToken, ChunkInfo, SubstitutionArrayEntry } from './base';
+import { ISubstitutionToken, ChunkInfo, SubstitutionArrayEntry } from './base';
 
 /**
  * Normal substitution token - references a value in the substitution array
@@ -21,7 +21,7 @@ export class NormalSubstitutionToken implements ISubstitutionToken {
     this.substitutionIndex = substitutionIndex;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     if (this.substitutionIndex >= 0 && this.substitutionIndex < substitutions.length) {
       const substitution = substitutions[this.substitutionIndex];
       if (substitution) {
@@ -74,7 +74,7 @@ export class OptionalSubstitutionToken implements ISubstitutionToken {
     this.substitutionIndex = substitutionIndex;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     if (this.substitutionIndex >= 0 && this.substitutionIndex < substitutions.length) {
       const substitution = substitutions[this.substitutionIndex];
       if (substitution) {
@@ -129,7 +129,7 @@ export class ConditionalSubstitutionToken implements ISubstitutionToken {
     this.condition = condition;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     // For now, treat conditional substitution like normal substitution
     // In a full implementation, we would evaluate the condition
     if (this.substitutionIndex >= 0 && this.substitutionIndex < substitutions.length) {

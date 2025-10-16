@@ -1,19 +1,19 @@
 import {
   BinXMLDeserializedTokens,
-  BinXMLOpenStartElement,
-  BinXMLAttribute,
-  BinXmlEntityReference,
-  BinXMLProcessingInstructionTarget,
-  TemplateSubstitutionDescriptor,
-  BinXMLFragmentHeader,
-  BinXmlTemplateRef,
+  // BinXMLOpenStartElement,
+  // BinXMLAttribute,
+  // BinXmlEntityReference,
+  // BinXMLProcessingInstructionTarget,
+  // TemplateSubstitutionDescriptor,
+  // BinXMLFragmentHeader,
+  // BinXmlTemplateRef,
 } from '../model/deserialized.js';
-import { BinXmlValue } from './value_variant.js';
+// import { BinXmlValue } from './value_variant.js';
 import {
   BinXMLRawToken,
   raw_token_from_u8,
-  OpenStartElementTokenMeta,
-  AttributeTokenMeta,
+  // OpenStartElementTokenMeta,
+  // AttributeTokenMeta,
 } from '../model/raw.js';
 import {
   read_open_start_element,

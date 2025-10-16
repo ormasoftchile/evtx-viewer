@@ -29,7 +29,7 @@ export function resolveEventMessage(
   eventId: number,
   provider: string,
   rawMessage: string | undefined,
-  eventData: { [key: string]: any }
+  _eventData: { [key: string]: any }
 ): string {
   // If we have no raw message, return a generic message
   if (!rawMessage) {

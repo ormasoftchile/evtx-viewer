@@ -12,7 +12,7 @@ function ok<T>(value: T): Result<T> {
   return { kind: 'ok', value };
 }
 
-function err<E extends Error>(error: E): Result<never, E> {
+function _err<E extends Error>(error: E): Result<never, E> {
   return { kind: 'err', error };
 }
 

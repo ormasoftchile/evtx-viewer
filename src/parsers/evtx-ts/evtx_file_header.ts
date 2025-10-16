@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+// import * as fs from 'fs';
 
 // TypeScript equivalent of Rust Result type
 type Result<T, E = Error> = { kind: 'ok'; value: T } | { kind: 'err'; error: E };

@@ -21,7 +21,7 @@ export class ValueToken implements IBinXmlToken {
     this.value = value;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     if (typeof this.value === 'string') {
       return escapeXml(this.value);
     }
@@ -99,7 +99,7 @@ export class StringValueToken implements IBinXmlToken {
     this.value = value;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     return escapeXml(this.value);
   }
 
@@ -121,7 +121,7 @@ export class EntityRefToken implements IBinXmlToken {
     this.entityName = entityName;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     // Convert common entity references
     switch (this.entityName.toLowerCase()) {
       case 'amp':
@@ -182,7 +182,7 @@ export class CommentToken implements IBinXmlToken {
     this.comment = comment;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     return `<!-- ${escapeXml(this.comment)} -->`;
   }
 
@@ -230,7 +230,7 @@ export class CDATAToken implements IBinXmlToken {
     this.data = data;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     return `<![CDATA[${this.data}]]>`;
   }
 

@@ -69,7 +69,7 @@ function read_ansi_encoded_string(
   cursor: Buffer,
   position: number,
   size: number,
-  ansi_codec: string
+  _ansi_codec: string
 ): string | null {
   if (position + size > cursor.length) return null;
   const stringBuffer = cursor.subarray(position, position + size);

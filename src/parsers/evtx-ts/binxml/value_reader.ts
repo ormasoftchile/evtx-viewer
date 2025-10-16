@@ -28,7 +28,7 @@ function format_guid_helper(bytes: Buffer): string {
 function parse_systemtime(buffer: Buffer): Date {
   const year = buffer.readUInt16LE(0);
   const month = buffer.readUInt16LE(2);
-  const dayOfWeek = buffer.readUInt16LE(4);
+  const _dayOfWeek = buffer.readUInt16LE(4);
   const day = buffer.readUInt16LE(6);
   const hour = buffer.readUInt16LE(8);
   const minute = buffer.readUInt16LE(10);
@@ -530,7 +530,7 @@ export function deserialize_value_type(
 }
 
 // Helper function to format GUID (already exists but importing here for completeness)
-function format_guid(guid_bytes: Buffer): string {
+function _format_guid(guid_bytes: Buffer): string {
   if (guid_bytes.length !== 16) {
     throw new Error('GUID must be 16 bytes');
   }
