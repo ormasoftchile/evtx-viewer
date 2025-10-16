@@ -7,7 +7,6 @@
 import { BinXmlTokenType } from '../value_types';
 import {
   IBinXmlToken,
-  IContainerToken,
   IElementToken,
   AttributeToken,
   ChunkInfo,
@@ -42,19 +41,19 @@ export class OpenStartElementToken implements IElementToken {
     this.attributes.push(attribute);
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     let xml = `<${this.name}`;
 
     // Add attributes
     for (const attr of this.attributes) {
-      xml += ` ${attr.asXml(substitutions, chunkInfo)}`;
+      xml += ` ${attr.asXml(_substitutions, _chunkInfo)}`;
     }
 
     xml += '>';
 
     // Add children
     for (const child of this.children) {
-      xml += child.asXml(substitutions, chunkInfo);
+      xml += child.asXml(_substitutions, _chunkInfo);
     }
 
     xml += `</${this.name}>`;
@@ -108,7 +107,7 @@ export class CloseStartElementToken implements IBinXmlToken {
     // Close start element has no additional data
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     // This token doesn't generate XML - it's handled by the element that contains it
     return '';
   }
@@ -146,7 +145,7 @@ export class CloseEmptyElementToken implements IBinXmlToken {
     // Close empty element has no additional data
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     // This token doesn't generate XML - it's handled by the element that contains it
     return '';
   }
@@ -184,7 +183,7 @@ export class EndElementToken implements IBinXmlToken {
     // End element has no additional data - element name is known from context
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     // This token doesn't generate XML - it's handled by the element that contains it
     return '';
   }
@@ -225,8 +224,8 @@ export class SimpleAttributeToken implements AttributeToken {
     this.value = value;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
-    const valueStr = this.value.asXml(substitutions, chunkInfo);
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
+    const valueStr = this.value.asXml(_substitutions, _chunkInfo);
     return `${this.name}="${escapeXml(valueStr)}"`;
   }
 
@@ -276,7 +275,7 @@ export class SimpleValueToken implements IBinXmlToken {
     this.value = value;
   }
 
-  public asXml(substitutions: SubstitutionArrayEntry[], chunkInfo: ChunkInfo): string {
+  public asXml(_substitutions: SubstitutionArrayEntry[], _chunkInfo: ChunkInfo): string {
     return this.value;
   }
 

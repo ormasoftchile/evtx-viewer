@@ -20,7 +20,6 @@ import * as vscode from 'vscode';
 import { OpenFileCommand } from './extension/commands/open_file';
 import { OpenFolderCommand } from './extension/commands/open_folder';
 import { AddFileCommand } from './extension/commands/add_file';
-import { TestBinaryXmlCommand } from './extension/commands/test_binary_xml';
 import { EvtxWebviewProvider } from './extension/providers/evtx_webview_provider';
 import { EvtxCustomEditorProvider } from './extension/providers/evtx_custom_editor_provider';
 
