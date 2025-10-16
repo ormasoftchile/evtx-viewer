@@ -2,7 +2,7 @@
   "name": "evtx-viewer",
   "displayName": "EVTX Viewer",
   "description": "A Visual Studio Code extension for viewing, filtering, searching, and exporting Windows Event Log (.evtx) files",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "publisher": "focus-space",
   "engines": {
     "vscode": "^1.80.0",
@@ -22,7 +22,7 @@
     "security analysis"
   ],
   "activationEvents": [],
-  "main": "./out/src/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "languages": [
       {
@@ -88,12 +88,15 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile && npm run build:webview",
-    "compile": "tsc -p ./",
+    "vscode:prepublish": "npm run build",
+    "compile": "npm run build:extension && npm run build:webview",
+    "build": "npm run build:extension && npm run build:webview",
+    "build:extension": "webpack --config webpack.extension.config.js",
     "build:webview": "webpack --config webpack.config.js",
-    "watch": "tsc -watch -p ./",
+    "watch": "npm run watch:extension",
+    "watch:extension": "webpack --config webpack.extension.config.js --watch",
     "watch:webview": "webpack --config webpack.config.js --watch",
-    "pretest": "npm run compile && npm run lint",
+    "pretest": "tsc -p ./ && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node -r ./tests/setup/pre-jsdom.js ./node_modules/jest/bin/jest.js",
     "test:vscode": "node ./out/tests/runTests.js",

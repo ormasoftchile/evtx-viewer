@@ -95,16 +95,15 @@ function checkCompiledFiles() {
     
     let allPresent = true;
     
-    // Check main extension file
-    allPresent &= checkFileExists('out/src/extension.js', 'Main extension');
+    // Check main extension file (now bundled in dist/)
+    allPresent &= checkFileExists('dist/extension.js', 'Main extension bundle');
     
-    // Check webview bundle
+    // Check webview files
     allPresent &= checkFileExists('out/webview/webview.js', 'Webview bundle');
     allPresent &= checkFileExists('out/webview/webview.html', 'Webview HTML');
     
-    // Check compiled providers
-    allPresent &= checkDirectoryExists('out/src/extension/providers', 'Extension providers');
-    allPresent &= checkDirectoryExists('out/src/parsers', 'EVTX parsers');
+    // Check resources
+    allPresent &= checkDirectoryExists('resources', 'Resources directory');
     
     return allPresent;
 }
