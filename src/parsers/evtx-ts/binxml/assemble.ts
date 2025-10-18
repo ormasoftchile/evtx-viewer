@@ -1,3 +1,7 @@
+// Ported from the Rust project "evtx" by Omer Ben-Amram and contributors.
+// SPDX-License-Identifier: MIT
+// © 2025 Cristian Ormazábal (translation); original authors retain their copyrights.
+
 /* eslint-disable */
 // import { BinXmlValue } from './value_variant.js';
 import { read_template_definition } from './tokens';
