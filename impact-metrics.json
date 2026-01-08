@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-01-08T19:51:00Z",
+  "project": {
+    "name": "EVTX Viewer",
+    "type": "vscode-extension"
+  },
+  "code": {
+    "total_loc": 27512,
+    "total_files": 66,
+    "comments": 5353,
+    "blank": 3180
+  },
+  "classification": {
+    "boilerplate": { "files": 3, "loc": 411 },
+    "glue_code": { "files": 8, "loc": 1248 },
+    "core_logic": { "files": 46, "loc": 14081 }
+  },
+  "ai_assisted": {
+    "total_loc": 8262,
+    "percent": 30,
+    "by_category": {
+      "boilerplate": 349,
+      "glue_code": 873,
+      "core_logic": 7040
+    }
+  },
+  "time": {
+    "estimated_manual_hours": 302.3,
+    "estimated_saved_hours": 155.5,
+    "saved_percent": 51,
+    "actual_hours": 13.3
+  },
+  "git": {
+    "first_commit": "2025-09-25 22:44:18 -0300",
+    "last_commit": "2025-10-17 22:43:21 -0300",
+    "total_commits": 64,
+    "sessions": 8
+  },
+  "speckit": {
+    "spec_lines": 4823,
+    "tasks_total": 47,
+    "tasks_complete": 42
+  }
+}

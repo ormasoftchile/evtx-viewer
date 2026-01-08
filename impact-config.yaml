@@ -1,0 +1,65 @@
+# Spec-Kit Impact Analyzer Configuration
+# Project: EVTX Viewer VS Code Extension
+
+project:
+  name: "EVTX Viewer"
+  type: "vscode-extension"
+  description: "VS Code extension for viewing Windows Event Log (.evtx) files"
+
+paths:
+  source: "src/"
+  tests: "src/test/"
+  specs: "specs/"
+  exclude:
+    - "node_modules"
+    - "out"
+    - "dist"
+    - ".vscode-test"
+
+# File classification - adjusted for this project's structure
+# The parsers/core files are ported from Rust, so lower AI-assistance
+classification:
+  boilerplate:
+    - "extension.ts"
+    - "shared/models/**/*.ts"
+    - "parsers/models/**/*.ts"
+    
+  glue_code:
+    - "extension/**/*.ts"
+    - "shared/**/*.ts"
+    - "webview/**/*.ts"
+    - "webview/**/*.tsx"
+    
+  core_logic:
+    - "parsers/**/*.ts"
+
+# Time multipliers (hours per 100 LoC without AI)
+# Core parsers are ported from Rust - translation work, not new design
+multipliers:
+  boilerplate: 0.5
+  glue_code: 1.5
+  core_logic: 2.0  # Lower - ported/translated, not designed from scratch
+
+# AI assistance estimates
+# Core parser was ported from Rust - AI helped with TypeScript translation
+ai_percent:
+  boilerplate: 85
+  glue_code: 70
+  core_logic: 50  # AI helped translate Rust → TypeScript
+
+git:
+  session_gap_hours: 2
+  session_buffer_minutes: 30
+  exclude_authors:
+    - "semantic-release-bot"
+    - "github-actions[bot]"
+
+speckit:
+  enabled: true
+  task_pattern: "- \\[.\\] T[0-9]+"
+  specs_glob: "specs/**/tasks.md"
+
+output:
+  report_file: "IMPACT_REPORT.md"
+  json_file: "impact-metrics.json"
+  include_file_details: true
